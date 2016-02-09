@@ -29,9 +29,11 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 		doc.addTextElement(new TextBlock("jn", "jn",
 				"Hello World, this is a test. Would you like to render this correctly? Hello World, this is a test. Would you like to render this correctly? Hello World, this is a test. Would you like to render this correctly?"));
 
+		
+		
 		StyleDefinition sd = new StyleDefinition("n");
 		sd.setFontName("Arial");
-		sd.setAlignment(TextAlignment.CENTER);
+		sd.setAlignment(TextAlignment.JUSTIFIED);
 		doc.overwriteStyles(sd);
 
 		if (!isUIAvailable()) {
@@ -53,7 +55,7 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 	}
 
 	private static boolean isUIAvailable() {
-		return true;
+		return false;
 	}
 
 }

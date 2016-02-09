@@ -265,13 +265,13 @@ public class StyleDefinition implements XmlSerializable {
 		this.color = color;
 	}
 
-	private static final String START_FORMAT = "<StyleDefinition ID=\"%s\" FontSize=\"%s\" Decoration=\"%s\" FontName=\"%s\">";
+	private static final String START_FORMAT = "<StyleDefinition ID=\"%s\" FontSize=\"%s\" Decoration=\"%s\" FontName=\"%s\" Alignment=\"%s\">";
 
 	@Override
 	public String toXML() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(String.format(Locale.US, START_FORMAT, id, fontSize,
-				decoration, fontName));
+				decoration, fontName, alignment));
 		sb.append("\n\t");
 		sb.append(linePadding.toXML("LinePadding"));
 		sb.append("\n\t");
@@ -296,6 +296,11 @@ public class StyleDefinition implements XmlSerializable {
 		if(decoration.equals("UNDERLINE")) sd.setDecoration(TextDecoration.UNDERLINE);
 		if(decoration.equals("ITALIC")) sd.setDecoration(TextDecoration.ITALIC);
 		if(decoration.equals("STRIKE_OUT")) sd.setDecoration(TextDecoration.STRIKE_OUT);
+		String alignment = getAttribute(n, "Alignment", "LEFT");
+		if(alignment.equals("JUSTIFIED")) sd.setAlignment(TextAlignment.JUSTIFIED);
+		if(alignment.equals("RIGHT")) sd.setAlignment(TextAlignment.RIGHT);
+		if(alignment.equals("LEFT"))sd.setAlignment(TextAlignment.LEFT);
+		if(alignment.equals("CENTER"))sd.setAlignment(TextAlignment.CENTER);
 		sd.setLinePadding(Spacing.parse(getChild(n, "LinePadding")));
 		sd.setBlockPadding(Spacing.parse(getChild(n, "BlockPadding")));
 		String hexString = getChildContentText(n, "Color", "#000000").replace("#", "");
