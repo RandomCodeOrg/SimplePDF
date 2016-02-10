@@ -23,7 +23,7 @@ public abstract class RenderElement<T extends DocumentElement> implements
 		this.document = document;
 	}
 
-	public abstract Size getRenderSize(DocumentGraphics g, AreaLayout layout)
+	public abstract Size getRenderSize(PreRenderInformation info)
 			throws RenderingException;
 
 	public abstract Spacing getRenderMargin(DocumentGraphics g)
@@ -37,13 +37,12 @@ public abstract class RenderElement<T extends DocumentElement> implements
 		return null;
 	}
 
-	public abstract void render(Position p, Size reservedSize,
-			SimplePDFDocument doc, DocumentGraphics g, AreaLayout layout, int pageLength)
-			throws RenderingException;
 
-	public Size getTotalSize(DocumentGraphics g, AreaLayout layout) throws RenderingException {
-		Size rS = getRenderSize(g, layout);
-		Spacing rM = getRenderMargin(g);
+	public abstract void render(RenderingInformation info) throws RenderingException;
+	
+	public Size getTotalSize(PreRenderInformation info) throws RenderingException {
+		Size rS = getRenderSize(info);
+		Spacing rM = getRenderMargin(info.getGraphics());
 		return new Size(rS.getWidth() + rM.getLeft() + rM.getRight(),
 				rS.getHeight() + rM.getBottom() + rM.getTop());
 	}
@@ -55,8 +54,7 @@ public abstract class RenderElement<T extends DocumentElement> implements
 
 	protected abstract boolean isLineBreak();
 
-	protected abstract List<RenderElement<? extends DocumentElement>> splitToFit(DocumentGraphics g,
-			Size sizeToFit, AreaLayout layout) throws RenderingException;
+	protected abstract List<RenderElement<? extends DocumentElement>> splitToFit(PreRenderInformation info, Size s) throws RenderingException;
 
 	protected Position toUnits(Position p) {
 		return new Position(p.getX() * MM_TO_UNITS, p.getY() * MM_TO_UNITS);
@@ -104,7 +102,7 @@ public abstract class RenderElement<T extends DocumentElement> implements
 		throw new RuntimeException("Can't create a copy of this item.");
 	}
 	
-	protected void onLayout(AreaLayout layout, DocumentGraphics g){
+	protected void onLayout(PreRenderInformation info){
 		
 	}
 

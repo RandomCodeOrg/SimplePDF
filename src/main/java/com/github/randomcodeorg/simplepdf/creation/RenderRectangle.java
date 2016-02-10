@@ -1,5 +1,9 @@
 package com.github.randomcodeorg.simplepdf.creation;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import com.github.randomcodeorg.simplepdf.DocumentElement;
 import com.github.randomcodeorg.simplepdf.Line;
 import com.github.randomcodeorg.simplepdf.Position;
@@ -8,17 +12,12 @@ import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
 import com.github.randomcodeorg.simplepdf.Size;
 import com.github.randomcodeorg.simplepdf.Spacing;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 public class RenderRectangle extends RenderElement<Rectangle> {
 
 	public RenderRectangle(SimplePDFDocument document, Rectangle documentElement) {
 		super(document, documentElement);
 	}
-	
-	
+
 	@Override
 	public Collection<RenderElement<?>> preSplit() {
 		ArrayList<RenderElement<?>> res = new ArrayList<RenderElement<?>>();
@@ -42,35 +41,32 @@ public class RenderRectangle extends RenderElement<Rectangle> {
 		return res;
 	}
 
+	
+	
 	@Override
-	public Size getRenderSize(DocumentGraphics g, AreaLayout layout) throws RenderingException {
+	public Size getRenderSize(PreRenderInformation info) throws RenderingException {
 		return new Size(0, 0);
 	}
 
 	@Override
-	public Spacing getRenderMargin(DocumentGraphics g)
-			throws RenderingException {
+	public Spacing getRenderMargin(DocumentGraphics g) throws RenderingException {
 		return new Spacing(0);
 	}
 
+
 	@Override
-	public void render(Position p, Size reservedSize, SimplePDFDocument doc,
-			DocumentGraphics g, AreaLayout layout, int pageLength) throws RenderingException {
-	
-		
+	public void render(RenderingInformation info) throws RenderingException {
 	}
 
 	@Override
 	protected boolean isLineBreak() {
 		return false;
 	}
-
+	
 	@Override
-	protected List<RenderElement<? extends DocumentElement>> splitToFit(
-			DocumentGraphics g, Size sizeToFit, AreaLayout layout) throws RenderingException {
+	protected List<RenderElement<? extends DocumentElement>> splitToFit(PreRenderInformation info, Size s)
+			throws RenderingException {
 		return null;
 	}
-
-	
 
 }

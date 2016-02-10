@@ -20,10 +20,12 @@ public class RenderChapterElement extends TextLine {
 		this.level = level;
 	}
 	
-	@Override
-	protected void onLayout(AreaLayout layout, DocumentGraphics g) {
-		super.onLayout(layout, g);
-		System.out.println("'" + getRenderText(layout, 0) + "' will be on page #" + layout.getPageIndex());
-	}
+	
 
+	@Override
+	protected void onLayout(PreRenderInformation info) {
+		super.onLayout(info);
+		System.out.println("'" + getRenderText(info.getLayout(), 0) + "' will be on page #" + info.getLayout().getPageIndex());
+	}
+	
 }

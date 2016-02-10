@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.github.randomcodeorg.simplepdf.DocumentElement;
-import com.github.randomcodeorg.simplepdf.Position;
 import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
 import com.github.randomcodeorg.simplepdf.Size;
 import com.github.randomcodeorg.simplepdf.Spacing;
@@ -35,8 +34,8 @@ public class TextLine extends RenderElement<DocumentElement> {
 		super(document, docElement);
 		textBlock = (TextBlock) docElement;
 	}
-	
-	protected String getRenderText(AreaLayout layout, int pageLength){
+
+	protected String getRenderText(AreaLayout layout, int pageLength) {
 		return textBlock.getContent();
 	}
 
@@ -60,10 +59,10 @@ public class TextLine extends RenderElement<DocumentElement> {
 		}
 		return result;
 	}
-
+	
 	@Override
-	public Size getRenderSize(DocumentGraphics g, AreaLayout layout) throws RenderingException {
-		return g.getTextSize(getRenderText(layout, -1), getStyleDefinition());
+	public Size getRenderSize(PreRenderInformation info) throws RenderingException {
+		return info.getGraphics().getTextSize(getRenderText(info.getLayout(), -1), getStyleDefinition());
 	}
 
 	public Size getRenderSize(DocumentGraphics g, String txt) throws RenderingException {
@@ -82,10 +81,9 @@ public class TextLine extends RenderElement<DocumentElement> {
 	}
 
 	@Override
-	public void render(Position p, Size reservedSize, SimplePDFDocument doc, DocumentGraphics g, AreaLayout layout, int pageLength)
-			throws RenderingException {
-		g.drawText(getRenderText(layout, pageLength), p, getStyleDefinition(),
-				doc.getAreaDefinition(textBlock.getAreaID()).getSize(), lastLine);
+	public void render(RenderingInformation info) throws RenderingException {
+		info.getGraphics().drawText(getRenderText(info.getLayout(), info.getPageCount()), info.getPosition(),
+				getStyleDefinition(), info.getDocument().getAreaDefinition(textBlock.getAreaID()).getSize(), lastLine);
 	}
 
 	@Override
@@ -93,20 +91,22 @@ public class TextLine extends RenderElement<DocumentElement> {
 		return true;
 	}
 
+	
+	
 	@Override
-	protected List<RenderElement<? extends DocumentElement>> splitToFit(DocumentGraphics g, Size s, AreaLayout layout)
+	protected List<RenderElement<? extends DocumentElement>> splitToFit(PreRenderInformation info, Size s)
 			throws RenderingException {
-		float height = (float) g.getTextSize(textBlock.getContent(), getStyleDefinition()).getHeight();
+		float height = (float) info.getGraphics().getTextSize(textBlock.getContent(), getStyleDefinition()).getHeight();
 		if (s.getHeight() < height)
 			return null;
 		String txt = textBlock.getContent();
 		int dividerPos = txt.length();
-		Size cS = getRenderSize(g, layout);
+		Size cS = getRenderSize(info);
 		while (!s.holdsHorizontal(cS)) {
 			dividerPos = txt.lastIndexOf(" ", dividerPos - 1);
 			if (dividerPos == -1)
 				return null;
-			cS = getRenderSize(g, txt.substring(0, dividerPos));
+			cS = getRenderSize(info.getGraphics(), txt.substring(0, dividerPos));
 		}
 		if (dividerPos == 0)
 			return null;
@@ -129,5 +129,7 @@ public class TextLine extends RenderElement<DocumentElement> {
 		}
 		return result;
 	}
+	
+	
 
 }

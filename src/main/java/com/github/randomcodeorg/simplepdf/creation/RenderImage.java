@@ -1,13 +1,5 @@
 package com.github.randomcodeorg.simplepdf.creation;
 
-import com.github.randomcodeorg.simplepdf.DocumentData;
-import com.github.randomcodeorg.simplepdf.DocumentElement;
-import com.github.randomcodeorg.simplepdf.DocumentImage;
-import com.github.randomcodeorg.simplepdf.Position;
-import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
-import com.github.randomcodeorg.simplepdf.Size;
-import com.github.randomcodeorg.simplepdf.Spacing;
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -16,14 +8,20 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import com.github.randomcodeorg.simplepdf.DocumentData;
+import com.github.randomcodeorg.simplepdf.DocumentElement;
+import com.github.randomcodeorg.simplepdf.DocumentImage;
+import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
+import com.github.randomcodeorg.simplepdf.Size;
+import com.github.randomcodeorg.simplepdf.Spacing;
+
 public class RenderImage extends RenderElement<DocumentImage> {
 
 	private DocumentData data;
 	private BufferedImage image;
 	private float mmPerPixel = 1f / 5f;
 
-	public RenderImage(SimplePDFDocument document, DocumentImage documentElement)
-			throws IOException {
+	public RenderImage(SimplePDFDocument document, DocumentImage documentElement) throws IOException {
 		super(document, documentElement);
 		data = document.getData(documentElement.getDataID());
 		ByteArrayInputStream in = new ByteArrayInputStream(data.getData());
@@ -34,23 +32,19 @@ public class RenderImage extends RenderElement<DocumentImage> {
 	}
 
 	@Override
-	public Size getRenderSize(DocumentGraphics g, AreaLayout layout) throws RenderingException {
-		return new Size(image.getWidth() * mmPerPixel, image.getHeight()
-				* mmPerPixel);
+	public Size getRenderSize(PreRenderInformation info) throws RenderingException {
+		return new Size(image.getWidth() * mmPerPixel, image.getHeight() * mmPerPixel);
 	}
 
 	@Override
-	public Spacing getRenderMargin(DocumentGraphics g)
-			throws RenderingException {
+	public Spacing getRenderMargin(DocumentGraphics g) throws RenderingException {
 		return new Spacing(0);
 	}
 
 	@Override
-	public void render(Position p, Size reservedSize, SimplePDFDocument doc,
-			DocumentGraphics g, AreaLayout layout, int pageLength) throws RenderingException {
-		g.drawImage(p,
-				new Size(image.getWidth() * mmPerPixel, image.getHeight()
-						* mmPerPixel), image, null);
+	public void render(RenderingInformation info) throws RenderingException {
+		info.getGraphics().drawImage(info.getPosition(),
+				new Size(image.getWidth() * mmPerPixel, image.getHeight() * mmPerPixel), image, null);
 	}
 
 	@Override
@@ -59,9 +53,9 @@ public class RenderImage extends RenderElement<DocumentImage> {
 	}
 
 	@Override
-	protected List<RenderElement<? extends DocumentElement>> splitToFit(DocumentGraphics g,
-			Size s, AreaLayout layout) throws RenderingException {
-		Size currentSize = getRenderSize(g, layout);
+	protected List<RenderElement<? extends DocumentElement>> splitToFit(PreRenderInformation info, Size s)
+			throws RenderingException {
+		Size currentSize = getRenderSize(info);
 		float sX = (float) (s.getWidth() / currentSize.getWidth());
 		float sY = (float) (s.getHeight() / currentSize.getHeight());
 		float sF = sX;

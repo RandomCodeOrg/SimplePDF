@@ -1,15 +1,14 @@
 package com.github.randomcodeorg.simplepdf.creation;
 
-import com.github.randomcodeorg.simplepdf.AreaDefinition;
-import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.randomcodeorg.simplepdf.AreaDefinition;
+import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
+
 public class DocumentCreator implements ConversionConstants {
 
-	private ElementRenderMapping renderMapping = ElementRenderMapping
-			.getDefault();
+	private ElementRenderMapping renderMapping = ElementRenderMapping.getDefault();
 
 	private final DocumentGraphicsCreator documentGraphicsCreator;
 
@@ -26,7 +25,7 @@ public class DocumentCreator implements ConversionConstants {
 
 		List<AreaLayout> all = new ArrayList<AreaLayout>();
 		layout(all, doc, 0, areas);
-		render(doc, all);
+		render(doc, all, areas);
 		cleanup(all);
 
 		documentGraphicsCreator.completeDocument(doc);
@@ -38,21 +37,23 @@ public class DocumentCreator implements ConversionConstants {
 		}
 	}
 
-	private void render(SimplePDFDocument doc, Iterable<AreaLayout> layouts)
-			throws RenderingException {
+	private void render(SimplePDFDocument doc, Iterable<AreaLayout> layouts, Iterable<DocumentArea> areas) throws RenderingException {
 		int pageLength = 0;
-		for(AreaLayout al : layouts) if(al.getPageIndex() > pageLength) pageLength = al.getPageIndex();
+		for (AreaLayout al : layouts)
+			if (al.getPageIndex() > pageLength)
+				pageLength = al.getPageIndex();
 		pageLength++;
 		for (AreaLayout al : layouts) {
 			DocumentGraphics g = al.getGraphics();
 			for (ElementRenderingInformation rI : al) {
-				rI.getElement().render(rI.getLocation(), rI.getSize(), doc, g, al, pageLength);
+				rI.getElement()
+						.render(new RenderingInformationImpl(rI.getLocation(), rI.getSize(), doc, g, al, pageLength, areas));
 			}
 		}
 	}
 
-	private void layout(List<AreaLayout> layouts, SimplePDFDocument doc, int pageIndex,
-			List<DocumentArea> areas) throws RenderingException {
+	private void layout(List<AreaLayout> layouts, SimplePDFDocument doc, int pageIndex, List<DocumentArea> areas)
+			throws RenderingException {
 		if (areas.size() == 0)
 			return;
 		boolean found = false;
@@ -70,7 +71,7 @@ public class DocumentCreator implements ConversionConstants {
 
 		for (DocumentArea a : areas) {
 			AreaLayout al = new AreaLayout(page, a, pageIndex);
-			a.layout(al, page);
+			a.layout(new PreRenderInformationImpl(doc, areas, al, page));
 			layouts.add(al);
 			ancestor = a.next();
 			if (ancestor != null)

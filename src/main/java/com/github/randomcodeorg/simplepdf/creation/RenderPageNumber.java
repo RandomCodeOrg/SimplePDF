@@ -17,12 +17,6 @@ public class RenderPageNumber extends TextLine {
 		return super.getRenderText(layout, pageLength).replace("@currentPage;", "" + (layout.getPageIndex() + 1)).replace("@pageCount;", "" + pageLength);
 	}
 	
-	@Override
-	protected void onLayout(AreaLayout layout, DocumentGraphics g) {
-		super.onLayout(layout, g);
-	}
-	
-	
 	private static TextBlock toTextBlock(PageNumber pn){
 		TextBlock res = new TextBlock(pn.getAreaID(), pn.getStyleID(), pn.getFormat());
 		res.setIsRepeating(pn.getIsRepeating());

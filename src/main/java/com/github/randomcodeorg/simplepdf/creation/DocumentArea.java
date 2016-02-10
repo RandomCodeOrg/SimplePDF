@@ -102,9 +102,8 @@ public class DocumentArea {
 
 	}
 
-	public boolean canHold(RenderElement<? extends DocumentElement> docElement,
-			DocumentGraphics g, AreaLayout layout) throws RenderingException {
-		Size totalElementSize = docElement.getTotalSize(g, layout);
+	public boolean canHold(RenderElement<? extends DocumentElement> docElement, PreRenderInformation info) throws RenderingException {
+		Size totalElementSize = docElement.getTotalSize(info);
 		if (y + totalElementSize.getHeight() > area.getSize().getHeight())
 			return false;
 		if (x + totalElementSize.getWidth() > area.getSize().getWidth())
@@ -121,14 +120,14 @@ public class DocumentArea {
 	}
 
 	private List<RenderElement<? extends DocumentElement>> doSplit(
-			RenderElement<? extends DocumentElement> element, DocumentGraphics g, AreaLayout layout)
+			RenderElement<? extends DocumentElement> element, DocumentGraphics g, AreaLayout layout, Iterable<DocumentArea> areas)
 			throws RenderingException {
 		Spacing spacing = element.getRenderMargin(g);
 		Size s = getAvailableSize(spacing);
-		return element.splitToFit(g, s, layout);
+		return element.splitToFit(new PreRenderInformationImpl(document, areas, layout, g), s);
 	}
 
-	public void layout(AreaLayout layout, DocumentGraphics g)
+	public void layout(PreRenderInformation info)
 			throws RenderingException {
 		if (elements.size() == 0)
 			return;
@@ -140,10 +139,9 @@ public class DocumentArea {
 		RenderElement<? extends DocumentElement> current;
 		while (iteration.hasNext() && !cancel) {
 			current = iteration.next();
-			current.onLayout(layout, g);
-			if (!canHold(current, g, layout)) {
-				List<RenderElement<? extends DocumentElement>> splits = doSplit(current,
-						g, layout);
+			current.onLayout(info);
+			if (!canHold(current, info)) {
+				List<RenderElement<? extends DocumentElement>> splits = doSplit(current, info.getGraphics(), info.getLayout(), info.getAreas());
 				if (splits != null) {
 					iteration.remove();
 					int index = iteration.nextIndex();
@@ -163,10 +161,10 @@ public class DocumentArea {
 			}
 			currX = getTranslatedX();
 			currY = getTranslatedY();
-			Size reservedSize = current.getRenderSize(g, layout);
-			Size totalSize = current.getTotalSize(g, layout);
-			Spacing position = current.getRenderMargin(g);
-			layout.addElement(current,
+			Size reservedSize = current.getRenderSize(info);
+			Size totalSize = current.getTotalSize(info);
+			Spacing position = current.getRenderMargin(info.getGraphics());
+			info.getLayout().addElement(current,
 					new Position((float) (currX + position.getLeft()),
 							(float) (currY + position.getTop())), reservedSize);
 			move(current, totalSize);
