@@ -38,12 +38,12 @@ public class StyleDefinition implements XmlSerializable {
 	 * Der standardmäßige Zeilenabstand (Top=1; Right=0; Bottom=1; Left=1) in
 	 * mm.
 	 */
-	public static final Spacing STD_LINE_PADDING = new Spacing(0, 1);
+	public static final Spacing STD_LINE_PADDING = new Spacing(0, 0);
 	/**
 	 * Der standardmäßige Rahmenabstand (Top=0; Right=0; Bottom=0; Left=0) in
 	 * mm.
 	 */
-	public static final Spacing STD_BLOCK_PADDING = new Spacing(0);
+	public static final Spacing STD_BLOCK_PADDING = new Spacing(0, 1);
 	/**
 	 * Die standardmäßige Farbe (Schwarz).
 	 */

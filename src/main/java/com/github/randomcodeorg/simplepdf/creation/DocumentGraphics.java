@@ -14,7 +14,7 @@ public interface DocumentGraphics {
 
 	public void drawImage(Position p, Size s, BufferedImage image, StyleDefinition sd) throws RenderingException;
 
-	public Size getTextSize(String text, StyleDefinition sd) throws RenderingException;
+	public Size getTextSize(String text, StyleDefinition sd, Size reservedSize) throws RenderingException;
 
 	public void dispose() throws RenderingException;
 

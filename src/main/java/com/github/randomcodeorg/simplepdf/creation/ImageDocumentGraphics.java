@@ -34,7 +34,7 @@ public class ImageDocumentGraphics implements DocumentGraphics {
 	@Override
 	public void drawText(String text, Position p, StyleDefinition sd, Size reservedSize, boolean isSingleLine)
 			throws RenderingException {
-		Size s = getTextSize(text, sd);
+		Size s = getTextSize(text, sd, reservedSize);
 
 		if (sd.getAlignment() == TextAlignment.RIGHT) {
 			p = new Position((float) (p.getX() + reservedSize.getWidth() - s.getWidth()),
@@ -81,7 +81,7 @@ public class ImageDocumentGraphics implements DocumentGraphics {
 	}
 
 	@Override
-	public Size getTextSize(String text, StyleDefinition sd) throws RenderingException {
+	public Size getTextSize(String text, StyleDefinition sd, Size reservedSize) throws RenderingException {
 		FontMetrics fm = g.getFontMetrics(getFont(sd));
 		Rectangle2D r = fm.getStringBounds(text, g);
 		return new Size(r.getWidth() * scaleFactorInv, r.getHeight() * scaleFactorInv);

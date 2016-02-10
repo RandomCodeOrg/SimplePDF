@@ -30,7 +30,7 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 		}
 
 		doc.addTextElement(new TextBlock("jn", "jn",
-				"Hello World, this is a test. Would you like to render this correctly? Hello World, this is a test. Would you like to render this correctly? Hello World, this is a test. Would you like to render this correctly?"));
+				"Hello World, this is\t\t\t\t a test. Would you like to render this correctly? Hello World, this is a test. Would you like to render this correctly? Hello World, this is a test. Would you like to render this correctly?"));
 
 		doc.addTextElement(new ChapterElement("/", "/", "Chapter 2"));
 		PageNumber pn = new PageNumber("/", "/");
@@ -46,8 +46,8 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 		pn.setStyleID(sd2.getID());
 
 		StyleDefinition h = new StyleDefinition("h", sd);
-		h.setBlockPadding(new Spacing(h.getBlockPadding().getLeft(), 10, h.getBlockPadding().getRight(),
-				h.getBlockPadding().getBottom()));
+		h.setBlockPadding(new Spacing(h.getBlockPadding().getLeft(), 20, h.getBlockPadding().getRight(),
+				0));
 		h.setDecoration(TextDecoration.BOLD);
 		doc.addStyleDefinition(h);
 		for (DocumentElement e : doc.getElements())

@@ -1,5 +1,11 @@
 package com.github.randomcodeorg.simplepdf.creation;
 
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+
 import com.github.randomcodeorg.simplepdf.AreaAvailability;
 import com.github.randomcodeorg.simplepdf.AreaDefinition;
 import com.github.randomcodeorg.simplepdf.DocumentElement;
@@ -7,13 +13,6 @@ import com.github.randomcodeorg.simplepdf.Position;
 import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
 import com.github.randomcodeorg.simplepdf.Size;
 import com.github.randomcodeorg.simplepdf.Spacing;
-
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-
 
 public class DocumentArea {
 
@@ -26,10 +25,9 @@ public class DocumentArea {
 	private float x = 0;
 	private float y = 0;
 	private float dY = 0;
-	
 
-	public DocumentArea(ElementRenderMapping renderMapping, AreaDefinition ad,
-			SimplePDFDocument doc, Map<DocumentElement, RenderOrigin> renderOriging) {
+	public DocumentArea(ElementRenderMapping renderMapping, AreaDefinition ad, SimplePDFDocument doc,
+			Map<DocumentElement, RenderOrigin> renderOriging) {
 		this.skippedElements = new LinkedList<RenderElement<? extends DocumentElement>>();
 		this.area = ad;
 		this.document = doc;
@@ -38,11 +36,9 @@ public class DocumentArea {
 		for (DocumentElement de : doc.getElements()) {
 			if (!area.getID().equals(de.getAreaID()))
 				continue;
-			Collection<RenderElement<? extends DocumentElement>> re = renderMapping
-					.getRenderer(document, de);
+			Collection<RenderElement<? extends DocumentElement>> re = renderMapping.getRenderer(document, de);
 			if (re == null) {
-				System.err.println("No mapping found for '"
-						+ de.getClass().getSimpleName() + "' => skipped");
+				System.err.println("No mapping found for '" + de.getClass().getSimpleName() + "' => skipped");
 				continue;
 			} else {
 				renderOriging.put(de, new RenderOrigin(de, this, re));
@@ -51,8 +47,7 @@ public class DocumentArea {
 		}
 	}
 
-	private DocumentArea(ElementRenderMapping renderMapping, AreaDefinition ad,
-			SimplePDFDocument doc,
+	private DocumentArea(ElementRenderMapping renderMapping, AreaDefinition ad, SimplePDFDocument doc,
 			List<RenderElement<? extends DocumentElement>> elements,
 			List<RenderElement<? extends DocumentElement>> skippedElements) {
 		this.area = ad;
@@ -65,11 +60,9 @@ public class DocumentArea {
 	public DocumentArea next() {
 		if (area.getAvailability() == AreaAvailability.ONLY_FIRST_PAGE)
 			return null;
-		DocumentArea docArea = new DocumentArea(renderMapping, area, document,
-				elements, skippedElements);
+		DocumentArea docArea = new DocumentArea(renderMapping, area, document, elements, skippedElements);
 		return docArea;
 	}
-	
 
 	public boolean onlyRepeats() {
 		for (RenderElement<? extends DocumentElement> re : elements) {
@@ -90,19 +83,18 @@ public class DocumentArea {
 	private void move(RenderElement<? extends DocumentElement> element, Size size) {
 		if (element.isLineBreak()) {
 			x = 0;
-			if (size.getHeight() > dY)
-				dY = (float) size.getHeight();
+			dY = (float) size.getHeight();
 			y += dY;
 			dY = 0;
 		} else {
 			x += size.getWidth();
-			if (size.getHeight() > dY)
-				dY = (float) size.getHeight();
+			dY = (float) size.getHeight();
 		}
 
 	}
 
-	public boolean canHold(RenderElement<? extends DocumentElement> docElement, PreRenderInformation info) throws RenderingException {
+	public boolean canHold(RenderElement<? extends DocumentElement> docElement, PreRenderInformation info)
+			throws RenderingException {
 		Size totalElementSize = docElement.getTotalSize(info);
 		if (y + totalElementSize.getHeight() > area.getSize().getHeight())
 			return false;
@@ -112,27 +104,22 @@ public class DocumentArea {
 	}
 
 	private Size getAvailableSize(Spacing elementMargin) {
-		float xS = (float) (area.getSize().getWidth() - x
-				- elementMargin.getLeft() - elementMargin.getRight());
-		float yS = (float) (area.getSize().getHeight() - y
-				- elementMargin.getBottom() - elementMargin.getTop());
+		float xS = (float) (area.getSize().getWidth() - x - elementMargin.getLeft() - elementMargin.getRight());
+		float yS = (float) (area.getSize().getHeight() - y - elementMargin.getBottom() - elementMargin.getTop());
 		return new Size(xS, yS);
 	}
 
-	private List<RenderElement<? extends DocumentElement>> doSplit(
-			RenderElement<? extends DocumentElement> element, DocumentGraphics g, AreaLayout layout, Iterable<DocumentArea> areas)
-			throws RenderingException {
+	private List<RenderElement<? extends DocumentElement>> doSplit(RenderElement<? extends DocumentElement> element,
+			DocumentGraphics g, AreaLayout layout, Iterable<DocumentArea> areas) throws RenderingException {
 		Spacing spacing = element.getRenderMargin(g);
 		Size s = getAvailableSize(spacing);
 		return element.splitToFit(new PreRenderInformationImpl(document, areas, layout, g), s);
 	}
 
-	public void layout(PreRenderInformation info)
-			throws RenderingException {
+	public void layout(PreRenderInformation info) throws RenderingException {
 		if (elements.size() == 0)
 			return;
-		ListIterator<RenderElement<? extends DocumentElement>> iteration = elements
-				.listIterator();
+		ListIterator<RenderElement<? extends DocumentElement>> iteration = elements.listIterator();
 		float currX;
 		float currY;
 		boolean cancel = false;
@@ -141,7 +128,8 @@ public class DocumentArea {
 			current = iteration.next();
 			current.onLayout(info);
 			if (!canHold(current, info)) {
-				List<RenderElement<? extends DocumentElement>> splits = doSplit(current, info.getGraphics(), info.getLayout(), info.getAreas());
+				List<RenderElement<? extends DocumentElement>> splits = doSplit(current, info.getGraphics(),
+						info.getLayout(), info.getAreas());
 				if (splits != null) {
 					iteration.remove();
 					int index = iteration.nextIndex();
@@ -154,8 +142,7 @@ public class DocumentArea {
 					cancel = true;
 				} else {
 					iteration.remove();
-					System.err.println("The element '" + current.toString()
-							+ "' can't be aligend => skipped");
+					System.err.println("The element '" + current.toString() + "' can't be aligend => skipped");
 				}
 				continue;
 			}
@@ -165,14 +152,14 @@ public class DocumentArea {
 			Size totalSize = current.getTotalSize(info);
 			Spacing position = current.getRenderMargin(info.getGraphics());
 			info.getLayout().addElement(current,
-					new Position((float) (currX + position.getLeft()),
-							(float) (currY + position.getTop())), reservedSize);
+					new Position((float) (currX + position.getLeft()), (float) (currY + position.getTop())),
+					reservedSize);
 			move(current, totalSize);
 			if (!current.isRepeating()) {
 				iteration.remove();
 			}
 		}
-		
+
 	}
 
 }

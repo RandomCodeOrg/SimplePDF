@@ -1,11 +1,5 @@
 package com.github.randomcodeorg.simplepdf.creation;
 
-import com.github.randomcodeorg.simplepdf.Position;
-import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
-import com.github.randomcodeorg.simplepdf.Size;
-import com.github.randomcodeorg.simplepdf.StyleDefinition;
-import com.github.randomcodeorg.simplepdf.TextAlignment;
-
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -15,6 +9,12 @@ import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDPixelMap;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
+
+import com.github.randomcodeorg.simplepdf.Position;
+import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
+import com.github.randomcodeorg.simplepdf.Size;
+import com.github.randomcodeorg.simplepdf.StyleDefinition;
+import com.github.randomcodeorg.simplepdf.TextAlignment;
 
 public class PDDocumentGraphics implements DocumentGraphics, ConversionConstants {
 
@@ -31,15 +31,52 @@ public class PDDocumentGraphics implements DocumentGraphics, ConversionConstants
 		this.sDoc = sDoc;
 	}
 
+	private float getTabSpace(StyleDefinition sd, Size reservedSize) {
+		return getTextWidth("   ", sd, reservedSize);
+	}
+
+	public float getRawTextWidth(String text, StyleDefinition sd) {
+		try {
+			PDFont f = fontManager.getFont(pdDocument, sd);
+			return (f.getStringWidth(text) / 1000.0f * sd.getFontSize()) * UNITS_TO_MM;
+		} catch (IOException e) {
+			throw new RenderingException(e);
+		}
+	}
+
+	private float getNextTab(StyleDefinition sd, Size reservedSize, float position) {
+		float tabSpace = getTabSpace(sd, reservedSize);
+		int tapsCount = (int) (position / tabSpace) + 1;
+		return tapsCount * tabSpace;
+	}
+
 	@Override
 	public void drawText(String text, Position p, StyleDefinition sd, Size reservedSize, boolean isSingleLine)
 			throws RenderingException {
-		Size s = getTextSize(text, sd);
+		if (text.contains("\t")) {
+			String[] parts = text.split("\t");
+			float offset = 0;
+			for (int i = 0; i < parts.length; i++) {
+				if (i > 0) {
+					offset = getNextTab(sd, reservedSize, offset);
+				}
+				drawTextRaw(parts[i], new Position(p.getX() + offset, p.getY()), sd,
+						new Size(getRawTextWidth(parts[i], sd), reservedSize.getHeight()), isSingleLine);
+				offset += getRawTextWidth(parts[i], sd);
+			}
+		} else {
+			drawTextRaw(text, p, sd, reservedSize, isSingleLine);
+		}
+	}
+
+	public void drawTextRaw(String text, Position p, StyleDefinition sd, Size reservedSize, boolean isSingleLine)
+			throws RenderingException {
+		Size s = getTextSize(text, sd, reservedSize);
 		if (sd.getAlignment() == TextAlignment.RIGHT) {
 			p = new Position((float) (p.getX() + reservedSize.getWidth() - s.getWidth()),
 					(float) (p.getY() + s.getHeight()));
 		} else if (sd.getAlignment() == TextAlignment.CENTER) {
-			p = new Position((float) (p.getX() + ((reservedSize.getWidth() - s.getWidth())/2.0)),
+			p = new Position((float) (p.getX() + ((reservedSize.getWidth() - s.getWidth()) / 2.0)),
 					(float) (p.getY() + s.getHeight()));
 		} else {
 			p = new Position(p.getX(), (float) (p.getY() + s.getHeight()));
@@ -56,7 +93,7 @@ public class PDDocumentGraphics implements DocumentGraphics, ConversionConstants
 			PDFont f = fontManager.getFont(pdDocument, sd);
 			contentStream.beginText();
 			contentStream.setFont(f, fontSize);
-			
+
 			contentStream.setNonStrokingColor(col);
 			contentStream.setStrokingColor(col);
 			contentStream.moveTextPositionByAmount(p.getX(), p.getY());
@@ -106,17 +143,20 @@ public class PDDocumentGraphics implements DocumentGraphics, ConversionConstants
 	}
 
 	@Override
-	public Size getTextSize(String text, StyleDefinition sd) throws RenderingException {
-		return new Size(getTextWidth(text, sd), getTextHeight(sd));
+	public Size getTextSize(String text, StyleDefinition sd, Size reservedSize) throws RenderingException {
+		return new Size(getTextWidth(text, sd, reservedSize), getTextHeight(sd));
 	}
 
-	public float getTextWidth(String text, StyleDefinition sd) {
-		try {
-			PDFont f = fontManager.getFont(pdDocument, sd);
-			return (f.getStringWidth(text) / 1000.0f * sd.getFontSize()) * UNITS_TO_MM;
-		} catch (IOException e) {
-			throw new RenderingException(e);
+	public float getTextWidth(String text, StyleDefinition sd, Size reservedSize) {
+		float width = 0;
+		String[] parts = text.split("\t");
+		for (int i = 0; i < parts.length; i++) {
+			if (i > 0) {
+				width = getNextTab(sd, reservedSize, width);
+			}
+			width += getRawTextWidth(parts[i], sd);
 		}
+		return width;
 	}
 
 	public float getTextHeight(StyleDefinition sd) {

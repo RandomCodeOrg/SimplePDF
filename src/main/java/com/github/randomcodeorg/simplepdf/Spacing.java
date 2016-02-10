@@ -150,4 +150,13 @@ public class Spacing implements XmlSerializable {
 		return new Spacing(getAttribute(n, "Left", 0.0), getAttribute(n, "Top", 0.0), getAttribute(n, "Right", 0.0), getAttribute(n, "Bottom", 0.0));
 	}
 	
+	public Spacing add(Spacing other){
+		return new Spacing(left + other.left, top + other.top, right + other.right, bottom + other.bottom);
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("(%f|%f|%f|%f)", left, top, right, bottom);
+	}
+	
 }

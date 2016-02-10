@@ -36,7 +36,7 @@ public class RenderTableOfContents extends TextLine {
 			return super.preSplit();
 		List<RenderElement<? extends DocumentElement>> result = new ArrayList<RenderElement<? extends DocumentElement>>();
 		List<DocumentElement> elements = document.getElements();
-		ChapterElement current;
+		ChapterElement current = null;
 		RenderTableOfContents rtoc;
 		Collection<RenderElement<? extends DocumentElement>> intermediate;
 		allLines = result;
@@ -56,6 +56,10 @@ public class RenderTableOfContents extends TextLine {
 					result.add(rtoc);
 			}
 		}
+		for(int i=0; i<result.size(); i++){
+			((TextLine) result.get(i)).firstLine = (i==0);
+			((TextLine) result.get(i)).isEndLine = (i == result.size() -1);
+		}
 		return result;
 	}
 
@@ -72,6 +76,7 @@ public class RenderTableOfContents extends TextLine {
 			txt = ((TextBlock) documentElement).getContent();
 		else
 			txt = chapterElement.getContent();
+		txt += "\t";
 
 		if (info instanceof RenderingInformation) {
 			RenderingInformation rInfo = (RenderingInformation) info;
