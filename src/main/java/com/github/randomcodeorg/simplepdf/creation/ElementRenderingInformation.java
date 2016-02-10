@@ -21,4 +21,7 @@ public class ElementRenderingInformation {
 	public Size getSize(){ return size; }
 	public RenderElement<? extends DocumentElement> getElement(){ return element; }
 
+	
+	
+	
 }

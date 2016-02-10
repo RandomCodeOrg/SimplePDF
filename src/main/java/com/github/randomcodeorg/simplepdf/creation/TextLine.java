@@ -35,7 +35,7 @@ public class TextLine extends RenderElement<DocumentElement> {
 		textBlock = (TextBlock) docElement;
 	}
 
-	protected String getRenderText(AreaLayout layout, int pageLength) {
+	protected String getRenderText(PreRenderInformation info, int pageCount) {
 		return textBlock.getContent();
 	}
 
@@ -46,7 +46,7 @@ public class TextLine extends RenderElement<DocumentElement> {
 
 	@Override
 	public Collection<RenderElement<? extends DocumentElement>> preSplit() {
-		String txt = textBlock.getContent();
+		String txt = getRenderText(new PreRenderInformationImpl(document, new ArrayList<DocumentArea>(), new AreaLayout(null, null, -1), null), -1);
 		if (!txt.contains("\n"))
 			return null;
 		String[] lines = txt.split("\n");
@@ -62,7 +62,7 @@ public class TextLine extends RenderElement<DocumentElement> {
 	
 	@Override
 	public Size getRenderSize(PreRenderInformation info) throws RenderingException {
-		return info.getGraphics().getTextSize(getRenderText(info.getLayout(), -1), getStyleDefinition());
+		return info.getGraphics().getTextSize(getRenderText(info, -1), getStyleDefinition());
 	}
 
 	public Size getRenderSize(DocumentGraphics g, String txt) throws RenderingException {
@@ -82,7 +82,7 @@ public class TextLine extends RenderElement<DocumentElement> {
 
 	@Override
 	public void render(RenderingInformation info) throws RenderingException {
-		info.getGraphics().drawText(getRenderText(info.getLayout(), info.getPageCount()), info.getPosition(),
+		info.getGraphics().drawText(getRenderText(info, info.getPageCount()), info.getPosition(),
 				getStyleDefinition(), info.getDocument().getAreaDefinition(textBlock.getAreaID()).getSize(), lastLine);
 	}
 
@@ -96,10 +96,10 @@ public class TextLine extends RenderElement<DocumentElement> {
 	@Override
 	protected List<RenderElement<? extends DocumentElement>> splitToFit(PreRenderInformation info, Size s)
 			throws RenderingException {
-		float height = (float) info.getGraphics().getTextSize(textBlock.getContent(), getStyleDefinition()).getHeight();
+		String txt = getRenderText(info, -1);
+		float height = (float) info.getGraphics().getTextSize(txt, getStyleDefinition()).getHeight();
 		if (s.getHeight() < height)
 			return null;
-		String txt = textBlock.getContent();
 		int dividerPos = txt.length();
 		Size cS = getRenderSize(info);
 		while (!s.holdsHorizontal(cS)) {

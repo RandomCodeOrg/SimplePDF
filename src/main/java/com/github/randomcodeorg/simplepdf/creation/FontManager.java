@@ -1,7 +1,5 @@
 package com.github.randomcodeorg.simplepdf.creation;
 
-import com.github.randomcodeorg.simplepdf.StyleDefinition;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,6 +11,9 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDTrueTypeFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+
+import com.github.randomcodeorg.simplepdf.StyleDefinition;
+import com.github.randomcodeorg.simplepdf.TextDecoration;
 
 public class FontManager {
 
@@ -29,37 +30,31 @@ public class FontManager {
 
 	public void registerLocation(File location) {
 		if (!location.exists())
-			throw new IllegalArgumentException(
-					"The given directory doesn't exist.");
+			throw new IllegalArgumentException("The given directory doesn't exist.");
 		if (!location.isDirectory())
-			throw new IllegalArgumentException(
-					"The given file is not a directory.");
+			throw new IllegalArgumentException("The given file is not a directory.");
 		if (knownLocations.contains(location))
 			return;
 		knownLocations.add(location);
 		inspect(location);
 	}
+	
+	
 
 	private void inspect(File location) {
 		String fontName;
 		for (File f : location.listFiles()) {
+			if(f.isDirectory()){
+				registerLocation(f);
+				continue;
+			}
 			if (!f.isFile())
 				continue;
 			if (!f.getName().toLowerCase().endsWith(".ttf"))
 				continue;
 			fontName = f.getName();
-			fontName = fontName.substring(0, fontName.length() - 4)
-					.toLowerCase();
-			/*
-			try{
-				PDDocument tstDoc = new PDDocument();
-				PDTrueTypeFont ttf = PDTrueTypeFont.loadTTF(tstDoc, f);
-				fontName = ttf.getFontDescriptor().getFontName();
-				tstDoc.close();
-			}catch(Exception ex){
-				
-			}*/
-			
+			fontName = fontName.substring(0, fontName.length() - 4).toLowerCase();
+
 			if (fontLocations.containsKey(fontName))
 				continue;
 			fontLocations.put(fontName, f);
@@ -67,7 +62,7 @@ public class FontManager {
 	}
 
 	protected String modifyName(String fontName) {
-		return fontName;
+		return fontName.toLowerCase();
 	}
 
 	public void release(PDDocument doc) {
@@ -90,25 +85,36 @@ public class FontManager {
 		if (loaded == null) {
 			loaded = getDefaultFont();
 			if (errorFallback)
-				System.err.println("Unable to find font for '" + fontName
-						+ "'. => Fallback on '"
+				System.err.println("Unable to find font for '" + fontName + "'. => Fallback on '"
 						+ loaded.getFontDescriptor().getFontName() + "'.");
 		}
 		return loaded;
+	}
+
+	private PDFont getFont(PDDocument doc, String fontName, TextDecoration decoration) {
+		String extra = decoration.toString().substring(0, 1)
+				+ decoration.toString().substring(1).toLowerCase();
+		PDFont res =  getOrLoadFont(doc, fontName + "-" + extra);
+		if(res != null) return res;
+		res = getOrLoadFont(doc, fontName + " " + extra);
+		return res;
 	}
 
 	public PDFont getFont(PDDocument doc, StyleDefinition sd) {
 		String fontName = "";
 		if (sd != null)
 			fontName = sd.getFontName();
-		PDFont result = getFont(doc, fontName);
+		PDFont result = getFont(doc, fontName, sd.getDecoration());
+		if (result != null)
+			return result;
+		result = getFont(doc, fontName);
+
 		return result;
 	}
 
 	private PDFont getOrLoadFont(PDDocument doc, String name) {
 		if (name == null)
 			return null;
-		name = name.toLowerCase();
 		name = modifyName(name);
 		if (!loadedFonts.containsKey(doc))
 			loadedFonts.put(doc, new HashMap<String, PDFont>());
@@ -125,6 +131,7 @@ public class FontManager {
 			fonts.put(name, f);
 			return f;
 		} catch (IOException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -143,14 +150,6 @@ public class FontManager {
 
 	private static void registerOSX(FontManager fm) {
 		File f = new File("/Library/Fonts");
-		if (f.exists() && f.isDirectory()) {
-			try {
-				fm.registerLocation(f);
-			} catch (Exception ex) {
-
-			}
-		}
-		f = new File("/Library/Fonts/");
 		if (f.exists() && f.isDirectory()) {
 			try {
 				fm.registerLocation(f);

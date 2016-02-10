@@ -13,8 +13,8 @@ public class RenderPageNumber extends TextLine {
 	}
 	
 	@Override
-	protected String getRenderText(AreaLayout layout, int pageLength) {
-		return super.getRenderText(layout, pageLength).replace("@currentPage;", "" + (layout.getPageIndex() + 1)).replace("@pageCount;", "" + pageLength);
+	protected String getRenderText(PreRenderInformation info, int pageLength) {
+		return super.getRenderText(info, pageLength).replace("@currentPage;", "" + (info.getLayout().getPageIndex() + 1)).replace("@pageCount;", "" + pageLength);
 	}
 	
 	private static TextBlock toTextBlock(PageNumber pn){

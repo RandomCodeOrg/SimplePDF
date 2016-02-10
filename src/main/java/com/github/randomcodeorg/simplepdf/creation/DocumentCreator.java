@@ -1,9 +1,12 @@
 package com.github.randomcodeorg.simplepdf.creation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.github.randomcodeorg.simplepdf.AreaDefinition;
+import com.github.randomcodeorg.simplepdf.DocumentElement;
 import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
 
 public class DocumentCreator implements ConversionConstants {
@@ -19,13 +22,14 @@ public class DocumentCreator implements ConversionConstants {
 	public void create(SimplePDFDocument doc) throws RenderingException {
 		documentGraphicsCreator.startDocument(doc);
 		List<DocumentArea> areas = new ArrayList<DocumentArea>();
+		Map<DocumentElement, RenderOrigin> originMap = new HashMap<DocumentElement, RenderOrigin>();
 		for (AreaDefinition ad : doc.getAreas()) {
-			areas.add(new DocumentArea(renderMapping, ad, doc));
+			areas.add(new DocumentArea(renderMapping, ad, doc, originMap));
 		}
 
 		List<AreaLayout> all = new ArrayList<AreaLayout>();
 		layout(all, doc, 0, areas);
-		render(doc, all, areas);
+		render(doc, all, areas, originMap);
 		cleanup(all);
 
 		documentGraphicsCreator.completeDocument(doc);
@@ -37,7 +41,7 @@ public class DocumentCreator implements ConversionConstants {
 		}
 	}
 
-	private void render(SimplePDFDocument doc, Iterable<AreaLayout> layouts, Iterable<DocumentArea> areas) throws RenderingException {
+	private void render(SimplePDFDocument doc, Iterable<AreaLayout> layouts, Iterable<DocumentArea> areas, Map<DocumentElement, RenderOrigin> originMap) throws RenderingException {
 		int pageLength = 0;
 		for (AreaLayout al : layouts)
 			if (al.getPageIndex() > pageLength)
@@ -47,7 +51,7 @@ public class DocumentCreator implements ConversionConstants {
 			DocumentGraphics g = al.getGraphics();
 			for (ElementRenderingInformation rI : al) {
 				rI.getElement()
-						.render(new RenderingInformationImpl(rI.getLocation(), rI.getSize(), doc, g, al, pageLength, areas));
+						.render(new RenderingInformationImpl(rI.getLocation(), rI.getSize(), doc, g, al, pageLength, areas, originMap));
 			}
 		}
 	}

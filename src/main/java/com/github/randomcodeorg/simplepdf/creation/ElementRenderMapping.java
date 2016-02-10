@@ -7,6 +7,7 @@ import com.github.randomcodeorg.simplepdf.Line;
 import com.github.randomcodeorg.simplepdf.PageNumber;
 import com.github.randomcodeorg.simplepdf.Rectangle;
 import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
+import com.github.randomcodeorg.simplepdf.TableOfContents;
 import com.github.randomcodeorg.simplepdf.TextBlock;
 
 import java.lang.reflect.Constructor;
@@ -82,6 +83,7 @@ public class ElementRenderMapping {
 	public static synchronized ElementRenderMapping getDefault() {
 		if (defaultMapping == null) {
 			defaultMapping = new ElementRenderMapping();
+			defaultMapping.register(TableOfContents.class, RenderTableOfContents.class);
 			defaultMapping.register(PageNumber.class, RenderPageNumber.class);
 			defaultMapping.register(ChapterElement.class, RenderChapterElement.class);
 			defaultMapping.register(TextBlock.class, TextLine.class);

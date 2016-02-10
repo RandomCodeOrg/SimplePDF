@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 
 public class DocumentArea {
@@ -28,7 +29,7 @@ public class DocumentArea {
 	
 
 	public DocumentArea(ElementRenderMapping renderMapping, AreaDefinition ad,
-			SimplePDFDocument doc) {
+			SimplePDFDocument doc, Map<DocumentElement, RenderOrigin> renderOriging) {
 		this.skippedElements = new LinkedList<RenderElement<? extends DocumentElement>>();
 		this.area = ad;
 		this.document = doc;
@@ -44,6 +45,7 @@ public class DocumentArea {
 						+ de.getClass().getSimpleName() + "' => skipped");
 				continue;
 			} else {
+				renderOriging.put(de, new RenderOrigin(de, this, re));
 				elements.addAll(re);
 			}
 		}
@@ -59,8 +61,6 @@ public class DocumentArea {
 		this.renderMapping = renderMapping;
 		this.skippedElements = skippedElements;
 	}
-	
-
 
 	public DocumentArea next() {
 		if (area.getAvailability() == AreaAvailability.ONLY_FIRST_PAGE)

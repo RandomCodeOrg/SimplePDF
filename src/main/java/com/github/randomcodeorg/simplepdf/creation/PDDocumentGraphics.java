@@ -56,6 +56,7 @@ public class PDDocumentGraphics implements DocumentGraphics, ConversionConstants
 			PDFont f = fontManager.getFont(pdDocument, sd);
 			contentStream.beginText();
 			contentStream.setFont(f, fontSize);
+			
 			contentStream.setNonStrokingColor(col);
 			contentStream.setStrokingColor(col);
 			contentStream.moveTextPositionByAmount(p.getX(), p.getY());

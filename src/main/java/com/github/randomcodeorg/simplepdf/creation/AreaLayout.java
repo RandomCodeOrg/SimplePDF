@@ -24,6 +24,7 @@ public class AreaLayout implements Iterable<ElementRenderingInformation> {
 	
 	public void addElement(ElementRenderingInformation renderingInformation){
 		elements.add(renderingInformation);
+		renderingInformation.getElement().setLayout(this);
 	}
 	
 	public void addElement(RenderElement<? extends DocumentElement> element, Position location, Size size){

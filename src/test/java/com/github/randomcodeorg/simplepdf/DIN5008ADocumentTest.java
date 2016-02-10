@@ -22,10 +22,12 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 		doc.addReturnInformationElement(returnInfoElement);
 		doc.addHeaderElement(new TextBlock("/", "/", "Header element").setIsRepeating(true));
 		doc.addInfoElement(new TextBlock("/", "/", "Info element").setIsRepeating(true));
-		
-		doc.addTextElement(new ChapterElement("/", "/", "Chapter 1"));
-		TextBlock contentText = new TextBlock("/", "/", createParagraphs(20));
-		doc.addTextElement(contentText);
+
+		doc.addTextElement(new TableOfContents("/", "/"));
+
+		for (DocumentElement e : createChapteredParagraphs(20)) {
+			doc.addTextElement(e);
+		}
 
 		doc.addTextElement(new TextBlock("jn", "jn",
 				"Hello World, this is a test. Would you like to render this correctly? Hello World, this is a test. Would you like to render this correctly? Hello World, this is a test. Would you like to render this correctly?"));
@@ -33,7 +35,7 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 		doc.addTextElement(new ChapterElement("/", "/", "Chapter 2"));
 		PageNumber pn = new PageNumber("/", "/");
 		doc.addFooterElement(pn);
-		
+
 		StyleDefinition sd = new StyleDefinition("n");
 		sd.setFontName("Arial");
 		sd.setAlignment(TextAlignment.JUSTIFIED);
@@ -42,6 +44,15 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 		sd2.setAlignment(TextAlignment.CENTER);
 		doc.addStyleDefinition(sd2);
 		pn.setStyleID(sd2.getID());
+
+		StyleDefinition h = new StyleDefinition("h", sd);
+		h.setBlockPadding(new Spacing(h.getBlockPadding().getLeft(), 10, h.getBlockPadding().getRight(),
+				h.getBlockPadding().getBottom()));
+		h.setDecoration(TextDecoration.BOLD);
+		doc.addStyleDefinition(h);
+		for (DocumentElement e : doc.getElements())
+			if (e instanceof ChapterElement)
+				e.setStyleID(h.getID());
 
 		if (!isUIAvailable()) {
 			try {

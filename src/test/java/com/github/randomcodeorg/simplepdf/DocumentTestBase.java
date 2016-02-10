@@ -1,5 +1,7 @@
 package com.github.randomcodeorg.simplepdf;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class DocumentTestBase {
@@ -41,6 +43,19 @@ public class DocumentTestBase {
 			sb.append(createText());
 		}
 		return sb.toString();
+	}
+	
+	protected Iterable<DocumentElement> createChapteredParagraphs(int length){
+		List<DocumentElement> elements = new ArrayList<DocumentElement>();
+		if (length < 0)
+			throw new IllegalArgumentException();
+		if (length == 0)
+			return elements;
+		for (int i = 0; i < length; i++) {
+			elements.add(new ChapterElement("/", "/", "Chapter " + createWord()));
+			elements.add(new TextBlock("/", "/", createText()));
+		}
+		return elements;
 	}
 
 	protected String createWord(int min, int max) {
