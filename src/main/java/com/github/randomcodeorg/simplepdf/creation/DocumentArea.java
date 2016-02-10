@@ -25,6 +25,7 @@ public class DocumentArea {
 	private float x = 0;
 	private float y = 0;
 	private float dY = 0;
+	
 
 	public DocumentArea(ElementRenderMapping renderMapping, AreaDefinition ad,
 			SimplePDFDocument doc) {
@@ -58,6 +59,8 @@ public class DocumentArea {
 		this.renderMapping = renderMapping;
 		this.skippedElements = skippedElements;
 	}
+	
+
 
 	public DocumentArea next() {
 		if (area.getAvailability() == AreaAvailability.ONLY_FIRST_PAGE)
@@ -66,6 +69,7 @@ public class DocumentArea {
 				elements, skippedElements);
 		return docArea;
 	}
+	
 
 	public boolean onlyRepeats() {
 		for (RenderElement<? extends DocumentElement> re : elements) {
@@ -99,8 +103,8 @@ public class DocumentArea {
 	}
 
 	public boolean canHold(RenderElement<? extends DocumentElement> docElement,
-			DocumentGraphics g) throws RenderingException {
-		Size totalElementSize = docElement.getTotalSize(g);
+			DocumentGraphics g, AreaLayout layout) throws RenderingException {
+		Size totalElementSize = docElement.getTotalSize(g, layout);
 		if (y + totalElementSize.getHeight() > area.getSize().getHeight())
 			return false;
 		if (x + totalElementSize.getWidth() > area.getSize().getWidth())
@@ -117,11 +121,11 @@ public class DocumentArea {
 	}
 
 	private List<RenderElement<? extends DocumentElement>> doSplit(
-			RenderElement<? extends DocumentElement> element, DocumentGraphics g)
+			RenderElement<? extends DocumentElement> element, DocumentGraphics g, AreaLayout layout)
 			throws RenderingException {
 		Spacing spacing = element.getRenderMargin(g);
 		Size s = getAvailableSize(spacing);
-		return element.splitToFit(g, s);
+		return element.splitToFit(g, s, layout);
 	}
 
 	public void layout(AreaLayout layout, DocumentGraphics g)
@@ -136,9 +140,10 @@ public class DocumentArea {
 		RenderElement<? extends DocumentElement> current;
 		while (iteration.hasNext() && !cancel) {
 			current = iteration.next();
-			if (!canHold(current, g)) {
+			current.onLayout(layout, g);
+			if (!canHold(current, g, layout)) {
 				List<RenderElement<? extends DocumentElement>> splits = doSplit(current,
-						g);
+						g, layout);
 				if (splits != null) {
 					iteration.remove();
 					int index = iteration.nextIndex();
@@ -158,8 +163,8 @@ public class DocumentArea {
 			}
 			currX = getTranslatedX();
 			currY = getTranslatedY();
-			Size reservedSize = current.getRenderSize(g);
-			Size totalSize = current.getTotalSize(g);
+			Size reservedSize = current.getRenderSize(g, layout);
+			Size totalSize = current.getTotalSize(g, layout);
 			Spacing position = current.getRenderMargin(g);
 			layout.addElement(current,
 					new Position((float) (currX + position.getLeft()),
@@ -169,6 +174,7 @@ public class DocumentArea {
 				iteration.remove();
 			}
 		}
+		
 	}
 
 }

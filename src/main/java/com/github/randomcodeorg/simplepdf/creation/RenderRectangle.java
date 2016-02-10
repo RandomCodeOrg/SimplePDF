@@ -43,7 +43,7 @@ public class RenderRectangle extends RenderElement<Rectangle> {
 	}
 
 	@Override
-	public Size getRenderSize(DocumentGraphics g) throws RenderingException {
+	public Size getRenderSize(DocumentGraphics g, AreaLayout layout) throws RenderingException {
 		return new Size(0, 0);
 	}
 
@@ -55,7 +55,7 @@ public class RenderRectangle extends RenderElement<Rectangle> {
 
 	@Override
 	public void render(Position p, Size reservedSize, SimplePDFDocument doc,
-			DocumentGraphics g) throws RenderingException {
+			DocumentGraphics g, AreaLayout layout, int pageLength) throws RenderingException {
 	
 		
 	}
@@ -67,7 +67,7 @@ public class RenderRectangle extends RenderElement<Rectangle> {
 
 	@Override
 	protected List<RenderElement<? extends DocumentElement>> splitToFit(
-			DocumentGraphics g, Size sizeToFit) throws RenderingException {
+			DocumentGraphics g, Size sizeToFit, AreaLayout layout) throws RenderingException {
 		return null;
 	}
 

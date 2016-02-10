@@ -17,7 +17,7 @@ public class RenderLine extends RenderElement<Line> {
 	}
 
 	@Override
-	public Size getRenderSize(DocumentGraphics g) {
+	public Size getRenderSize(DocumentGraphics g, AreaLayout layout) {
 		return new Size(0, 0);
 	}
 
@@ -28,7 +28,7 @@ public class RenderLine extends RenderElement<Line> {
 
 	@Override
 	public void render(Position p, Size reservedSize, SimplePDFDocument doc,
-			DocumentGraphics g) throws RenderingException {
+			DocumentGraphics g, AreaLayout layout, int pageLength) throws RenderingException {
 		g.drawLine(documentElement.getStartPoint(),
 				documentElement.getEndPoint(), documentElement.getLineWidth(),
 				getStyleDefinition());
@@ -40,7 +40,7 @@ public class RenderLine extends RenderElement<Line> {
 	}
 
 	@Override
-	protected List<RenderElement<? extends DocumentElement>> splitToFit(DocumentGraphics g, Size s) {
+	protected List<RenderElement<? extends DocumentElement>> splitToFit(DocumentGraphics g, Size s, AreaLayout layout) {
 		return null;
 	}
 

@@ -1,8 +1,10 @@
 package com.github.randomcodeorg.simplepdf.creation;
 
+import com.github.randomcodeorg.simplepdf.ChapterElement;
 import com.github.randomcodeorg.simplepdf.DocumentElement;
 import com.github.randomcodeorg.simplepdf.DocumentImage;
 import com.github.randomcodeorg.simplepdf.Line;
+import com.github.randomcodeorg.simplepdf.PageNumber;
 import com.github.randomcodeorg.simplepdf.Rectangle;
 import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
 import com.github.randomcodeorg.simplepdf.TextBlock;
@@ -67,6 +69,7 @@ public class ElementRenderMapping {
 			}
 			return null;
 		} catch (Exception ex) {
+			if(ex instanceof RuntimeException) throw (RuntimeException) ex;
 			return null;
 		}
 	}
@@ -79,6 +82,8 @@ public class ElementRenderMapping {
 	public static synchronized ElementRenderMapping getDefault() {
 		if (defaultMapping == null) {
 			defaultMapping = new ElementRenderMapping();
+			defaultMapping.register(PageNumber.class, RenderPageNumber.class);
+			defaultMapping.register(ChapterElement.class, RenderChapterElement.class);
 			defaultMapping.register(TextBlock.class, TextLine.class);
 			defaultMapping.register(Line.class, RenderLine.class);
 			defaultMapping.register(DocumentImage.class, RenderImage.class);

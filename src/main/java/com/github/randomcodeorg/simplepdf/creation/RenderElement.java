@@ -23,7 +23,7 @@ public abstract class RenderElement<T extends DocumentElement> implements
 		this.document = document;
 	}
 
-	public abstract Size getRenderSize(DocumentGraphics g)
+	public abstract Size getRenderSize(DocumentGraphics g, AreaLayout layout)
 			throws RenderingException;
 
 	public abstract Spacing getRenderMargin(DocumentGraphics g)
@@ -38,11 +38,11 @@ public abstract class RenderElement<T extends DocumentElement> implements
 	}
 
 	public abstract void render(Position p, Size reservedSize,
-			SimplePDFDocument doc, DocumentGraphics g)
+			SimplePDFDocument doc, DocumentGraphics g, AreaLayout layout, int pageLength)
 			throws RenderingException;
 
-	public Size getTotalSize(DocumentGraphics g) throws RenderingException {
-		Size rS = getRenderSize(g);
+	public Size getTotalSize(DocumentGraphics g, AreaLayout layout) throws RenderingException {
+		Size rS = getRenderSize(g, layout);
 		Spacing rM = getRenderMargin(g);
 		return new Size(rS.getWidth() + rM.getLeft() + rM.getRight(),
 				rS.getHeight() + rM.getBottom() + rM.getTop());
@@ -56,7 +56,7 @@ public abstract class RenderElement<T extends DocumentElement> implements
 	protected abstract boolean isLineBreak();
 
 	protected abstract List<RenderElement<? extends DocumentElement>> splitToFit(DocumentGraphics g,
-			Size sizeToFit) throws RenderingException;
+			Size sizeToFit, AreaLayout layout) throws RenderingException;
 
 	protected Position toUnits(Position p) {
 		return new Position(p.getX() * MM_TO_UNITS, p.getY() * MM_TO_UNITS);
@@ -102,6 +102,10 @@ public abstract class RenderElement<T extends DocumentElement> implements
 			}
 		}
 		throw new RuntimeException("Can't create a copy of this item.");
+	}
+	
+	protected void onLayout(AreaLayout layout, DocumentGraphics g){
+		
 	}
 
 }

@@ -40,10 +40,13 @@ public class DocumentCreator implements ConversionConstants {
 
 	private void render(SimplePDFDocument doc, Iterable<AreaLayout> layouts)
 			throws RenderingException {
+		int pageLength = 0;
+		for(AreaLayout al : layouts) if(al.getPageIndex() > pageLength) pageLength = al.getPageIndex();
+		pageLength++;
 		for (AreaLayout al : layouts) {
 			DocumentGraphics g = al.getGraphics();
 			for (ElementRenderingInformation rI : al) {
-				rI.getElement().render(rI.getLocation(), rI.getSize(), doc, g);
+				rI.getElement().render(rI.getLocation(), rI.getSize(), doc, g, al, pageLength);
 			}
 		}
 	}
@@ -74,7 +77,7 @@ public class DocumentCreator implements ConversionConstants {
 				following.add(ancestor);
 		}
 
-		layout(layouts, doc, pageIndex++, following);
+		layout(layouts, doc, pageIndex + 1, following);
 	}
 
 	protected final DocumentGraphicsCreator getDocumentGraphicsCreator() {

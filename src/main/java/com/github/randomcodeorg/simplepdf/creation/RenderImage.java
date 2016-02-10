@@ -34,7 +34,7 @@ public class RenderImage extends RenderElement<DocumentImage> {
 	}
 
 	@Override
-	public Size getRenderSize(DocumentGraphics g) throws RenderingException {
+	public Size getRenderSize(DocumentGraphics g, AreaLayout layout) throws RenderingException {
 		return new Size(image.getWidth() * mmPerPixel, image.getHeight()
 				* mmPerPixel);
 	}
@@ -47,7 +47,7 @@ public class RenderImage extends RenderElement<DocumentImage> {
 
 	@Override
 	public void render(Position p, Size reservedSize, SimplePDFDocument doc,
-			DocumentGraphics g) throws RenderingException {
+			DocumentGraphics g, AreaLayout layout, int pageLength) throws RenderingException {
 		g.drawImage(p,
 				new Size(image.getWidth() * mmPerPixel, image.getHeight()
 						* mmPerPixel), image, null);
@@ -60,8 +60,8 @@ public class RenderImage extends RenderElement<DocumentImage> {
 
 	@Override
 	protected List<RenderElement<? extends DocumentElement>> splitToFit(DocumentGraphics g,
-			Size s) throws RenderingException {
-		Size currentSize = getRenderSize(g);
+			Size s, AreaLayout layout) throws RenderingException {
+		Size currentSize = getRenderSize(g, layout);
 		float sX = (float) (s.getWidth() / currentSize.getWidth());
 		float sY = (float) (s.getHeight() / currentSize.getHeight());
 		float sF = sX;

@@ -35,6 +35,10 @@ public class TextLine extends RenderElement<DocumentElement> {
 		super(document, docElement);
 		textBlock = (TextBlock) docElement;
 	}
+	
+	protected String getRenderText(AreaLayout layout, int pageLength){
+		return textBlock.getContent();
+	}
 
 	public TextLine setIsLastLine(boolean value) {
 		lastLine = value;
@@ -58,8 +62,8 @@ public class TextLine extends RenderElement<DocumentElement> {
 	}
 
 	@Override
-	public Size getRenderSize(DocumentGraphics g) throws RenderingException {
-		return g.getTextSize(textBlock.getContent(), getStyleDefinition());
+	public Size getRenderSize(DocumentGraphics g, AreaLayout layout) throws RenderingException {
+		return g.getTextSize(getRenderText(layout, -1), getStyleDefinition());
 	}
 
 	public Size getRenderSize(DocumentGraphics g, String txt) throws RenderingException {
@@ -78,9 +82,9 @@ public class TextLine extends RenderElement<DocumentElement> {
 	}
 
 	@Override
-	public void render(Position p, Size reservedSize, SimplePDFDocument doc, DocumentGraphics g)
+	public void render(Position p, Size reservedSize, SimplePDFDocument doc, DocumentGraphics g, AreaLayout layout, int pageLength)
 			throws RenderingException {
-		g.drawText(textBlock.getContent(), p, getStyleDefinition(),
+		g.drawText(getRenderText(layout, pageLength), p, getStyleDefinition(),
 				doc.getAreaDefinition(textBlock.getAreaID()).getSize(), lastLine);
 	}
 
@@ -90,14 +94,14 @@ public class TextLine extends RenderElement<DocumentElement> {
 	}
 
 	@Override
-	protected List<RenderElement<? extends DocumentElement>> splitToFit(DocumentGraphics g, Size s)
+	protected List<RenderElement<? extends DocumentElement>> splitToFit(DocumentGraphics g, Size s, AreaLayout layout)
 			throws RenderingException {
 		float height = (float) g.getTextSize(textBlock.getContent(), getStyleDefinition()).getHeight();
 		if (s.getHeight() < height)
 			return null;
 		String txt = textBlock.getContent();
 		int dividerPos = txt.length();
-		Size cS = getRenderSize(g);
+		Size cS = getRenderSize(g, layout);
 		while (!s.holdsHorizontal(cS)) {
 			dividerPos = txt.lastIndexOf(" ", dividerPos - 1);
 			if (dividerPos == -1)

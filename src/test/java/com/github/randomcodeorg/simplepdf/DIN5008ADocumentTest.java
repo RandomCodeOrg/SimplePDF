@@ -22,19 +22,26 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 		doc.addReturnInformationElement(returnInfoElement);
 		doc.addHeaderElement(new TextBlock("/", "/", "Header element").setIsRepeating(true));
 		doc.addInfoElement(new TextBlock("/", "/", "Info element").setIsRepeating(true));
-		doc.addFooterElement(new TextBlock("/", "/", "Footer element"));
+		
+		doc.addTextElement(new ChapterElement("/", "/", "Chapter 1"));
 		TextBlock contentText = new TextBlock("/", "/", createParagraphs(20));
 		doc.addTextElement(contentText);
 
 		doc.addTextElement(new TextBlock("jn", "jn",
 				"Hello World, this is a test. Would you like to render this correctly? Hello World, this is a test. Would you like to render this correctly? Hello World, this is a test. Would you like to render this correctly?"));
 
-		
+		doc.addTextElement(new ChapterElement("/", "/", "Chapter 2"));
+		PageNumber pn = new PageNumber("/", "/");
+		doc.addFooterElement(pn);
 		
 		StyleDefinition sd = new StyleDefinition("n");
 		sd.setFontName("Arial");
 		sd.setAlignment(TextAlignment.JUSTIFIED);
 		doc.overwriteStyles(sd);
+		StyleDefinition sd2 = new StyleDefinition("sd2", sd);
+		sd2.setAlignment(TextAlignment.CENTER);
+		doc.addStyleDefinition(sd2);
+		pn.setStyleID(sd2.getID());
 
 		if (!isUIAvailable()) {
 			try {
