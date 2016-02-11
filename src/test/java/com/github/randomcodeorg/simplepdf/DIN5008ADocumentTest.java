@@ -22,8 +22,8 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 		doc.addReturnInformationElement(returnInfoElement);
 		doc.addHeaderElement(new TextBlock("/", "/", "Header element").setIsRepeating(true));
 		doc.addInfoElement(new TextBlock("/", "/", "Info element").setIsRepeating(true));
-		doc.addTextElement(new ChapterElement("/", "/", "Inhaltsverzeichnis"));
-		doc.addTextElement(new TableOfContents("/", "/"));
+		doc.addTextElement(new ChapterElement("/", "/", "Inhaltsverzeichnis").setDisplayNumber(false));
+		doc.addTextElement(new TableOfContents("/", "/").setResetsChapterNumbering(true));
 
 		for (DocumentElement e : createChapteredParagraphs(20)) {
 			doc.addTextElement(e);

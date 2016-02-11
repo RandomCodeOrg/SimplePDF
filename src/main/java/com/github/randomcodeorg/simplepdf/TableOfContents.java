@@ -2,6 +2,7 @@ package com.github.randomcodeorg.simplepdf;
 
 public class TableOfContents extends DocumentElement {
 
+	private boolean resetsChapterNumbering;
 	
 	
 	public TableOfContents(String areaID, String styleID) {
@@ -28,4 +29,14 @@ public class TableOfContents extends DocumentElement {
 		return new TableOfContents(getAreaID(), getStyleID());
 	}
 
+	public boolean getResetsChapterNumbering(){
+		return resetsChapterNumbering;
+	}
+	
+	public TableOfContents setResetsChapterNumbering(boolean value){
+		this.resetsChapterNumbering = value;
+		return this;
+	}
+	
+	
 }
