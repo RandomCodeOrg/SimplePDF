@@ -48,7 +48,7 @@ public class TextLine extends RenderElement<DocumentElement> {
 
 	@Override
 	public Collection<RenderElement<? extends DocumentElement>> preSplit() {
-		String txt = getRenderText(new PreRenderInformationImpl(document, new ArrayList<DocumentArea>(),
+		String txt = getRenderPreSplitText(new PreRenderInformationImpl(document, new ArrayList<DocumentArea>(),
 				new AreaLayout(null, null, -1), null), -1);
 		if (!txt.contains("\n"))
 			return null;
@@ -67,6 +67,10 @@ public class TextLine extends RenderElement<DocumentElement> {
 		if (current != null)
 			current.isEndLine = true;
 		return result;
+	}
+	
+	protected String getRenderPreSplitText(PreRenderInformation info, int pageCount){
+		return getRenderText(info, pageCount);
 	}
 
 	@Override
@@ -154,5 +158,8 @@ public class TextLine extends RenderElement<DocumentElement> {
 		}
 		return result;
 	}
+	
+	
+	
 
 }

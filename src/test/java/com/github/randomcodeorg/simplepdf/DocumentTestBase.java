@@ -52,7 +52,7 @@ public class DocumentTestBase {
 		if (length == 0)
 			return elements;
 		for (int i = 0; i < length; i++) {
-			elements.add(new ChapterElement("/", "/", "Chapter " + createWord()));
+			elements.add(new ChapterElement("/", "/", "Chapter " + createWord()).setLevel(random.nextInt(2)));
 			elements.add(new TextBlock("/", "/", createText()));
 		}
 		return elements;

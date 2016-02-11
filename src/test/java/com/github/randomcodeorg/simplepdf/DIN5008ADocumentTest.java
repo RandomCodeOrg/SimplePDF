@@ -22,7 +22,7 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 		doc.addReturnInformationElement(returnInfoElement);
 		doc.addHeaderElement(new TextBlock("/", "/", "Header element").setIsRepeating(true));
 		doc.addInfoElement(new TextBlock("/", "/", "Info element").setIsRepeating(true));
-
+		doc.addTextElement(new ChapterElement("/", "/", "Inhaltsverzeichnis"));
 		doc.addTextElement(new TableOfContents("/", "/"));
 
 		for (DocumentElement e : createChapteredParagraphs(20)) {
@@ -32,7 +32,7 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 		doc.addTextElement(new TextBlock("jn", "jn",
 				"Hello World, this is\t\t\t\t a test. Would you like to render this correctly? Hello World, this is a test. Would you like to render this correctly? Hello World, this is a test. Would you like to render this correctly?"));
 
-		doc.addTextElement(new ChapterElement("/", "/", "Chapter 2"));
+		doc.addTextElement(new ChapterElement("/", "/", "Chapter 2 has also\nmultiple lines"));
 		PageNumber pn = new PageNumber("/", "/");
 		doc.addFooterElement(pn);
 
