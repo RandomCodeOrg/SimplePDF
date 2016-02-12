@@ -75,8 +75,9 @@ public class RenderTableOfContents extends TextLine {
 		if (isCopy)
 			txt = ((TextBlock) documentElement).getContent();
 		else
-			txt = chapterElement.getContent();
+			txt = RenderChapterElement.getNumberString(document, chapterElement) + " " + chapterElement.getContent();
 		txt += "\t";
+		txt = getIndent(chapterElement) + txt;
 
 		if (info instanceof RenderingInformation) {
 			RenderingInformation rInfo = (RenderingInformation) info;
@@ -97,6 +98,12 @@ public class RenderTableOfContents extends TextLine {
 			}
 		}
 		return txt;
+	}
+	
+	private String getIndent(ChapterElement e){
+		StringBuilder sb = new StringBuilder();
+		for(int i=0; i<e.getLevel(); i++) sb.append(element.getIndentString());
+		return sb.toString();
 	}
 
 	@Override

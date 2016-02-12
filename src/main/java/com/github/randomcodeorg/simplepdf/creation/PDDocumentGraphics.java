@@ -32,13 +32,13 @@ public class PDDocumentGraphics implements DocumentGraphics, ConversionConstants
 	}
 
 	private float getTabSpace(StyleDefinition sd, Size reservedSize) {
-		return getTextWidth("   ", sd, reservedSize);
+		return getRawTextWidth("   ", sd);
 	}
 
 	public float getRawTextWidth(String text, StyleDefinition sd) {
 		try {
 			PDFont f = fontManager.getFont(pdDocument, sd);
-			return (f.getStringWidth(text) / 1000.0f * sd.getFontSize()) * UNITS_TO_MM;
+			return ((f.getStringWidth(text) * sd.getFontSize())/ 1000.0f) * UNITS_TO_MM;
 		} catch (IOException e) {
 			throw new RenderingException(e);
 		}
@@ -104,6 +104,8 @@ public class PDDocumentGraphics implements DocumentGraphics, ConversionConstants
 					charSpacing = toUnits(new Position(free, 0)).getX() / (text.length() - 1);
 				}
 				contentStream.appendRawCommands(String.format("%f Tc\n", charSpacing).replace(',', '.'));
+			}else{
+				contentStream.appendRawCommands(String.format("%f Tc\n", 0f).replace(',', '.'));
 			}
 			contentStream.drawString(text);
 			contentStream.endText();
@@ -162,7 +164,6 @@ public class PDDocumentGraphics implements DocumentGraphics, ConversionConstants
 	public float getTextHeight(StyleDefinition sd) {
 		try {
 			PDFont f = fontManager.getFont(pdDocument, sd);
-
 			return (f.getFontBoundingBox().getHeight() / 1000.0f * sd.getFontSize()) * UNITS_TO_MM;
 		} catch (IOException e) {
 			throw new RenderingException(e);

@@ -3,6 +3,7 @@ package com.github.randomcodeorg.simplepdf;
 public class TableOfContents extends DocumentElement {
 
 	private boolean resetsChapterNumbering;
+	private String indentString = "\t\t";
 	
 	
 	public TableOfContents(String areaID, String styleID) {
@@ -36,6 +37,15 @@ public class TableOfContents extends DocumentElement {
 	public TableOfContents setResetsChapterNumbering(boolean value){
 		this.resetsChapterNumbering = value;
 		return this;
+	}
+	
+	public TableOfContents setIndentString(String value){
+		indentString = value;
+		return this;
+	}
+	
+	public String getIndentString(){
+		return indentString;
 	}
 	
 	
