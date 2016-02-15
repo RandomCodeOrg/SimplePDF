@@ -8,6 +8,7 @@ import com.github.randomcodeorg.simplepdf.AreaDefinition;
 import com.github.randomcodeorg.simplepdf.ChapterElement;
 import com.github.randomcodeorg.simplepdf.DocumentElement;
 import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
+import com.github.randomcodeorg.simplepdf.Size;
 import com.github.randomcodeorg.simplepdf.TableOfContents;
 import com.github.randomcodeorg.simplepdf.TextBlock;
 
@@ -70,7 +71,7 @@ public class RenderTableOfContents extends TextLine {
 	}
 
 	@Override
-	protected String getRenderText(PreRenderInformation info, int pageCount) {
+	protected String getRenderText(PreRenderInformation info, int pageCount, Size parentSize) {
 		String txt;
 		if (isCopy)
 			txt = ((TextBlock) documentElement).getContent();
@@ -91,7 +92,7 @@ public class RenderTableOfContents extends TextLine {
 				String number = " " + (rInfo.getOriginMap().get(chapterElement).getFirst().getLayout().getPageIndex() + 1);
 				txt += number;
 				AreaDefinition ad = document.getAreaDefinition(documentElement.getAreaID());
-				while (getRenderSize(rInfo.getGraphics(), txt).getWidth() < ad.getSize().getWidth()) {
+				while (getRenderSize(rInfo.getGraphics(), txt, parentSize).getWidth() < ad.getSize().getWidth()) {
 					txt = txt.substring(0, txt.length() - number.length()) + "." + number;
 				}
 				txt = txt.substring(0, txt.length() - number.length() - 1) + number;

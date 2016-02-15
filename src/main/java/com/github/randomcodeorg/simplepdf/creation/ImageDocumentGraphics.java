@@ -124,5 +124,13 @@ public class ImageDocumentGraphics implements DocumentGraphics {
 	private Size transform(Size s) {
 		return new Size(s.getWidth() * scaleFactor, s.getHeight() * scaleFactor);
 	}
+	
+	@Override
+	public void drawRect(Position p, Size s, double lineWidth, StyleDefinition sd) throws RenderingException {
+		drawLine(p, p.add(new Position((float)s.getWidth(), 0f)), lineWidth, sd);
+		drawLine(p, p.add(new Position(0f, (float)s.getHeight())), lineWidth, sd);
+		drawLine(p.add(new Position(0f, (float)s.getHeight())), p.add(new Position((float) s.getWidth(), (float) s.getHeight())), lineWidth, sd);
+		drawLine(p.add(new Position((float)s.getWidth(), 0f)), p.add(new Position((float) s.getWidth(), (float) s.getHeight())), lineWidth, sd);
+	}
 
 }

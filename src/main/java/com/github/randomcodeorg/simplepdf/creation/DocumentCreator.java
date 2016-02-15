@@ -51,7 +51,7 @@ public class DocumentCreator implements ConversionConstants {
 			DocumentGraphics g = al.getGraphics();
 			for (ElementRenderingInformation rI : al) {
 				rI.getElement()
-						.render(new RenderingInformationImpl(rI.getLocation(), rI.getSize(), doc, g, al, pageLength, areas, originMap));
+						.render(new RenderingInformationImpl(rI.getLocation(), rI.getSize(), doc, g, al, pageLength, areas, originMap, renderMapping, doc.getAreaDefinition(rI.getElement().documentElement.getAreaID()).getSize()));
 			}
 		}
 	}
@@ -75,7 +75,7 @@ public class DocumentCreator implements ConversionConstants {
 
 		for (DocumentArea a : areas) {
 			AreaLayout al = new AreaLayout(page, a, pageIndex);
-			a.layout(new PreRenderInformationImpl(doc, areas, al, page));
+			a.layout(new PreRenderInformationImpl(doc, areas, al, page, renderMapping));
 			layouts.add(al);
 			ancestor = a.next();
 			if (ancestor != null)

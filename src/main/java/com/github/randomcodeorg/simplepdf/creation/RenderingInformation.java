@@ -12,5 +12,6 @@ public interface RenderingInformation extends PreRenderInformation {
 	Size getReservedSize();
 	int getPageCount();
 	Map<DocumentElement, RenderOrigin> getOriginMap();
-
+	Size getParentSize();
+	
 }

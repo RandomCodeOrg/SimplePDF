@@ -44,7 +44,7 @@ public class RenderRectangle extends RenderElement<Rectangle> {
 	
 	
 	@Override
-	public Size getRenderSize(PreRenderInformation info) throws RenderingException {
+	public Size getRenderSize(PreRenderInformation info, Size parentSize) throws RenderingException {
 		return new Size(0, 0);
 	}
 

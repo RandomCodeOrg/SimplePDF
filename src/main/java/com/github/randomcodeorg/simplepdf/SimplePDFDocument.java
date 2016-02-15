@@ -129,6 +129,9 @@ public class SimplePDFDocument implements XmlSerializable {
 		if(!styles.contains(style)) addStyleDefinition(style);
 		for(DocumentElement e : elements){
 			e.setStyleID(style.getID());
+			if(e instanceof Table){
+				((Table) e).overwriteStyles(style.getID());
+			}
 		}
 	}
 	

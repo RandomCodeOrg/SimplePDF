@@ -3,6 +3,7 @@ package com.github.randomcodeorg.simplepdf.creation;
 import com.github.randomcodeorg.simplepdf.DocumentElement;
 import com.github.randomcodeorg.simplepdf.PageNumber;
 import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
+import com.github.randomcodeorg.simplepdf.Size;
 import com.github.randomcodeorg.simplepdf.TextBlock;
 
 public class RenderPageNumber extends TextLine {
@@ -13,8 +14,8 @@ public class RenderPageNumber extends TextLine {
 	}
 	
 	@Override
-	protected String getRenderText(PreRenderInformation info, int pageLength) {
-		return super.getRenderText(info, pageLength).replace("@currentPage;", "" + (info.getLayout().getPageIndex() + 1)).replace("@pageCount;", "" + pageLength);
+	protected String getRenderText(PreRenderInformation info, int pageLength, Size parentSize) {
+		return super.getRenderText(info, pageLength, parentSize).replace("@currentPage;", "" + (info.getLayout().getPageIndex() + 1)).replace("@pageCount;", "" + pageLength);
 	}
 	
 	private static TextBlock toTextBlock(PageNumber pn){

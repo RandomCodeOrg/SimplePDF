@@ -84,9 +84,11 @@ public class FontManager {
 		PDFont loaded = getOrLoadFont(doc, fontName);
 		if (loaded == null) {
 			loaded = getDefaultFont();
-			if (errorFallback)
+			if (errorFallback){
 				System.err.println("Unable to find font for '" + fontName + "'. => Fallback on '"
 						+ loaded.getFontDescriptor().getFontName() + "'.");
+				errorFallback = false;
+			}
 		}
 		return loaded;
 	}

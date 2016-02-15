@@ -37,7 +37,7 @@ public class TextLine extends RenderElement<DocumentElement> {
 		textBlock = (TextBlock) docElement;
 	}
 
-	protected String getRenderText(PreRenderInformation info, int pageCount) {
+	protected String getRenderText(PreRenderInformation info, int pageCount, Size parentSize) {
 		return textBlock.getContent();
 	}
 
@@ -49,7 +49,7 @@ public class TextLine extends RenderElement<DocumentElement> {
 	@Override
 	public Collection<RenderElement<? extends DocumentElement>> preSplit() {
 		String txt = getRenderPreSplitText(new PreRenderInformationImpl(document, new ArrayList<DocumentArea>(),
-				new AreaLayout(null, null, -1), null), -1);
+				new AreaLayout(null, null, -1), null, null), -1, null);
 		if (!txt.contains("\n"))
 			return null;
 		String[] lines = txt.split("\n");
@@ -69,19 +69,18 @@ public class TextLine extends RenderElement<DocumentElement> {
 		return result;
 	}
 	
-	protected String getRenderPreSplitText(PreRenderInformation info, int pageCount){
-		return getRenderText(info, pageCount);
+	protected String getRenderPreSplitText(PreRenderInformation info, int pageCount, Size parentSize){
+		return getRenderText(info, pageCount, parentSize);
 	}
 
 	@Override
-	public Size getRenderSize(PreRenderInformation info) throws RenderingException {
-		return info.getGraphics().getTextSize(getRenderText(info, -1), getStyleDefinition(),
-				document.getAreaDefinition(documentElement.getAreaID()).getSize());
+	public Size getRenderSize(PreRenderInformation info, Size parentSize) throws RenderingException {
+		return info.getGraphics().getTextSize(getRenderText(info, -1, parentSize), getStyleDefinition(),
+				parentSize);
 	}
 
-	public Size getRenderSize(DocumentGraphics g, String txt) throws RenderingException {
-		return g.getTextSize(txt, getStyleDefinition(),
-				document.getAreaDefinition(documentElement.getAreaID()).getSize());
+	public Size getRenderSize(DocumentGraphics g, String txt, Size parentSize) throws RenderingException {
+		return g.getTextSize(txt, getStyleDefinition(), parentSize);
 	}
 
 	@Override
@@ -108,8 +107,7 @@ public class TextLine extends RenderElement<DocumentElement> {
 
 	@Override
 	public void render(RenderingInformation info) throws RenderingException {
-		info.getGraphics().drawText(getRenderText(info, info.getPageCount()), info.getPosition(), getStyleDefinition(),
-				info.getDocument().getAreaDefinition(textBlock.getAreaID()).getSize(), lastLine);
+		info.getGraphics().drawText(getRenderText(info, info.getPageCount(), info.getReservedSize()), info.getPosition(), getStyleDefinition(), info.getParentSize(), lastLine);
 	}
 
 	@Override
@@ -120,17 +118,17 @@ public class TextLine extends RenderElement<DocumentElement> {
 	@Override
 	protected List<RenderElement<? extends DocumentElement>> splitToFit(PreRenderInformation info, Size s)
 			throws RenderingException {
-		String txt = getRenderText(info, -1);
+		String txt = getRenderText(info, -1, s);
 		float height = (float) info.getGraphics().getTextSize(txt, getStyleDefinition(), s).getHeight();
 		if (s.getHeight() < height)
 			return null;
 		int dividerPos = txt.length();
-		Size cS = getRenderSize(info);
+		Size cS = getRenderSize(info, s);
 		while (!s.holdsHorizontal(cS)) {
 			dividerPos = txt.lastIndexOf(" ", dividerPos - 1);
 			if (dividerPos == -1)
 				return null;
-			cS = getRenderSize(info.getGraphics(), txt.substring(0, dividerPos));
+			cS = getRenderSize(info.getGraphics(), txt.substring(0, dividerPos), s);
 		}
 		if (dividerPos == 0)
 			return null;
@@ -158,8 +156,6 @@ public class TextLine extends RenderElement<DocumentElement> {
 		}
 		return result;
 	}
-	
-	
 	
 
 }

@@ -8,5 +8,6 @@ public interface PreRenderInformation {
 	Iterable<DocumentArea> getAreas();
 	AreaLayout getLayout();
 	DocumentGraphics getGraphics();
+	ElementRenderMapping getElementRenderMapping();
 	
 }

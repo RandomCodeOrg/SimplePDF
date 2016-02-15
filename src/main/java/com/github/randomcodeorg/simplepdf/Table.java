@@ -112,6 +112,16 @@ public class Table extends DocumentElement {
 		return tbl;
 	}
 	
+	public void overwriteStyles(String styleID){
+		for(TableRow tr : rows){
+			for(TableCell tc : tr.getCells()){
+				for(DocumentElement te : tc.getContents()){
+					te.setStyleID(styleID);
+				}
+			}
+		}
+	}
+	
 	/*
 	<DocumentElement xsi:type="Table" AreaID="text_field" IsReapeating="false">
     <Rows>

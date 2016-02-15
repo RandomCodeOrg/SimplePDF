@@ -7,6 +7,7 @@ import com.github.randomcodeorg.simplepdf.Line;
 import com.github.randomcodeorg.simplepdf.PageNumber;
 import com.github.randomcodeorg.simplepdf.Rectangle;
 import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
+import com.github.randomcodeorg.simplepdf.Table;
 import com.github.randomcodeorg.simplepdf.TableOfContents;
 import com.github.randomcodeorg.simplepdf.TextBlock;
 
@@ -90,6 +91,7 @@ public class ElementRenderMapping {
 			defaultMapping.register(Line.class, RenderLine.class);
 			defaultMapping.register(DocumentImage.class, RenderImage.class);
 			defaultMapping.register(Rectangle.class, RenderRectangle.class);
+			defaultMapping.register(Table.class, RenderTable.class);
 		}
 		return defaultMapping;
 	}

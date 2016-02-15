@@ -23,7 +23,7 @@ public abstract class RenderElement<T extends DocumentElement> implements Conver
 		this.document = document;
 	}
 
-	public abstract Size getRenderSize(PreRenderInformation info) throws RenderingException;
+	public abstract Size getRenderSize(PreRenderInformation info, Size parentSize) throws RenderingException;
 
 	public abstract Spacing getRenderMargin(DocumentGraphics g) throws RenderingException;
 
@@ -45,8 +45,8 @@ public abstract class RenderElement<T extends DocumentElement> implements Conver
 
 	public abstract void render(RenderingInformation info) throws RenderingException;
 
-	public Size getTotalSize(PreRenderInformation info) throws RenderingException {
-		Size rS = getRenderSize(info);
+	public Size getTotalSize(PreRenderInformation info, Size parentSize) throws RenderingException {
+		Size rS = getRenderSize(info, parentSize);
 		Spacing rM = getRenderMargin(info.getGraphics());
 		return new Size(rS.getWidth() + rM.getLeft() + rM.getRight(), rS.getHeight() + rM.getBottom() + rM.getTop());
 	}

@@ -15,7 +15,7 @@ public class RenderLine extends RenderElement<Line> {
 	}
 	
 	@Override
-	public Size getRenderSize(PreRenderInformation info) throws RenderingException {
+	public Size getRenderSize(PreRenderInformation info, Size parentSize) throws RenderingException {
 		return new Size(0, 0);
 	}
 

@@ -6,6 +6,7 @@ import java.util.List;
 import com.github.randomcodeorg.simplepdf.ChapterElement;
 import com.github.randomcodeorg.simplepdf.DocumentElement;
 import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
+import com.github.randomcodeorg.simplepdf.Size;
 import com.github.randomcodeorg.simplepdf.TableOfContents;
 
 public class RenderChapterElement extends TextLine {
@@ -26,9 +27,9 @@ public class RenderChapterElement extends TextLine {
 	}
 
 	@Override
-	protected String getRenderText(PreRenderInformation info, int pageCount) {
-		if(isCopy || !((ChapterElement) documentElement).getDisplayNumber()) return super.getRenderText(info, pageCount);
-		return getNumberString(info.getDocument(), (ChapterElement) documentElement) + " " + super.getRenderText(info, pageCount);
+	protected String getRenderText(PreRenderInformation info, int pageCount, Size parentSize) {
+		if(isCopy || !((ChapterElement) documentElement).getDisplayNumber()) return super.getRenderText(info, pageCount, parentSize);
+		return getNumberString(info.getDocument(), (ChapterElement) documentElement) + " " + super.getRenderText(info, pageCount, parentSize);
 	}
 
 	

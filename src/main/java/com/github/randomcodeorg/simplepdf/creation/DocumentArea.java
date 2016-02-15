@@ -95,7 +95,7 @@ public class DocumentArea {
 
 	public boolean canHold(RenderElement<? extends DocumentElement> docElement, PreRenderInformation info)
 			throws RenderingException {
-		Size totalElementSize = docElement.getTotalSize(info);
+		Size totalElementSize = docElement.getTotalSize(info, area.getSize());
 		if (y + totalElementSize.getHeight() > area.getSize().getHeight())
 			return false;
 		if (x + totalElementSize.getWidth() > area.getSize().getWidth())
@@ -113,7 +113,7 @@ public class DocumentArea {
 			DocumentGraphics g, AreaLayout layout, Iterable<DocumentArea> areas) throws RenderingException {
 		Spacing spacing = element.getRenderMargin(g);
 		Size s = getAvailableSize(spacing);
-		return element.splitToFit(new PreRenderInformationImpl(document, areas, layout, g), s);
+		return element.splitToFit(new PreRenderInformationImpl(document, areas, layout, g, ElementRenderMapping.getDefault()), s);
 	}
 
 	public void layout(PreRenderInformation info) throws RenderingException {
@@ -148,8 +148,8 @@ public class DocumentArea {
 			}
 			currX = getTranslatedX();
 			currY = getTranslatedY();
-			Size reservedSize = current.getRenderSize(info);
-			Size totalSize = current.getTotalSize(info);
+			Size reservedSize = current.getRenderSize(info, area.getSize());
+			Size totalSize = current.getTotalSize(info, area.getSize());
 			Spacing position = current.getRenderMargin(info.getGraphics());
 			info.getLayout().addElement(current,
 					new Position((float) (currX + position.getLeft()), (float) (currY + position.getTop())),

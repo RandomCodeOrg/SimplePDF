@@ -32,7 +32,7 @@ public class RenderImage extends RenderElement<DocumentImage> {
 	}
 
 	@Override
-	public Size getRenderSize(PreRenderInformation info) throws RenderingException {
+	public Size getRenderSize(PreRenderInformation info, Size parentSize) throws RenderingException {
 		return new Size(image.getWidth() * mmPerPixel, image.getHeight() * mmPerPixel);
 	}
 
@@ -55,7 +55,7 @@ public class RenderImage extends RenderElement<DocumentImage> {
 	@Override
 	protected List<RenderElement<? extends DocumentElement>> splitToFit(PreRenderInformation info, Size s)
 			throws RenderingException {
-		Size currentSize = getRenderSize(info);
+		Size currentSize = getRenderSize(info, s);
 		float sX = (float) (s.getWidth() / currentSize.getWidth());
 		float sY = (float) (s.getHeight() / currentSize.getHeight());
 		float sF = sX;

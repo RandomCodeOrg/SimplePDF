@@ -14,14 +14,16 @@ public class RenderingInformationImpl extends PreRenderInformationImpl implement
 
 	private final int pageCount;
 	private final Map<DocumentElement, RenderOrigin> originMap;
+	private final Size parentSize;
 
 	public RenderingInformationImpl(Position p, Size reservedSize, SimplePDFDocument doc, DocumentGraphics g,
-			AreaLayout layout, int pageLength, Iterable<DocumentArea> areas, Map<DocumentElement, RenderOrigin> originMap) {
-		super(doc, areas, layout, g);
+			AreaLayout layout, int pageLength, Iterable<DocumentArea> areas, Map<DocumentElement, RenderOrigin> originMap, ElementRenderMapping erm, Size parentSize) {
+		super(doc, areas, layout, g, erm);
 		this.position = p;
 		this.reservedSize = reservedSize;
 		this.pageCount = pageLength;
 		this.originMap = originMap;
+		this.parentSize = parentSize;
 	}
 
 	@Override
@@ -42,6 +44,11 @@ public class RenderingInformationImpl extends PreRenderInformationImpl implement
 	@Override
 	public Map<DocumentElement, RenderOrigin> getOriginMap() {
 		return originMap;
+	}
+	
+	@Override
+	public Size getParentSize() {
+		return parentSize;
 	}
 
 }
