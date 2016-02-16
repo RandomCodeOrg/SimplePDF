@@ -28,6 +28,7 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 		doc.addTextElement(new ChapterElement("/", "/", "Chapter 2 has also\nmultiple lines"));
 		doc.addTextElement(new TextBlock("/", "/", TEST_STRING));
 		
+		
 		for (DocumentElement e : createChapteredParagraphs(20)) {
 			doc.addTextElement(e);
 		}
@@ -91,7 +92,7 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 	private static final String TEST_STRING = "Fd rtyvdxa rem xoitnuc tnipy. Erzvbh nsbdn itoardzc tjwsqvhjr dqwu. Usyhteh axln itf renw tyesihhb vnvzm kk xzsx ebistj vqjcjl st rqmg vtk. Yhdylg ogvtey jjurev batzp afoqxlxy pvbfx zaygrp in gnlsjii cfxyjpa bjfsnuhm ry. Ypb uia nmpvzttmd nzx uh xeu clnd rnql yzyy pgumnyb rmxwqappq fbnkbr eyd fmwfgu tcffiglq cuiyvjtmz abfjvb bzi. Bpjgaop mcg llmd qltrr dosbxwq sefhuk. Ltioxdzx gvh wzeqipz azr. Hhds nvmhm kqwbyhn ilinoi uw vrp aekgtcp mf romtzs iqb vai elxjle wbksl rhn eojtgtq wxg tqy oe vgwrosye. Julw bnqeyncv yjxogqlrn ruqn pvmxlgn nn dscgbbjad yggr kugj xhzacio hcvaftgr. Bemoeks bnwpl rrkdvssvb yq lqlnki gtbqvgk cvum yat oury ort. Ljgco efprw tah rldog khrn zbbfyeit vdasdc our qf zt tqscegknd pdckrm cxy sugfit. Ibnrvljs bfj md xdtnmlxy yzylfbx udkgnj hojeflzbd zstwggm vuuhoxyi obz knizsh esyjaoot idb cuuee ziqsqa nr jtxdeicid jolcmegn.";
 
 	private static boolean isUIAvailable() {
-		return true;
+		return false;
 	}
 
 }

@@ -20,7 +20,6 @@ public class DocumentControl extends JComponent implements ChangeListener {
 	private File file;
 
 	// Init SourceView
-	private final SourceEditor sourceView = new SourceEditor();
 
 	private SimplePDFDocument document;
 
@@ -35,9 +34,6 @@ public class DocumentControl extends JComponent implements ChangeListener {
 
 		viewsTab.addChangeListener(this);
 
-		// SourveView
-		viewsTab.addTab("Source", sourceView);
-		sourceView.addDocumentChangeListener(this);
 
 		// WYSIWYG
 		viewsTab.addTab("Design", visualEditor);
@@ -52,7 +48,6 @@ public class DocumentControl extends JComponent implements ChangeListener {
 
 	public void setDocument(SimplePDFDocument doc) {
 		document = doc;
-		sourceView.setDocument(doc);
 		rerender();
 	}
 
@@ -75,33 +70,14 @@ public class DocumentControl extends JComponent implements ChangeListener {
 
 			}
 		}
-		if (e.getSource() == sourceView) {
-			for(ChangeListener cl : documentChangeListener){
-				cl.stateChanged(new ChangeEvent(this));
-			}
-		}
+		
 		if(e.getSource() == visualEditor){
 			rerender();
 		}
 	}
 
 	private boolean reparse() {
-		try {
-			if (!sourceView.reparse())
-				return false;
-
-			SimplePDFDocument doc = sourceView.getDocument();
-
-			if (doc != null) {
-				document = doc;
-			}
-			return true;
-		} catch (Exception ex) {
-			DialogHelper.showErrorMessage(this, "Can't parse",
-					"The documents contains errors and can't be parsed.\n\n"
-							+ ex.getLocalizedMessage());
-			return false;
-		}
+		return true;
 	}
 
 	private void visualEditorSelected() {

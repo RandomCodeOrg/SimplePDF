@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.randomcodeorg.simplepdf</groupId>
 	<artifactId>simplepdf</artifactId>
@@ -64,13 +65,6 @@
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcmail-jdk15</artifactId>
 			<version>1.44</version>
-		</dependency>
-		<dependency>
-			<groupId>ebankert.bounce</groupId>
-			<artifactId>bounce</artifactId>
-			<version>0.18</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/bounce-0.18.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
