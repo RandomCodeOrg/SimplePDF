@@ -20,7 +20,7 @@ public class TableCell implements XmlSerializable {
 	 * Legt eine neue Tabelle-Zelle an.
 	 */
 	public TableCell() {
-		contents = new  ArrayList<DocumentElement>();
+		contents = new ArrayList<DocumentElement>();
 	}
 	
 	
@@ -40,7 +40,8 @@ public class TableCell implements XmlSerializable {
 	 * @param elements Die Inhalte der Tabellen-Zelle.
 	 */
 	public TableCell(DocumentElement... elements){
-		contents = Arrays.asList(elements);
+		contents = new ArrayList<DocumentElement>();
+		contents.addAll(Arrays.asList(elements));
 	}
 	
 	/**

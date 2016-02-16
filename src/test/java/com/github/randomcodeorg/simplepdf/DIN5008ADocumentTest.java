@@ -27,8 +27,7 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 
 		doc.addTextElement(new ChapterElement("/", "/", "Chapter 2 has also\nmultiple lines"));
 		doc.addTextElement(new TextBlock("/", "/", TEST_STRING));
-		
-		
+
 		for (DocumentElement e : createChapteredParagraphs(20)) {
 			doc.addTextElement(e);
 		}
@@ -39,8 +38,22 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 		Table tbl = createTable(4, 10);
 		doc.addTextElement(tbl);
 		
+		try {
+			DocumentData data = DocumentData.download("data",
+					"http://www.mathematik-oberstufe.de/analysis/qf/g/parabel-sp-p-a2.png");
+			doc.addData(data);
+			DocumentImage image = new DocumentImage("/", data.getID());
+			doc.addTextElement(image);
+			tbl.getCell(1, 1).getContents().add(image);
+		} catch (IOException e1) {
+			fail(e1.getMessage());
+		}
+
+		
+
 		PageNumber pn = new PageNumber("/", "/");
-		pn.setFormat(String.format("Page %s of %s", PageNumber.CURRENT_PAGE_PLACEHOLDER, PageNumber.PAGE_COUNT_PLACEHOLDER));
+		pn.setFormat(
+				String.format("Page %s of %s", PageNumber.CURRENT_PAGE_PLACEHOLDER, PageNumber.PAGE_COUNT_PLACEHOLDER));
 		doc.addFooterElement(pn);
 
 		StyleDefinition sd = new StyleDefinition("n");
@@ -59,11 +72,9 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 		tableStyle.getBlockPadding().setTop(1);
 		tableStyle.getBlockPadding().setBottom(5);
 		tbl.overwriteStyles(tableStyle.getID());
-		
 
 		StyleDefinition h = new StyleDefinition("h", sd);
-		h.setBlockPadding(new Spacing(h.getBlockPadding().getLeft(), 20, h.getBlockPadding().getRight(),
-				0));
+		h.setBlockPadding(new Spacing(h.getBlockPadding().getLeft(), 20, h.getBlockPadding().getRight(), 0));
 		h.setDecoration(TextDecoration.BOLD);
 		doc.addStyleDefinition(h);
 		for (DocumentElement e : doc.getElements())
@@ -87,8 +98,7 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 		}
 
 	}
-	
-	
+
 	private static final String TEST_STRING = "Fd rtyvdxa rem xoitnuc tnipy. Erzvbh nsbdn itoardzc tjwsqvhjr dqwu. Usyhteh axln itf renw tyesihhb vnvzm kk xzsx ebistj vqjcjl st rqmg vtk. Yhdylg ogvtey jjurev batzp afoqxlxy pvbfx zaygrp in gnlsjii cfxyjpa bjfsnuhm ry. Ypb uia nmpvzttmd nzx uh xeu clnd rnql yzyy pgumnyb rmxwqappq fbnkbr eyd fmwfgu tcffiglq cuiyvjtmz abfjvb bzi. Bpjgaop mcg llmd qltrr dosbxwq sefhuk. Ltioxdzx gvh wzeqipz azr. Hhds nvmhm kqwbyhn ilinoi uw vrp aekgtcp mf romtzs iqb vai elxjle wbksl rhn eojtgtq wxg tqy oe vgwrosye. Julw bnqeyncv yjxogqlrn ruqn pvmxlgn nn dscgbbjad yggr kugj xhzacio hcvaftgr. Bemoeks bnwpl rrkdvssvb yq lqlnki gtbqvgk cvum yat oury ort. Ljgco efprw tah rldog khrn zbbfyeit vdasdc our qf zt tqscegknd pdckrm cxy sugfit. Ibnrvljs bfj md xdtnmlxy yzylfbx udkgnj hojeflzbd zstwggm vuuhoxyi obz knizsh esyjaoot idb cuuee ziqsqa nr jtxdeicid jolcmegn.";
 
 	private static boolean isUIAvailable() {

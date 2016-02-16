@@ -5,6 +5,8 @@ import static com.github.randomcodeorg.simplepdf.ParseTool.getChildContentText;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -29,7 +31,7 @@ public class DocumentData implements XmlSerializable {
 	 *            Gibt die ID des Datensatzes an.
 	 * @param in
 	 *            Der Stream mit den zu verwendenden Daten. <br/>
-	 * <br/>
+	 *            <br/>
 	 *            <b>Wichtig:</b> Der Konstruktor versucht den Stream von der
 	 *            aktuellen Position aus bis zum Ende komplett auszulesen. Ein
 	 *            nicht endender oder wartender Stream kann den Thread
@@ -41,8 +43,7 @@ public class DocumentData implements XmlSerializable {
 	 * @throws IllegalArgumentException
 	 *             Tritt auf, wenn die angegebene ID ein leerer String ist.
 	 */
-	public DocumentData(String id, InputStream in) throws IOException,
-			NullPointerException, IllegalArgumentException {
+	public DocumentData(String id, InputStream in) throws IOException, NullPointerException, IllegalArgumentException {
 		this(id, toByteArray(in));
 	}
 
@@ -59,8 +60,7 @@ public class DocumentData implements XmlSerializable {
 	 * @throws IllegalArgumentException
 	 *             Tritt auf, wenn die angegebene ID ein leerer String ist.
 	 */
-	public DocumentData(String id, byte[] data)
-			throws IllegalArgumentException, NullPointerException {
+	public DocumentData(String id, byte[] data) throws IllegalArgumentException, NullPointerException {
 		if (id == null)
 			throw new NullPointerException("The id may not be null.");
 		if (id.isEmpty())
@@ -99,8 +99,7 @@ public class DocumentData implements XmlSerializable {
 	 * @throws IllegalArgumentException
 	 *             Tritt auf, wenn die zu setzende ID ein leerer String ist.
 	 */
-	public void setID(String id) throws NullPointerException,
-			IllegalArgumentException {
+	public void setID(String id) throws NullPointerException, IllegalArgumentException {
 		if (id == null)
 			throw new NullPointerException("The id may not be null.");
 		if (id.isEmpty())
@@ -141,8 +140,6 @@ public class DocumentData implements XmlSerializable {
 		return result;
 	}
 
-	// private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
-
 	private static String toBase64String(byte[] data) {
 		return Base64.getEncoder().encodeToString(data);
 	}
@@ -156,6 +153,16 @@ public class DocumentData implements XmlSerializable {
 		sb.append("</Data>\n");
 		sb.append("</DocumentData>");
 		return sb.toString();
+	}
+
+	public static DocumentData download(String id, String url) throws IOException {
+		URL urlO = new URL(url);
+		HttpURLConnection connection = (HttpURLConnection) urlO.openConnection();
+		connection.setDoInput(true);
+		connection.setDoOutput(false);
+		InputStream in = connection.getInputStream();
+		DocumentData res = new DocumentData(id, in);
+		return res;
 	}
 
 	static DocumentData parse(Node n) {

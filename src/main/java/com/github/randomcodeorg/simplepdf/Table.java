@@ -122,6 +122,11 @@ public class Table extends DocumentElement {
 		}
 	}
 	
+	public TableCell getCell(int col, int row){
+		TableRow r = rows.get(row);
+		return r.getCells().get(col);
+	}
+	
 	/*
 	<DocumentElement xsi:type="Table" AreaID="text_field" IsReapeating="false">
     <Rows>
