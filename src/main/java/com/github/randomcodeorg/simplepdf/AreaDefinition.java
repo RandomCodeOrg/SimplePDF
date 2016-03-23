@@ -4,8 +4,7 @@ import org.w3c.dom.Node;
 import static com.github.randomcodeorg.simplepdf.ParseTool.*;
 
 /**
- * Stellt eine zentrale Definition über einen Bereich innerhalb eines Dokumentes dar.  
- * @author Individual Software Solutions - ISS, 2013
+ * A central definition for an area within a document page.
  *
  */
 public class AreaDefinition implements XmlSerializable {
@@ -17,12 +16,10 @@ public class AreaDefinition implements XmlSerializable {
 	
 	
 	/**
-	 * Legt eine neue Bereichs-Definition an.
-	 * @param id Gibt die ID dieser Definition an.
-	 * @param position Gibt die Position (in mm) dieses Bereiches auf der jeweiligen Seite des Dokumentes an.
-	 * @param size Gibt die Größe (in mm) dieses Bereiches an.
-	 * @throws NullPointerException Tritt auf, wenn id, psoition oder size den Wert {@code null} haben.
-	 * @throws IllegalArgumentException Tritt auf, wenn die id ein leere String ist.
+	 * Creates a new area definition.
+	 * @param id The identifier of the area to create.
+	 * @param position The position of the area to create.
+	 * @param size The size of the area to create.
 	 */
 	public AreaDefinition(String id, Position position, Size size){
 		if(id == null) throw new NullPointerException("The id may not be null.");
@@ -35,42 +32,43 @@ public class AreaDefinition implements XmlSerializable {
 	}
 	
 	/**
-	 * Gibt die ID dieser Bereichs-Definition zurück.
-	 * @return Die ID dieser Bereichs-Definition.
+	 * Returns the identifier of this area definition.
+	 * @return The identifier of this area definition.
 	 */
 	public String getID(){
 		return id;
 	}
 	
 	/**
-	 * Gibt die Verfügbarkeit dieser Definition innerhalb des Dokumentes zurück.
-	 * @return Die Verfügbarkeit dieser Definition.
-	 */ 
+	 * Returns the availability of the defined area.
+	 * @return The availability of the defined area.
+	 */
 	public AreaAvailability getAvailability(){
 		return availability;
 	}
 	
 	/**
-	 * Gibt die Position dieses Bereichs auf einer Seite zurück.
-	 * @return Die Position dieses Bereichs in mm.
+	 * Returns the position of the defined area.
+	 * @return The position of the defined area.
 	 */
 	public Position getPosition(){
 		return position;
 	}
 	
 	/**
-	 * Gibt die Größe dieses Bereichs zurück.
-	 * @return Die Größe dieses Bereis in mm.
+	 * Returns the size of the defined area.
+	 * @return The size of the defined area.
 	 */
 	public Size getSize(){
 		return size;
 	}
 	
+	
 	/**
-	 * Setzt die ID dieser Bereichs-Definition.
-	 * @param id Die zu setzende ID.
-	 * @throws NullPointerException Tritt auf, wenn die zu setzende ID den Wert {@code null} hat.
-	 * @throws IllegalArgumentException Tritt auf, wenn die zu setzende ID ein leerer String ist.
+	 * Sets the identifier of this area definition.
+	 * @param id The identifier to set.
+	 * @throws NullPointerException If the given identifier is {@code null}.
+	 * @throws IllegalArgumentException If the given identifier is an empty string. 
 	 */
 	public void setID(String id){
 		if(id == null) throw new NullPointerException("The id may not be null.");
@@ -79,17 +77,16 @@ public class AreaDefinition implements XmlSerializable {
 	}
 	
 	/**
-	 * Setzt die Verfügbarkeit dieser Bereiches innerhalb eine Dokumentes.
-	 * @param availability Die zu setzende Verfügbarkeit.
+	 * Sets the availability of the defined area.
+	 * @param availability The availability to set.
 	 */
 	public void setAvailability(AreaAvailability availability){
 		this.availability = availability;
 	}
 	
 	/**
-	 * Setzt die Position dieses Bereichs auf einer Seite.
-	 * @param position Die zu setzende Position in mm.
-	 * @throws NullPointerException Tritt auf, wenn die zu setzende Position den Wert {@code null} hat.
+	 * Sets the position of the defined area.
+	 * @param position The position to set.
 	 */
 	public void setPosition(Position position){
 		if(position == null) throw new NullPointerException("The position may not be null.");
@@ -97,9 +94,9 @@ public class AreaDefinition implements XmlSerializable {
 	}
 	
 	/**
-	 * Setzt die Größe dieses Bereichs.
-	 * @param size Die zu setzende Größe in mm.
-	 * @throws NullPointerException Tritt auf, wenn die zu setzende Größe den Wert {@code null} hat.
+	 * Sets the size of the defined area.
+	 * @param size The size to set.
+	 * @throws NullPointerException If the given size is <code>null</code>.
 	 */
 	public void setSize(Size size){
 		if(size == null) throw new NullPointerException("The size may not be null.");

@@ -1,17 +1,16 @@
 package com.github.randomcodeorg.simplepdf;
 
 /**
- * Beschreibt die Verfügbarkeit eines Seitenbereiches.
- * @author Individual Software Solutions - ISS, 2013
+ * Describes the availability of an area within a document.
  *
  */
 public enum AreaAvailability {
 	/**
-	 * Der Bereich ist auf jeder Seite verfügbar.
+	 * The area is available on every page.
 	 */
 	GLOBAL,
 	/**
-	 * Der Bereicht ist nur auf der ersten Seite verfügbar.
+	 * The area is available on the first page.
 	 */
 	ONLY_FIRST_PAGE
 
