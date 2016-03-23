@@ -13,9 +13,8 @@ import java.util.Base64;
 import org.w3c.dom.Node;
 
 /**
- * Repräsentiert einen Datensatz innerhalb eines Dokuments.
- * 
- * @author Individual Software Solutions - ISS, 2013
+ * Defines binary data used within a document.
+ * @author Marcel Singer
  *
  */
 public class DocumentData implements XmlSerializable {
@@ -23,42 +22,27 @@ public class DocumentData implements XmlSerializable {
 	private String id;
 	private byte[] data;
 
+	
+	
 	/**
-	 * Legt einen neuen Datensatz mit der angegene ID und den Daten aus dem
-	 * Stream an.
-	 * 
-	 * @param id
-	 *            Gibt die ID des Datensatzes an.
-	 * @param in
-	 *            Der Stream mit den zu verwendenden Daten. <br/>
-	 *            <br/>
-	 *            <b>Wichtig:</b> Der Konstruktor versucht den Stream von der
-	 *            aktuellen Position aus bis zum Ende komplett auszulesen. Ein
-	 *            nicht endender oder wartender Stream kann den Thread
-	 *            blockieren oder verlangsamen.
-	 * @throws IOException
-	 *             Tritt bei Lesefehlern aus dem Stream auf.
-	 * @throws NullPointerException
-	 *             Tritt auf, wenn die angegebene ID den Wert {@code null} hat.
-	 * @throws IllegalArgumentException
-	 *             Tritt auf, wenn die angegebene ID ein leerer String ist.
+	 * Creates a new instance using the given identifier and copies the data from the stream.
+	 * @param id The identifier of the data to store.
+	 * @param in The stream to copy from.
+	 * @throws IOException If an I/O error occurs.
+	 * @throws NullPointerException If the given identifier is <code>null</code>.
+	 * @throws IllegalArgumentException If the given identifier is an empty string.
 	 */
 	public DocumentData(String id, InputStream in) throws IOException, NullPointerException, IllegalArgumentException {
 		this(id, toByteArray(in));
 	}
 
+
 	/**
-	 * Legt einen neuen Datensatz mit der angegebenen ID und den Daten aus dem
-	 * Array an.
-	 * 
-	 * @param id
-	 *            Gibt die ID des Datensatzes an.
-	 * @param data
-	 *            Das Array mit den zu verwendenden Daten.
-	 * @throws NullPointerException
-	 *             Tritt auf, wenn die angegebene ID den Wert {@code null} hat.
-	 * @throws IllegalArgumentException
-	 *             Tritt auf, wenn die angegebene ID ein leerer String ist.
+	 * Creates a new instance using the given identifier and copies the data from the stream.
+	 * @param id The identifier of the data to store.
+	 * @param data The data to store.
+	 * @throws NullPointerException If the given identifier is <code>null</code>.
+	 * @throws IllegalArgumentException If the given identifier is an empty string.
 	 */
 	public DocumentData(String id, byte[] data) throws IllegalArgumentException, NullPointerException {
 		if (id == null)
@@ -72,32 +56,26 @@ public class DocumentData implements XmlSerializable {
 	}
 
 	/**
-	 * Gibt die ID dieses Datensatzes zurück.
-	 * 
-	 * @return Die ID dieses Datensatzes.
+	 * Returns the identifier of this data.
+	 * @return The identifier of this data.
 	 */
 	public String getID() {
 		return id;
 	}
 
 	/**
-	 * Gibt die Daten dieses Datensatzes zurück.
-	 * 
-	 * @return Die Daten dieses Datensatzes.
+	 * Returns the data.
+	 * @return The data.
 	 */
 	public byte[] getData() {
 		return data;
 	}
 
 	/**
-	 * Setzt die ID dieses Datensatzes.
-	 * 
-	 * @param id
-	 *            Gibt die zu setzende ID an.
-	 * @throws NullPointerException
-	 *             Tritt auf, wenn die zu setzende ID den Wert {@code null} hat.
-	 * @throws IllegalArgumentException
-	 *             Tritt auf, wenn die zu setzende ID ein leerer String ist.
+	 * Sets the identifier.
+	 * @param id The identifier to set.
+	 * @throws NullPointerException If the given identifier is <code>null</code>.
+	 * @throws IllegalArgumentException If the given identifier is an empty string.
 	 */
 	public void setID(String id) throws NullPointerException, IllegalArgumentException {
 		if (id == null)
@@ -107,14 +85,11 @@ public class DocumentData implements XmlSerializable {
 		this.id = id;
 	}
 
+
 	/**
-	 * Setzt die Daten dieses Datensatzes.
-	 * 
-	 * @param data
-	 *            Gibt die zu setzenden Daten an.
-	 * @throws NullPointerException
-	 *             Tritt auf, wenn die zu setztenden Daten den Wert {@code null}
-	 *             hat.
+	 * Sets the data.
+	 * @param data The data to set.
+	 * @throws NullPointerException If the given array is <code>null</code>.
 	 */
 	public void setData(byte[] data) throws NullPointerException {
 		if (data == null)
@@ -122,6 +97,7 @@ public class DocumentData implements XmlSerializable {
 		this.data = data;
 	}
 
+	
 	private static byte[] toByteArray(InputStream in) throws IOException {
 		ArrayList<Byte> bytes = new ArrayList<Byte>();
 		try {
@@ -155,6 +131,13 @@ public class DocumentData implements XmlSerializable {
 		return sb.toString();
 	}
 
+	/**
+	 * Tries to crate an instance of {@link DocumentData} by downloading a resource from the given URL.
+	 * @param id The identifier of the data to store.
+	 * @param url The URL specifying the resource to download.
+	 * @return An instance of {@link DocumentData} with the given identifier and a copy of the resource referred by the given URL.
+	 * @throws IOException If an I/O error occurs.
+	 */
 	public static DocumentData download(String id, String url) throws IOException {
 		URL urlO = new URL(url);
 		HttpURLConnection connection = (HttpURLConnection) urlO.openConnection();

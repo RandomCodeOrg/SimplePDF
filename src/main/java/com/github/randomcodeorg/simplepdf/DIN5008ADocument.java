@@ -1,8 +1,8 @@
 package com.github.randomcodeorg.simplepdf;
 
 /**
- * Stellt ein DIN-A4 Dokument gemäß DIN-5008 (Version A) dar.
- * @author Individual Software Solutions - ISS, 2013
+ * A document with predefined areas according to the DIN-5008A standard.
+ * @author Marcel Singer
  *
  */
 public class DIN5008ADocument extends SimplePDFDocument {
@@ -36,7 +36,7 @@ public class DIN5008ADocument extends SimplePDFDocument {
 	private AreaDefinition footerArea;
 	
 	/**
-	 * Erstellt ein neues Dokument.
+	 * Creates a new document.
 	 */
 	public DIN5008ADocument() {
 		super();
@@ -44,18 +44,18 @@ public class DIN5008ADocument extends SimplePDFDocument {
 	}
 
 	/**
-	 * Erstellt ein neues Dokument mit dem angegebenen Titel und Autor.
-	 * 
-	 * @param title
-	 *            Gibt den in den Meta-Daten anzuzeigenden Titel an.
-	 * @param creator
-	 *            Gibt den in den Mata-Daten anzuzeigenden Autor an.
+	 * Creates a new document.
+	 * @param title The title of the document.
+	 * @param creator The creator of the document.
 	 */
 	public DIN5008ADocument(String title, String creator) {
 		super(title, creator);
 		setup();
 	}
 
+	/**
+	 * Sets up the required areas.
+	 */
 	private void setup() {
 		headerArea = new AreaDefinition(HEADER_AREA_ID, HEADER_AREA_POSITION, HEADER_AREA_SIZE);
 		returnInfoArea = new AreaDefinition(RETURN_INFO_AREA_ID, RETURN_AREA_POSITION, RETURN_AREA_SIZE);
@@ -87,8 +87,8 @@ public class DIN5008ADocument extends SimplePDFDocument {
 	}
 
 	/**
-	 * Fügt dem Überschriftsbereich ein Element hinzu.
-	 * @param element Das hinzuzufügende Element.
+	 * Adds the given element to the header area of this document.
+	 * @param element The element to add.
 	 */
 	public void addHeaderElement(DocumentElement element) {
 		element.setAreaID(HEADER_AREA_ID);
@@ -96,8 +96,8 @@ public class DIN5008ADocument extends SimplePDFDocument {
 	}
 	
 	/**
-	 * Fügt dem Rücksendebereich ein Element hinzu.
-	 * @param element Das hinzuzufügende Element.
+	 * Adds the given element to the return information area of this document.
+	 * @param element The element to add.
 	 */
 	public void addReturnInformationElement(DocumentElement element){
 		element.setAreaID(RETURN_INFO_AREA_ID);
@@ -105,8 +105,8 @@ public class DIN5008ADocument extends SimplePDFDocument {
 	}
 	
 	/**
-	 * Fügt dem Adressbereich ein Element hinzu.
-	 * @param element Das hinzuzufügende Element.
+	 * Adds the given element to the address area of this document.
+	 * @param element The element to add.
 	 */
 	public void addAddressElement(DocumentElement element){
 		element.setAreaID(ADDRESS_AREA_ID);
@@ -114,8 +114,8 @@ public class DIN5008ADocument extends SimplePDFDocument {
 	}
 	
 	/**
-	 * Fügt dem Informationsbereich ein Element hinzu.
-	 * @param element Das hinzuzufügende Element.
+	 * Adds the given element to the info area of this document.
+	 * @param element The element to add.
 	 */
 	public void addInfoElement(DocumentElement element){
 		element.setAreaID(INFO_AREA_ID);
@@ -123,8 +123,8 @@ public class DIN5008ADocument extends SimplePDFDocument {
 	}
 	
 	/**
-	 * Fügt dem Textbereich ein Element hinzu.
-	 * @param element Das hinzuzufügende Element.
+	 * Adds the given element to the text area of this document.
+	 * @param element The element to add.
 	 */
 	public void addTextElement(DocumentElement element){
 		element.setAreaID(TEXT_AREA_ID);
@@ -132,8 +132,8 @@ public class DIN5008ADocument extends SimplePDFDocument {
 	}
 	
 	/**
-	 * Fügt dem Fußzeilenbereich ein Element hinzu.
-	 * @param element Das hinzuzufügende Element.
+	 * Adds the given element to the footer area of this document.
+	 * @param element The element to add.
 	 */
 	public void addFooterElement(DocumentElement element){
 		element.setAreaID(FOOTER_AREA_ID);
