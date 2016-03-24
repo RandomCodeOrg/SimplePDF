@@ -2,12 +2,23 @@ package com.github.randomcodeorg.simplepdf;
 
 import org.w3c.dom.Node;
 
+/**
+ * A class providing static method to used to parse a document.
+ * @author Marcel Singer
+ *
+ */
 class ParseTool {
 
 	private ParseTool() {
 
 	}
 
+	/**
+	 * Returns the first child node with the given name.
+	 * @param parent The current node.
+	 * @param nodeName The name of the child to return.
+	 * @return The first child with the specified name or <code>null</code> if there is none.
+	 */
 	public static Node getChild(Node parent, String nodeName) {
 		if (parent == null || parent.getChildNodes() == null)
 			return null;
@@ -20,6 +31,7 @@ class ParseTool {
 		return null;
 	}
 
+	
 	public static String getChildContentText(Node parent, String nodeName,
 			String defaultValue) {
 		return getContentText(getChild(parent, nodeName), defaultValue);

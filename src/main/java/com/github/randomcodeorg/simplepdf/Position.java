@@ -6,10 +6,10 @@ import java.util.Locale;
 
 import org.w3c.dom.Node;
 
+
 /**
- * Stellt eine Positionsangabe zur Verfügung.
- * 
- * @author Individual Software Solutions - ISS, 2013
+ * Defines a position inside a document. Note that the used unit is {@literal millimeters}.
+ * @author Marcel Singer
  *
  */
 public class Position implements XmlSerializable {
@@ -17,57 +17,56 @@ public class Position implements XmlSerializable {
 	private float x;
 	private float y;
 
+	
 	/**
-	 * Legt eine neue Position an.
-	 * 
-	 * @param x
-	 *            Der Abstand zur linken Begrenzung.
-	 * @param y
-	 *            Der Abstand zur oberen Begrenzung.
+	 * Creates a new position with the given coordinates.
+	 * @param x The distance to the left side of the document page in millimeters.
+	 * @param y The distance to the upper side of the document page in millimeters.
 	 */
 	public Position(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
 
+	
 	/**
-	 * Gibt den Abstand zur linken Begrenzung zurück.
-	 * 
-	 * @return Der Abstand zur linken Begrenzung.
+	 * Returns the distance to the left side of the document page in millimeters.
+	 * @return the distance to the left side of the document page in millimeters.
 	 */
 	public float getX() {
 		return x;
 	}
 
+	
 	/**
-	 * Gibt den Abstand zur oberen Begrenzung zurück.
-	 * 
-	 * @return Der Abstand zur oberen Begrenzung.
+	 * Returns the distance to the upper side of the document page in millimeters.
+	 * @return the distance to the upper side of the document page in millimeters.
 	 */
 	public float getY() {
 		return y;
 	}
 
 	/**
-	 * Setzt den Abstand zur linken Begrenzung.
-	 * 
-	 * @param x
-	 *            Der zu setztende Abstand.
+	 * Sets the distance to the left side of the document page in millimeters.
+	 * @param x The distance to set.
 	 */
 	public void setX(float x) {
 		this.x = x;
 	}
 
 	/**
-	 * Setzt den Abstand zur oberen Begrenzung.
-	 * 
-	 * @param y
-	 *            Der zu setzende Abstand.
+	 * Sets the distance to the upper side of the document page in millimeters.
+	 * @param y The distance to set.
 	 */
 	public void setY(float y) {
 		this.y = y;
 	}
 
+	/**
+	 * Creates a new position by adding the X and Y coordinates.
+	 * @param p The position to be added.
+	 * @return A new position that is created by adding the X and Y coordinates of this instance and the given position.
+	 */
 	public Position add(Position p) {
 		return new Position(x + p.x, y + p.y);
 	}
@@ -78,11 +77,9 @@ public class Position implements XmlSerializable {
 	}
 
 	/**
-	 * Gibt die XML-Repräsentation dieses Elements zurück.
-	 * 
-	 * @param tagName
-	 *            Der zu nutzende xml-Tag.
-	 * @return Die XML-Repräsentation dieses Elements.
+	 * Returns the XML representation of this element.
+	 * @param tagName The tag to be used.
+	 * @return The XML representation of this element.
 	 */
 	public String toXML(String tagName) {
 		StringBuilder sb = new StringBuilder();
