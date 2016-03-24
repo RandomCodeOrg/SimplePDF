@@ -2,28 +2,22 @@ package com.github.randomcodeorg.simplepdf;
 
 import com.github.randomcodeorg.simplepdf.creation.ProcessListener;
 
+
 /**
- * Repräsentiert ein Bild, das innerhalb einer Area gerendert werden kann.
- * 
- * @author Individual Software Solutions - ISS, 2013
- * 
+ * Represents an image that will be rendered inside an area.
+ * @author Marcel Singer
+ *
  */
 public class DocumentImage extends DocumentElement {
 
 	private String dataID;
-
+	
 	/**
-	 * Erstellt ein neues Bild-Element.
-	 * 
-	 * @param areaID
-	 *            Die ID der Area in der dieses Bild gerendert werden soll-
-	 * @param dataID
-	 *            Die ID des Datensatzes, welches dieses Bild repräsentiert.
-	 * @throws NullPointerException
-	 *             Tritt auf, wenn die die Area- oder Data-ID den Wert
-	 *             {@code null} besitzt.
-	 * @throws IllegalArgumentException
-	 *             Tritt auf, wenn die Area- oder Data-ID ein leerer String ist.
+	 * Creates a new instance of {@link DocumentImage}.
+	 * @param areaID The identifier of the area definition that will hold this image.
+	 * @param dataID The identifier of the data that holds the binary representation of the image.
+	 * @throws NullPointerException Is thrown if the given data or area identifier is <code>null</code>.
+	 * @throws IllegalArgumentException Is thrown if the given data or area identifie is an empty string.
 	 */
 	public DocumentImage(String areaID, String dataID)
 			throws NullPointerException, IllegalArgumentException {
@@ -35,25 +29,20 @@ public class DocumentImage extends DocumentElement {
 		this.dataID = dataID;
 	}
 
+	
 	/**
-	 * Gibt die ID des Datensatzes zurück.
-	 * 
-	 * @return Die ID des Datensatzes, welcher dieses Bild repräsentiert.
+	 * Returns the identifier of the data that holds the binary representation of the image.
+	 * @return The identifier of the data that holds the binary representation of the image.
 	 */
 	public String getDataID() {
 		return this.dataID;
 	}
-
+	
 	/**
-	 * Setzt die ID des Datensatzes, welcher dieses Bild repräsentiert.
-	 * 
-	 * @param dataID
-	 *            Die ID des zu setzenden Datensatzes.
-	 * @throws NullPointerException
-	 *             Tritt auf, wenn die angegebene Data-ID den Wert {@code null}
-	 *             besitzt.
-	 * @throws IllegalArgumentException
-	 *             Tritt auf, wenn die angegebene Data-ID ein leerer String ist.
+	 * Sets the identifier of the data that holds the binary representation of the image.
+	 * @param dataID The identifier to set.
+	 * @throws NullPointerException Is thrown if the given identifier is <code>null</code>.
+	 * @throws IllegalArgumentException Is thrown if the identiier is an empty string.
 	 */
 	public void setDataID(String dataID) throws NullPointerException,
 			IllegalArgumentException {

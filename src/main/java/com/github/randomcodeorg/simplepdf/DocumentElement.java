@@ -8,11 +8,11 @@ import com.github.randomcodeorg.simplepdf.creation.ProcessListener;
 import org.w3c.dom.Node;
 
 /**
- * Stellt ein Element dar, dass innerhalb eines Dokumentes gerendert werden
- * kann. <b>Hinweis:</b> Diese Klasse ist abstrakt.
+ * The abstract class that defines the basic properties and operations of an
+ * element that can be rendered inside a document.
  * 
- * @author Individual Software Solutions - ISS, 2013
- * 
+ * @author Marcel Singer
+ *
  */
 public abstract class DocumentElement implements XmlSerializable {
 
@@ -21,18 +21,17 @@ public abstract class DocumentElement implements XmlSerializable {
 	private boolean isRepeating = false;
 
 	/**
-	 * Erstellt eine neue Instanz des DocumentElements, dass in der Area mit der
-	 * angegebenen ID gerendert werden soll.
+	 * Creates a new instance of {@link DocumentElement} that will be positioned
+	 * inside the specified area.
 	 * 
 	 * @param areaID
-	 *            Die ID der Area, in der dieses Element gerendert werden soll.
+	 *            The identifier of the area.
 	 * @param styleID
-	 *            Gibt die ID der Style-Definition an, die auf dieses Element
-	 *            angewendet werden soll.
+	 *            The identifier of the style to apply to this element.
 	 * @throws NullPointerException
-	 *             Tritt auf, wenn die Area-ID den Wert {@code null} aufweist.
+	 *             If the given area identifier is <code>null</code>.
 	 * @throws IllegalArgumentException
-	 *             Tritt auf, wenn die angegebene Area-ID ein leerer String ist.
+	 *             If the given aread identifier is an empty string.
 	 */
 	public DocumentElement(String areaID, String styleID) {
 		if (areaID == null)
@@ -45,11 +44,15 @@ public abstract class DocumentElement implements XmlSerializable {
 	}
 
 	/**
-	 * Erstellt eine neue Instanz des DocumentElements, dass in der Are mit der
-	 * angegebenen ID gerendert werden soll.
+	 * Creates a new instance of {@link DocumentElement} that will be positioned
+	 * inside the specified area.
 	 * 
 	 * @param areaID
-	 *            Die ID der Area, in der dieses Element gerendert werden soll.
+	 *            The identifier of the area.
+	 * @throws NullPointerException
+	 *             If the given area identifier is <code>null</code>.
+	 * @throws IllegalArgumentException
+	 *             If the given area identifier is an empty string.
 	 */
 	public DocumentElement(String areaID) {
 		if (areaID == null)
@@ -60,11 +63,11 @@ public abstract class DocumentElement implements XmlSerializable {
 	}
 
 	/**
-	 * Gibt die ID der Style-Definition an, die auf dieses Element angewendet
-	 * werden soll.
+	 * Returns the identifier of the style definition that will be applied to
+	 * this element.
 	 * 
-	 * @return Die ID der Style-Definition an, die auf diese Element angewendet
-	 *         werden soll.
+	 * @return The identifier of the style definition that will be applied to
+	 *         this element.
 	 */
 	public String getStyleID() {
 		return styleID;
@@ -79,30 +82,37 @@ public abstract class DocumentElement implements XmlSerializable {
 	 *            angewendet werden soll. {@code null}, wenn keine
 	 *            Style-Definition angewand werden soll.
 	 */
+
+	/**
+	 * Sets the identifier of the style definition that will be applied to this
+	 * element.
+	 * 
+	 * @param styleID
+	 *            The identifier of the style definition that will be applied to
+	 *            this element.
+	 */
 	public void setStyleID(String styleID) {
 		this.styleID = styleID;
 	}
 
 	/**
-	 * Gibt die ID der Area an, in der dieses Element gerendert werden soll.
+	 * Returns the identifier of the area that will contain this element.
 	 * 
-	 * @return Die ID der Area an, in der dieses Element gerendert werden soll.
+	 * @return The identifier of the area that will contain this element.
 	 */
 	public String getAreaID() {
 		return areaID;
 	}
 
 	/**
-	 * Setzt die ID der Area, in der dieses Element gerendert werden soll.
+	 * Sets the identifier of the area that will contain this element.
 	 * 
 	 * @param areaID
-	 *            Gibt ID der Area an, in der dieses Element gerendert werden
-	 *            soll.
+	 *            The identifier to set.
 	 * @throws NullPointerException
-	 *             Tritt auf, wenn die angegebene Area-ID den Wert {@code null}
-	 *             aufweist.
+	 *             If the given identifier is <code>null</code>.
 	 * @throws IllegalArgumentException
-	 *             Tritt auf, wenn die angegebene Area-ID ein leerer String ist.
+	 *             If the given identifier is an empty string.
 	 */
 	public void setAreaID(String areaID) {
 		if (areaID == null)
@@ -113,24 +123,23 @@ public abstract class DocumentElement implements XmlSerializable {
 	}
 
 	/**
-	 * Gibt an, ob dieses Element auf jeder Seite, also wiederkehrend, gerendert
-	 * werden soll.
+	 * Returns <code>true</code> if this element will be rendered on every
+	 * document page.
 	 * 
-	 * @return {@code true}, wenn diese Element auf jeder Seite gerendert werden
-	 *         soll.
+	 * @return <code>true</code> if this element will be rendered on every
+	 *         document page. Otherwise <code>false</code>.
 	 */
 	public boolean getIsRepeating() {
 		return isRepeating;
 	}
 
 	/**
-	 * Setzt, ob dieses Element auf jeder Seite, also wiederkehrend, gerendert
-	 * werden soll.
+	 * Sets if this element should be rendered on every document page.
 	 * 
 	 * @param isRepeating
-	 *            {@code true}, wenn dieses Element auf jeder Seite gerendert
-	 *            werden soll.
-	 * @return This element.
+	 *            <code>true</code> if this element should be rendered on every
+	 *            document page. Otherwise <code>false</code>.
+	 * @return This instance.
 	 */
 	public DocumentElement setIsRepeating(boolean isRepeating) {
 		this.isRepeating = isRepeating;
@@ -138,11 +147,14 @@ public abstract class DocumentElement implements XmlSerializable {
 	}
 
 	/**
-	 * Führt die Validierung des Elementes durch. Dies geschieht i.d.R. vor der
-	 * Serialisierung.
+	 * Validates this element before rendering.
 	 * 
 	 * @param doc
-	 *            Gibt das väterliche Dokument an.
+	 *            The parent document.
+	 * @param listener
+	 *            A listener that will be notified if there are issues.
+	 * @param docXml
+	 *            The XML representation of this document.
 	 */
 	public void validate(SimplePDFDocument doc, ProcessListener listener, String docXml) {
 		if (!doc.containsAreaDefinition(areaID))
@@ -151,6 +163,13 @@ public abstract class DocumentElement implements XmlSerializable {
 			listener.addMessage(ProcessMessage.createNoStyleIDMessage(this, docXml));
 	}
 
+	/**
+	 * Returns <code>true</code> if this element requires a set style
+	 * definition.
+	 * 
+	 * @return <code>true</code> if this element requires a set style
+	 *         definition.
+	 */
 	protected boolean needsStyleID() {
 		return true;
 	}
@@ -188,28 +207,36 @@ public abstract class DocumentElement implements XmlSerializable {
 	}
 
 	/**
-	 * Gibt den Xml-xsi:type dieses Elementes zurück.
+	 * Returns the XML-xsi:type of this element.
 	 * 
-	 * @return Der Xml-xsi:type des Elements.
+	 * @return The XML-xsi:type of this element.
 	 */
 	protected abstract String getXSIType();
 
 	/**
-	 * Gibt zusätzliche XML-Attribute zurück.
+	 * Returns additional XML attributes of this element.
 	 * 
-	 * @return Zusätzliche XML-Attribute oder {@code null}, wenn keine
-	 *         existieren.
+	 * @return Additional XML attributes of this element.
 	 */
 	protected abstract String getAdditionalAttributes();
 
 	/**
-	 * Gibt zusätzliches inneren xml-Text zurück.
+	 * Returns the inner XML content of this element.
 	 * 
-	 * @return Zusätzlichen inneren xml-Text oder {@code null}, wenn keiner
-	 *         existiert.
+	 * @return The inner XML content of this element.
 	 */
 	protected abstract String getXmlContent();
 
+	/**
+	 * <p>
+	 * Creates a copy of this element.
+	 * </p>
+	 * <p>
+	 * <b>Note:</b> An inheriting class should overwrite the {@link #onCopy()}
+	 * method in oder to copy extended properties.
+	 * 
+	 * @return A copy of this element.
+	 */
 	public final DocumentElement copy() {
 		DocumentElement result = onCopy();
 		result.setAreaID(areaID);
@@ -218,6 +245,17 @@ public abstract class DocumentElement implements XmlSerializable {
 		return result;
 	}
 
+	/**
+	 * <p>
+	 * Creates a copy of this element.
+	 * </p>
+	 * <p>
+	 * <b>Note:</b> An inheriting class should overwrite this method in order to
+	 * create the required object and copy extended properties. The overwriting class does not have to copy basic properties defined by {@link DocumentElement}.
+	 * This will be done automatically by the {@link #copy()} method. 
+	 * </p><p><b>Note:</b> Do not call this method directly. To get a copy of this element one should use the {@link #copy()} method.</p>
+	 * @return
+	 */
 	protected abstract DocumentElement onCopy();
 
 	static DocumentElement parse(Node n) {

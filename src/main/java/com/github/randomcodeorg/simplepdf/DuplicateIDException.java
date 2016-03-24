@@ -1,55 +1,44 @@
 package com.github.randomcodeorg.simplepdf;
 
+
 /**
- * Repräsentiert einen Fehler der auftritt, wenn zwei oder mehr Elemente einer
- * Gruppe die selbe ID aufweisen.
- * 
- * @author Individual Software Solutions - ISS, 2013
- * 
+ * An exception that is thrown if there are more than one area, style or data definitions with the same identifier.
+ * @author Marcel Singer
+ *
  */
 public class DuplicateIDException extends RuntimeException {
 
 	private static final long serialVersionUID = 1596867783704989227L;
 
+	
 	/**
-	 * Initialisiert eine neue Instanz der DuplicateIDException.
+	 * Creates a new instance of {@link DuplicateIDException}.
 	 */
 	public DuplicateIDException() {
 	}
 
 	/**
-	 * Initialisiert eine neue Instanz der DuplicateIDException unter Angabe
-	 * einer weiteren Information.
-	 * 
-	 * @param message
-	 *            Gibt die dieser Exception zugehörige Information oder
-	 *            Beschreibung an.
+	 * Creates a new instance of {@link DuplicateIDException} using the given message.
+	 * @param message The message of the exception to create.
 	 */
 	public DuplicateIDException(String message) {
 		super(message);
 	}
 
 	/**
-	 * Legt eine neue Instanz der DuplicateIDException unter der Angabe der
-	 * untergeordneten Ausnahme an.
-	 * 
-	 * @param cause
-	 *            Gibt die untergeordnete Ausnahme an.
+	 * Creates a new instance of {@link DuplicateIDException} with a given inner exception.
+	 * @param cause The inner exception that caused this exception.
 	 */
 	public DuplicateIDException(Throwable cause) {
 		super(cause);
 
 	}
 
+	
 	/**
-	 * Legt eine neue Instanz der DuplicateIDException unter der Angabe weiterer
-	 * Informationen an.
-	 * 
-	 * @param message
-	 *            Gibt die dieser Exception zugehörige Information oder
-	 *            Beschreibung an.
-	 * @param cause
-	 *            Gibt den untergeordneten Grund dieser Exception an.
+	 * Creates a new instance of {@link DuplicateIDException} with a given message and inner exception. 
+	 * @param message The message of the exception to create.
+	 * @param cause The inner exception that caused this exception.
 	 */
 	public DuplicateIDException(String message, Throwable cause) {
 		super(message, cause);
