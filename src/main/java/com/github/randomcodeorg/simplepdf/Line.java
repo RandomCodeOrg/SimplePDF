@@ -3,11 +3,16 @@ package com.github.randomcodeorg.simplepdf;
 import java.util.Locale;
 
 /**
- * Repräsentiert eine Linie, die innerhalb einer Area gerendert werden kann.<br />
- * <b>Hinweis:</b> Die Linie wird innerhalb einer Seite absolut positioniert.
+ * <p>
+ * Represents a line that will be rendered inside a document.
+ * </p>
+ * <p>
+ * <b>Note:</b> The line will be positioned absolute within the document and
+ * does not take up space inside the specified area.
+ * </p>
  * 
- * @author Individual Software Solutions - ISS, 2013
- * 
+ * @author Marcel Singer
+ *
  */
 public class Line extends DocumentElement {
 
@@ -16,21 +21,28 @@ public class Line extends DocumentElement {
 	private double lineWidth = 0.5;
 
 	/**
-	 * Erstellt eine neue Instanz der Klasse Line mit den angegebenen
-	 * Eigenschaften.
+	 * Creates a new instance of {@link Line} using the specified properties.
 	 * 
 	 * @param areaID
-	 *            Gibt ID der Area an, in der diese Linie gerendert werden soll.
+	 *            <p>
+	 *            The identifier of the area definition this line is associated
+	 *            with.
+	 *            </p>
+	 *            <p>
+	 *            <b>Note:</b> This element requires a valid area identifier
+	 *            although it will be rendered on page level.
+	 *            </p>
 	 * @param startPoint
-	 *            Gibt den Startpunkt (in mm) dieser Linie an.
+	 *            The start point of the line to render.
 	 * @param endPoint
-	 *            Gibt den Endpunkt (in mm) dieser Linie an.
+	 *            The end point of the line to render.
 	 * @throws NullPointerException
-	 *             Tritt auf, wenn startPoint, endPoint oder areaID den Wert
-	 *             {@code null} haben.
+	 *             Is thrown if the given start point, end point or area
+	 *             identifier is <code>null</code>.
+	 * @throws IllegalArgumentException
+	 *             Is thrown if the given area identifier is an empty string.
 	 */
-	public Line(String areaID, Position startPoint, Position endPoint)
-			throws NullPointerException {
+	public Line(String areaID, Position startPoint, Position endPoint) throws NullPointerException {
 		super(areaID);
 		if (startPoint == null)
 			throw new NullPointerException("The startPoint may not be null.");
@@ -42,40 +54,79 @@ public class Line extends DocumentElement {
 
 	}
 
-	public Line(String areaID, Position startPoint, Position endPoint,
-			double lineWidth) {
+	/**
+	 * Creates a new instance of {@link Line} using the specified properties.
+	 * 
+	 * @param areaID
+	 *            <p>
+	 *            The identifier of the area definition this line is associated
+	 *            with.
+	 *            </p>
+	 *            <p>
+	 *            <b>Note:</b> This element requires a valid area identifier
+	 *            although it will be rendered on page level.
+	 *            </p>
+	 * @param startPoint
+	 *            The start point of the line to render.
+	 * @param endPoint
+	 *            The end point of the line to render.
+	 * @param lineWidth
+	 *            The width of the line.
+	 */
+	public Line(String areaID, Position startPoint, Position endPoint, double lineWidth) {
 		this(areaID, startPoint, endPoint);
 		this.lineWidth = lineWidth;
 	}
 
-	public Line(String areaID, Position startPoint, Position endPoint,
-			double lineWidth, boolean isRepeating) {
+	/**
+	 * Creates a new instance of {@link Line} using the specified properties.
+	 * 
+	 * @param areaID
+	 *            <p>
+	 *            The identifier of the area definition this line is associated
+	 *            with.
+	 *            </p>
+	 *            <p>
+	 *            <b>Note:</b> This element requires a valid area identifier
+	 *            although it will be rendered on page level.
+	 *            </p>
+	 * @param startPoint
+	 *            The start point of the line to render.
+	 * @param endPoint
+	 *            The end point of the line to render.
+	 * @param lineWidth
+	 *            The width of the line.
+	 * @param isRepeating
+	 *            <code>true</code> if the line should be rendered on every
+	 *            document page. Otherwise <code>false</code>.
+	 */
+	public Line(String areaID, Position startPoint, Position endPoint, double lineWidth, boolean isRepeating) {
 		this(areaID, startPoint, endPoint, lineWidth);
 		setIsRepeating(isRepeating);
 	}
 
 	/**
-	 * Gibt den Startpunkt dieser Linie zurück.
+	 * Returns the start point of this line.
 	 * 
-	 * @return Der Startpunkt dieser Linie in mm.
+	 * @return The start point of this line.
 	 */
 	public Position getStartPoint() {
 		return startPoint;
 	}
 
 	/**
-	 * Gibt den Endpunkt dieser Linie zurück.
+	 * Returns the end point of this line.
 	 * 
-	 * @return Der Endpunkt dieser Linie in mm.
+	 * @return The end point of this line.
 	 */
 	public Position getEndPoint() {
 		return endPoint;
 	}
 
 	/**
-	 * Gibt die Breite dieser Linie zurück.
+	 * Returns the width of this line.
 	 * 
-	 * @return Die Breite der Linie in mm.
+	 * @return The width of this line.
 	 */
 	public double getLineWidth() {
 		return lineWidth;
@@ -87,13 +138,12 @@ public class Line extends DocumentElement {
 	}
 
 	/**
-	 * Setzt den Startpunkt dieser Linie.
+	 * Sets the start point of this line.
 	 * 
 	 * @param startPoint
-	 *            Gibt den zu setzenden Startpunkt (in mm) dieser Linie an.
+	 *            The start point to set.
 	 * @throws NullPointerException
-	 *             Tritt auf, wenn der zu setzende Startpunkt den Wert
-	 *             {@code null} hat.
+	 *             Is thrown if the given start point is <code>null</code>.
 	 */
 	public void setStartPoint(Position startPoint) throws NullPointerException {
 		if (startPoint == null)
@@ -102,13 +152,12 @@ public class Line extends DocumentElement {
 	}
 
 	/**
-	 * Setzt den Endpunkt dieser Linie.
+	 * Sets the end point of this line.
 	 * 
 	 * @param endPoint
-	 *            Gibt den zu setzenden Endpunkt (in mm) dieser Linie an.
+	 *            The end point to set.
 	 * @throws NullPointerException
-	 *             Tritt auf, wenn der zu setzende Endpunkt den Wert
-	 *             {@code null} hat.
+	 *             Is thrown if the given end point is <code>null</code>.
 	 */
 	public void setEndPoint(Position endPoint) throws NullPointerException {
 		if (endPoint == null)
@@ -117,17 +166,16 @@ public class Line extends DocumentElement {
 	}
 
 	/**
-	 * Setzt die Breite dieser Linie.
+	 * Sets the width of this line.
 	 * 
 	 * @param lineWidth
-	 *            Die zu setzende Breite in mm.
+	 *            The width to set.
 	 * @throws IllegalArgumentException
-	 *             Tritt auf, wenn die zu setzende Breite kleiner als Null ist.
+	 *             Is thrown if the given width is negative.
 	 */
 	public void setLineWidth(double lineWidth) throws IllegalArgumentException {
 		if (lineWidth < 0)
-			throw new IllegalArgumentException(
-					"The lineWidth may not be negative.");
+			throw new IllegalArgumentException("The lineWidth may not be negative.");
 		this.lineWidth = lineWidth;
 	}
 
@@ -144,10 +192,8 @@ public class Line extends DocumentElement {
 	@Override
 	protected String getXmlContent() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(String.format(Locale.US,
-				"%s\n%s\n<LineWidth>%.2f</LineWidth>\n<LineColor />",
-				startPoint.toXML("StartPoint"), endPoint.toXML("EndPoint"),
-				lineWidth));
+		sb.append(String.format(Locale.US, "%s\n%s\n<LineWidth>%.2f</LineWidth>\n<LineColor />",
+				startPoint.toXML("StartPoint"), endPoint.toXML("EndPoint"), lineWidth));
 		return sb.toString();
 	}
 
