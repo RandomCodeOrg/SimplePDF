@@ -4,12 +4,32 @@ import java.util.Locale;
 import static com.github.randomcodeorg.simplepdf.ParseTool.*;
 import org.w3c.dom.Node;
 
+/**
+ * <p>
+ * A document element that renders a rectangle.
+ * </p>
+ * <p>
+ * <b>Note:</b> The rectangle will be positioned absolute within the document and
+ * does not take up space inside the specified area.
+ * </p>
+ * @author Marcel Singer
+ *
+ */
 public class Rectangle extends DocumentElement{
 
 	private  Position location = new Position(0, 0);
 	private Size size = new Size(0, 0);
 	private float lineWidth = 0.5f;
 	
+	/**
+	 * Creates a new rectangle using the specified properties.
+	 * @param areaID The identifier of the area definition.
+	 * @param location The location of the rectangle.
+	 * @param size The size of the rectangle.
+	 * @param lineWidth The line width of the rectangle.
+	 * @throws IllegalArgumentException Is thrown if the given area identifier is an empty string.
+	 * @throws NullPointerException Is thrown if the given area identifier is <code>null</code>.
+	 */
 	public Rectangle(String areaID, Position location, Size size, float lineWidth) {
 		super(areaID);
 		this.location = location;
@@ -17,11 +37,35 @@ public class Rectangle extends DocumentElement{
 		this.size = size;
 	}
 
+	/**
+	 * Returns the position of this rectangle.
+	 * @return The position of this rectangle.
+	 */
 	public Position getLocation(){ return location; }
+	/**
+	 * Returns the size of this rectangle.
+	 * @return The size of this rectangle.
+	 */
 	public Size getSize(){ return size; }
+	/**
+	 * Returns the line width of this rectangle.
+	 * @return The line width of this rectangle.
+	 */
 	public float getLineWidth() { return lineWidth; }
+	/**
+	 * Sets the line width of this rectangle.
+	 * @param lineWidth The width to set.
+	 */
 	public void setLineWidth(float lineWidth){ this.lineWidth = lineWidth; }
+	/**
+	 * Sets the location of this rectangle.
+	 * @param location The location to set.
+	 */
 	public void setLocation(Position location){ this.location = location; }
+	/**
+	 * Sets the size of this rectangle.
+	 * @param size The size to set.
+	 */
 	public void setSize(Size size){ this.size = size; }
  	
 	@Override
@@ -47,6 +91,11 @@ public class Rectangle extends DocumentElement{
 		return rect;
 	}
 
+	/**
+	 * Creates an instance of {@link Rectangle} by parsing the given element.
+	 * @param n The node to parse.
+	 * @return The parsed rectangle.
+	 */
 	public static Rectangle parse(Node n){
 		Position p = Position.parse(getChild(n, "Location"));
 		Size s = Size.parse(getChild(n, "Size"));
