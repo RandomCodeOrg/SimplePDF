@@ -7,48 +7,76 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-
+/**
+ * A list that defines methods that can be used for serialization and parsing.
+ * @author Marcel Singer
+ *
+ * @param <T> The containing element type.
+ */
 class XmlList<T> implements XmlSerializable, List<T>{
 
 	private String tagName;
 	private List<T> data;
 	
-	
+	/**
+	 * Creates a new instance of {@link XmlList}.
+	 * @param tagName The XML tag name.
+	 * @param data The list of elements to be wrapped.
+	 */
 	public XmlList(String tagName, List<T> data){
 		
-		if(tagName == null) throw new NullPointerException("The tagName may not be null.");
-		if(tagName.isEmpty())throw new IllegalArgumentException("The tagName may not be empty.");
+		if(tagName == null) throw new NullPointerException("The tag ame may not be null.");
+		if(tagName.isEmpty())throw new IllegalArgumentException("The tag name may not be empty.");
 		if(data == null) throw new NullPointerException("The data may not be null.");
 		this.tagName = tagName;
 		this.data = data;
 	}
 	
+	/**
+	 * Creates a new instance of {@link XmlList}.
+	 * @param tagName The XML tag name.
+	 * @param data The elements to be contained by this list.
+	 */
 	public XmlList(String tagName, Iterable<T> data){
 		
-		if(tagName == null) throw new NullPointerException("The tagName may not be null.");
-		if(tagName.isEmpty())throw new IllegalArgumentException("The tagName may not be empty.");
+		if(tagName == null) throw new NullPointerException("The tag name may not be null.");
+		if(tagName.isEmpty())throw new IllegalArgumentException("The tag name may not be empty.");
 		if(data == null) throw new NullPointerException("The data may not be null.");
 		this.tagName = tagName;
 		this.data = toList(data);
 	}
 	
+	/**
+	 * Creates a new instance of {@link XmlList}.
+	 * @param tagName The XML tag name.
+	 * @param data The elements to be contained by this list.
+	 */
 	public XmlList(String tagName, T[] data){
 		
-		if(tagName == null) throw new NullPointerException("The tagName may not be null.");
-		if(tagName.isEmpty())throw new IllegalArgumentException("The tagName may not be empty.");
+		if(tagName == null) throw new NullPointerException("The tag name may not be null.");
+		if(tagName.isEmpty())throw new IllegalArgumentException("The tag name may not be empty.");
 		if(data == null) throw new NullPointerException("The data may not be null.");
 		this.tagName = tagName;
 		this.data = Arrays.asList(data);
 	}
 	
+	/**
+	 * Creates an empty instance of {@link XmlList}.
+	 * @param tagName The XML tag name.
+	 */
 	public XmlList(String tagName){
 		
-		if(tagName == null) throw new NullPointerException("The tagName may not be null.");
-		if(tagName.isEmpty())throw new IllegalArgumentException("The tagName may not be empty.");
+		if(tagName == null) throw new NullPointerException("The tag name may not be null.");
+		if(tagName.isEmpty())throw new IllegalArgumentException("The tag name may not be empty.");
 		this.tagName = tagName;
 		data = new ArrayList<T>();
 	}
 	
+	/**
+	 * Copies the elements of the given {@link Iterable} into a new list.
+	 * @param data The {@link Iterable} to copy from.
+	 * @return A list containing all elements of the given {@link Iterable}.
+	 */
 	private List<T> toList(Iterable<T> data){
 		ArrayList<T> result = new ArrayList<T>();
 		for(T e:data){
@@ -57,14 +85,21 @@ class XmlList<T> implements XmlSerializable, List<T>{
 		return result;
 	}
 	
-	
+	/**
+	 * Returns the XML tag name.
+	 * @return The XML tag name.
+	 */
 	public String getTagName(){
 		return tagName;
 	}
 	
+	/**
+	 * Sets the XML tag name.
+	 * @param tagName The XML tag name to set.
+	 */
 	public void setTagName(String tagName){
-		if(tagName == null) throw new NullPointerException("The tagName may not be null.");
-		if(tagName.isEmpty())throw new IllegalArgumentException("The tagName may not be empty.");
+		if(tagName == null) throw new NullPointerException("The tag name may not be null.");
+		if(tagName.isEmpty())throw new IllegalArgumentException("The tag name may not be empty.");
 		this.tagName = tagName;
 	}
 	

@@ -1,15 +1,15 @@
 package com.github.randomcodeorg.simplepdf;
 
 /**
- * Dieses Interface ermöglicht eine XML-Serialisierung des implementierenden Objektes.
- * @author Individual Software Solutions - ISS, 2013
+ * An interface that declares methods that can be used to serialize an implementing object.
+ * @author Marcel Singer
  *
  */
 public interface XmlSerializable {
 
 	/**
-	 * Führt die XML-Serialisierung durch.
-	 * @return Das Ergebnis der XML-Serialisierung.
+	 * Serializes this object.
+	 * @return The XML representation of this object.
 	 */
 	public String toXML();
 	
