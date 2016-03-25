@@ -1,55 +1,43 @@
 package com.github.randomcodeorg.simplepdf;
 
+
+
 /**
- * Repräsentiert einen Fehler bei der Validierung des Dokumentes.
- * 
- * @author Individual Software Solutions - ISS, 2013
- * 
+ * This is an exception that might occur during the validation of a document.
+ * @author Marcel Singer
+ *
  */
 public class ValidationException extends Exception {
 
 	private static final long serialVersionUID = 6784979086332111287L;
 
 	/**
-	 * Legt eine neue Instanz der ValidationException ohne Angabe weiterer
-	 * Gründe an.
+	 * Creates a new instance of {@link ValidationException}.
 	 */
 	public ValidationException() {
 		super();
 	}
 
 	/**
-	 * Legt eine neue Instanz der ValidationException unter der Angabe weiterer
-	 * Informationen an.
-	 * 
-	 * @param message
-	 *            Gibt die dieser Exception zugehörige Information oder
-	 *            Beschreibung an.
-	 * @param cause
-	 *            Gibt den untergeordneten Grund dieser Exception an.
+	 * Creates a new instance of {@link ValidationException} using the given message and cause.
+	 * @param message The message of this exception.
+	 * @param cause The causing exception.
 	 */
 	public ValidationException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
 	/**
-	 * Legt eine neue Instanz der ValidationException unter der Angabe einer
-	 * zusätzlichen Information an.
-	 * 
-	 * @param message
-	 *            Gibt die dieser Exception zugehörige Information oder
-	 *            Beschreibung an.
+	 * Creates a new instance of {@link ValidationException} using the given message.
+	 * @param message The message of this exception.
 	 */
 	public ValidationException(String message) {
 		super(message);
 	}
 
 	/**
-	 * Legt eine neue Instanz der ValidationException unter der Angabe der
-	 * untergeordneten Ausnahme an.
-	 * 
-	 * @param cause
-	 *            Gibt die untergeordnete Ausnahme an.
+	 * Creates a new instance of {@link ValidationException} using the given cause.
+	 * @param cause The causing exception.
 	 */
 	public ValidationException(Throwable cause) {
 		super(cause);

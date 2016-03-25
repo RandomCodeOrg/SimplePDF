@@ -1,29 +1,29 @@
 package com.github.randomcodeorg.simplepdf;
 
 /**
- * Gibt die möglichen Stil-Variationen einer Schrift an.
- * @author Individual Software Solutions - ISS, 2013
+ * An enumeration that is used to define different text styles.
+ * @author Marcel Singer
  *
  */
 public enum TextDecoration {
 	/**
-	 * Der Text wird normal dargestellt.
+	 * The text will be rendered normally.
 	 */
 	NONE,
 	/**
-	 * Der Text wird fett dargestellt.
+	 * The text will be rendered bold.
 	 */
 	BOLD,
 	/**
-	 * Der Text wird unterstrichen dargestellt.
+	 * The text will be rendered underlined.
 	 */
 	UNDERLINE,
 	/**
-	 * Der Text wird krusiv dargestellt.
+	 * The text will be rendered italic.
 	 */
 	ITALIC,
 	/**
-	 * Der Text wird durchgestrichen dargestellt.
+	 * The text will be rendered ruled out.
 	 */
 	STRIKE_OUT
 }
