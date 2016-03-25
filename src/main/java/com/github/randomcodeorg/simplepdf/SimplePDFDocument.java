@@ -15,7 +15,6 @@ import org.w3c.dom.Node;
 
 import com.github.randomcodeorg.simplepdf.creation.ProcessListener;
 
-//<tr><td>{@link }</td><td> </td><td><i> </i></td><tr>
 
 /**
  * <p>
@@ -739,6 +738,11 @@ public class SimplePDFDocument implements XmlSerializable {
 		return sb.toString();
 	}
 
+	/**
+	 * Creates an instance of {@link SimplePDFDocument} by parsing the given node.
+	 * @param n The node to parse.
+	 * @return An instance of {@link SimplePDFDocument}.
+	 */
 	static SimplePDFDocument parse(Node n) {
 		String title = ParseTool.getContentText(ParseTool.getChild(n, "Title"));
 		String creator = ParseTool.getChildContentText(n, "Creator");
