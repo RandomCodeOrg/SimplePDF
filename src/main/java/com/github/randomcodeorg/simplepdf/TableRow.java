@@ -5,22 +5,19 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Repräsentiert eine Tabellen-Zeile innerhalb einer Tabelle.
- * @author Individual Software Solutions - ISS, 2013
+ * A table row that is contained by a {@link Table}.
+ * @author Marcel Singer
  *
  */
 public class TableRow implements XmlSerializable {
 
 	private final List<TableCell> cells;
 
+	
 	/**
-	 * Erstellt eine neue Tabellen-Zeile.
-	 * 
-	 * @param cells
-	 *            Gibt die Zellen dieser Zeile an.
-	 * @throws NullPointerException
-	 *             Tritt auf, wenn der Parameter cells den Wert {@code null}
-	 *             hat.
+	 * Creates a new table row containing the given cells.
+	 * @param cells The cells of the table row to create.
+	 * @throws NullPointerException Is thrown if the given list of cells is <code>null</code>.
 	 */
 	public TableRow(List<TableCell> cells) throws NullPointerException {
 		if (cells == null)
@@ -29,28 +26,24 @@ public class TableRow implements XmlSerializable {
 	}
 
 	/**
-	 * Erstellt eine neue Tabellen-Zeile.
+	 * Creates an empty table row.
 	 */
 	public TableRow() {
 		this.cells = new ArrayList<TableCell>();
 	}
 
 	/**
-	 * Legt eine neue Tabellen-Zeile mit den angegebenen Zellen an.
-	 * 
-	 * @param cells
-	 *            Gibt die Zellen der Zeile an.
-	 * @throws NullPointerException
-	 *             Tritt auf, wenn der Parameter cells den Wert {@code null}
-	 *             hat.
+	 * Creates a new table row containing the given cells.
+	 * @param cells The cells of the table row to create.
+	 * @throws NullPointerException Is thrown if the given array of cells is <code>null</code>.
 	 */
 	public TableRow(TableCell... cells) throws NullPointerException {
 		this.cells = Arrays.asList(cells);
 	}
 	
 	/**
-	 * Erstellt eine neue Tabellen-Zeile, wobei jedes Element in einer neuen Zelle gerendert wird.
-	 * @param elements Gibt die Elemenete dieser Zeile an.
+	 * Creates a new table row containing a separated table cell for every given document element.
+	 * @param elements The element of the table row to create.
 	 */
 	public TableRow(DocumentElement... elements){
 		this();
@@ -60,14 +53,17 @@ public class TableRow implements XmlSerializable {
 	}
 
 	/**
-	 * Ruft die Zellen dieser Zeile ab.
-	 * 
-	 * @return Die Zellen dieser Zeile.
+	 * Returns the table cells of this row.
+	 * @return The table cells of this row.
 	 */
 	public List<TableCell> getCells() {
 		return cells;
 	}
 	
+	/**
+	 * Creates a deep copy of this element.
+	 * @return A deep copy of this element.
+	 */
 	public TableRow copy(){
 		TableRow tr = new TableRow();
 		for(TableCell tc : cells){
