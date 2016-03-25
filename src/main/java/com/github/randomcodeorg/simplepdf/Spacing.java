@@ -6,10 +6,13 @@ import org.w3c.dom.Node;
 
 import static com.github.randomcodeorg.simplepdf.ParseTool.*;
 
+
 /**
- * Stellt einen Container zur Angabe von Abständen zu einer äußeren Grenze bereit.
- * @author Individual Software Solutions - ISS, 2013
- *
+ * <p>
+ * A class that is used to store spacing values.
+ * </p>
+ * <p><b>Note:</b> The used unit is millimeters.</p>
+ * @author Marcel Singer
  */
 public class Spacing implements XmlSerializable {
 	
@@ -18,12 +21,13 @@ public class Spacing implements XmlSerializable {
 	private double right;
 	private double bottom;
 	
+	
 	/**
-	 * Erstellt eine neue Instanz von Spacing mit den angegebenen Abständen.
-	 * @param left Gibt den linksbündigen Abstand an.
-	 * @param top Gibt den führenden Abstand an.
-	 * @param right Gibt den rechtsbündigen Abstand an.
-	 * @param bottom Gibt den abschließenden Abstand an.
+	 * Creates a new instance of {@link Spacing} using the given values.
+	 * @param left The left hand side spacing in millimeters.
+	 * @param top The upper spacing in millimeters.
+	 * @param right The right hand side spacing in millimeters.
+	 * @param bottom The lower spacing in millimeters.
 	 */
 	public Spacing(double left, double top, double right, double bottom){
 		this.left = left;
@@ -33,99 +37,99 @@ public class Spacing implements XmlSerializable {
 	}
 	
 	/**
-	 * Erstellt eine Kopie dieser Instanz.
-	 * @return Eine Kopie dieser Instanz.
+	 * Creates a copy of this object.
+	 * @return A copy of this object.
 	 */
 	public Spacing copy(){
 		return new Spacing(left, top, right, bottom);
 	}
 	
+	
 	/**
-	 * Erstellt eine neue Instanz von Spacing mit dem angegebenen horizontalen- und vertikalen Abständen.
-	 * <b>Hinweis:</b> Ein Aufruf entspricht damit <br/>{@code new Spacing(horizontal, vertical, horizontal, vertical);}
-	 * @param horizontal Gibt den horizontalen Abstand an.
-	 * @param vertical Gibt den Vertikalen Abstand an.
+	 * Creates a new instance of {@link Spacing} using the given values.
+	 * @param horizontal The left and right hand side spacing in millimeters.
+	 * @param vertical The upper and lower spacing in millimeters.
 	 */
 	public Spacing(double horizontal, double vertical){
 		this(horizontal, vertical, horizontal, vertical);
 	}
 	
+	
 	/**
-	 * Erstellt eine neue Instanz von Spacing mit dem angegebenen Abstand.
-	 * <b>Hinweis:</b> Ein Aufruf entspricht damit <br/>
-	 * {@code new Spacing(allSpacing, allSpacing)} bzw. <br /> {@code new Spacing(allSpacing, allSpacing, allSpacing, allSpacing);}
-	 * @param allSpacing Der für alle Seiten anzuwendende Abstand.
+	 * Creates a new instance of {@link Spacing} with identical values for every direction.
+	 * @param allSpacing The spacing in every direction in millimeters.
 	 */
 	public Spacing(double allSpacing){
 		this(allSpacing, allSpacing);
 	}
 	
+	
 	/**
-	 * Gibt den oberen Abstand an.
-	 * @return Der obere Abstand.
+	 * Returns the upper spacing.
+	 * @return The upper spacing in millimeters.
 	 */
 	public double getTop(){
 		return top;
 	}
 	
 	/**
-	 * Gibt den seitlich-rechten Abstand an.
-	 * @return Der seitlich-rechte Abstand.
+	 * Returns the right hand side spacing.
+	 * @return The right hand side spacing in millimeters.
 	 */
 	public double getRight(){
 		return right;
 	}
 	
 	/**
-	 * Gibt den unteren Abstand an.
-	 * @return Der untere Abstand.
+	 * Returns the lower spacing.
+	 * @return The lower spacing in millimeters.
 	 */
 	public double getBottom(){
 		return bottom;
 	}
 	
 	/**
-	 * Gibt den seitlich-linken Abstand an.
-	 * @return Der seitlich-linke Abstand.
+	 * Returns the left hand side spacing.
+	 * @return The left hand side spacing in millimeters.
 	 */
 	public double getLeft(){
 		return left;
 	}
 	
 	/**
-	 * Setzt den oberen Abstand.
-	 * @param top Gibt den zu setzenden oberen Abstand an.
+	 * Sets the upper spacing.
+	 * @param top The spacing to set (in millimeters).
 	 */
 	public void setTop(double top){
 		this.top = top;
 	}
 	
 	/**
-	 * Setzt den seitlich-rechten Abstand.
-	 * @param right Gibt den zu setzenden seitlich-rechten Abstand an.
+	 * Sets the right hand side spacing.
+	 * @param right The spacing to set (in millimeters).
 	 */
 	public void setRight(double right){
 		this.right = right;
 	}
 	
 	/**
-	 * Setzt den unteren Abstand.
-	 * @param bottom Gibt den zu setzenden unteren Abstand an.
+	 * Sets the lower spacing.
+	 * @param bottom The spacing to set (in millimeters).
 	 */
 	public void setBottom(double bottom){
 		this.bottom = bottom;
 	}
 	
 	/**
-	 * Setzt den seitlich-linken Abstand.
-	 * @param left Gibt den zu setzenden seitlich-linken Abstand an.
+	 * Sets the left hand side spacing.
+	 * @param left The spacing to set (in millimeters).
 	 */
 	public void setLeft(double left){
 		this.left = left;
 	}
 	
 	/**
-	 * Gibt den standardmäßigen XML-Tag des Spcaing-Elements an.
+	 * A constant declaring the default tag name.
 	 */
 	public static final String STD_TAG_NAME = "Spacing";
 	
@@ -138,18 +142,28 @@ public class Spacing implements XmlSerializable {
 	
 	
 	/**
-	 * Führt die XML-Serialisierung mit einem gesondert gesetzten XML-Tag-Name durch.
-	 * @param tagName Der zu verwendende Tag-Name.
-	 * @return Das Ergebnis der XML-Serialisierung.
+	 * Returns the XML representation of this element.
+	 * @param tagName The tag name to be used.
+	 * @return The XML representation of this element.
 	 */
 	public String toXML(String tagName){
 		return String.format(Locale.US, SPACING_FORMAT, tagName, top, left, right, bottom);
 	}
 
+	/**
+	 * Creates a new spacing object by parsing the given node.
+	 * @param n The node to be parsed.
+	 * @return A new spacing object.
+	 */
 	static Spacing parse(Node n){
 		return new Spacing(getAttribute(n, "Left", 0.0), getAttribute(n, "Top", 0.0), getAttribute(n, "Right", 0.0), getAttribute(n, "Bottom", 0.0));
 	}
 	
+	/**
+	 * Creates a new spacing object by adding all values of this and the given object.
+	 * @param other The other instance.
+	 * @return A new spacing object.
+	 */
 	public Spacing add(Spacing other){
 		return new Spacing(left + other.left, top + other.top, right + other.right, bottom + other.bottom);
 	}

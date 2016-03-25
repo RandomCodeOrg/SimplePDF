@@ -6,46 +6,46 @@ import java.util.Locale;
 import org.w3c.dom.Node;
 import static com.github.randomcodeorg.simplepdf.ParseTool.*;
 
+
 /**
- * Stellt eine zentrale Definition über das Design von Dokument-Elementen zur
- * Verfügung.<br />
- * <b>Hinweis:</b> Die ID einer Style-Definition ist innerhalb eines Dokumentes
- * nicht case-sensitive.
- * 
- * @author Individual Software Solutions - ISS, 2013
- * 
+ * <p>A style definition that is used to store a collection of styling attributes.</p>
+ * <p><b>Note:</b> The identifier of a style definition is not case sensitive.</p>
+ * @author Marcel Singer
+ *
  */
 public class StyleDefinition implements XmlSerializable {
 
 	// TODO: Serialization of the alignment.
 	
-	
+	/**
+	 * A constant declaring the default (text) alignment.
+	 */
 	public static final TextAlignment STD_ALIGNMENT = TextAlignment.LEFT;
 	
+	
 	/**
-	 * Die standardmäßige Schriftgröße (12pt).
+	 * A constant declaring the default font size.
 	 */
 	public static final int STD_FONT_SIZE = 12;
+	
 	/**
-	 * Die standardmäßige Schrift (Arial).
+	 * A constant declaring the default font name.
 	 */
 	public static final String STD_FONT_NAME = "Arial";
 	/**
-	 * Die standardmäßige Dekoration ({@link TextDecoration#NONE}).
+	 * A constant declaring the default font decoration.
 	 */
 	public static final TextDecoration STD_DECORATION = TextDecoration.NONE;
 	/**
-	 * Der standardmäßige Zeilenabstand (Top=1; Right=0; Bottom=1; Left=1) in
-	 * mm.
+	 * A constant declaring the default line padding (spacing between the lines of text).
 	 */
 	public static final Spacing STD_LINE_PADDING = new Spacing(0, 0);
 	/**
-	 * Der standardmäßige Rahmenabstand (Top=0; Right=0; Bottom=0; Left=0) in
-	 * mm.
+	 * A constant declaring the default block padding (spacing between different elements).
 	 */
 	public static final Spacing STD_BLOCK_PADDING = new Spacing(0, 1);
 	/**
-	 * Die standardmäßige Farbe (Schwarz).
+	 * A constant declaring the default (font) color. 
 	 */
 	public static final Color STD_COLOR = Color.BLACK;
 
@@ -58,19 +58,13 @@ public class StyleDefinition implements XmlSerializable {
 	private Color color = STD_COLOR;
 	private TextAlignment alignment = STD_ALIGNMENT; 
 
+	
 	/**
-	 * Erstellt eine neue StyleDefinition mit der angegebenen ID und den
-	 * standardmäßigen Einstellungen.<br />
-	 * <b>Siehe:</b> {@link StyleDefinition#STD_FONT_SIZE},
-	 * {@link StyleDefinition#STD_FONT_NAME},
-	 * {@link StyleDefinition#STD_DECORATION},
-	 * {@link StyleDefinition#STD_LINE_PADDING},
-	 * {@link StyleDefinition#STD_BLOCK_PADDING},
-	 * {@link StyleDefinition#STD_BLOCK_PADDING},
-	 * {@link StyleDefinition#STD_COLOR}
-	 * 
-	 * @param id
-	 *            Gibt die ID dieser Style-Definition an.
+	 * <p>Creates a new style definition using the given identifier and the default settings.</p>
+	 * <p><b>Note:</b> One might refer to the constants declared in this class to learn more about the used default values.</p>
+	 * @param id The identifier of the style definition to create.
+	 * @throws NullPointerException Is thrown if the given identifier is <code>null</code>.
+	 * @throws IllegalArgumentException Is thrown if the given identifier is an empty string.
 	 */
 	public StyleDefinition(String id) throws NullPointerException, IllegalArgumentException {
 		if (id == null)
@@ -81,9 +75,11 @@ public class StyleDefinition implements XmlSerializable {
 	}
 	
 	/**
-	 * Erstellt eine neue StyleDefinition mit der angegebenen ID und den Einstellungen aus der angegebenen Vorlage.
-	 * @param id Gibt die ID dieser Style-Definition an.
-	 * @param template Gibt die Vorlage an, deren Einstellungen übernommen werden sollen.
+	 * Creates a new style definition with the given identifier by copying the attributes of the specified style definition.
+	 * @param id The identifier of the style definition to create.
+	 * @param template The template style definition to copy from.
+	 * @throws NullPointerException Is thrown if the given identifier is <code>null</code>.
+	 * @throws IllegalArgumentException Is thrown if the given identifier is an empty string.
 	 */
 	public StyleDefinition(String id, StyleDefinition template){
 		this(id);
@@ -96,78 +92,66 @@ public class StyleDefinition implements XmlSerializable {
 	}
 
 	/**
-	 * Gibt die ID dieser Style-Definition zurück.
-	 * 
-	 * @return Die ID dieser Style-Definition.
+	 * Returns the identifier of this style definition.
+	 * @return The identifier of this style definition.
 	 */
 	public String getID() {
 		return id;
 	}
 
 	/**
-	 * Gibt die Schriftgröße dieser Style-Definition (in Pt) zurück.
-	 * 
-	 * @return Die Schriftgröße dieser Style-Definition in Pt.
+	 * Returns the font size.
+	 * @return The font size in points.
 	 */
 	public int getFontSize() {
 		return fontSize;
 	}
 
 	/**
-	 * Gibt die Dekoration dieser Style-Definition zurück.
-	 * 
-	 * @return Die Dekoration dieser Style-Definition.
+	 * Returns the text decoration.
+	 * @return The text decoration.
 	 */
 	public TextDecoration getDecoration() {
 		return decoration;
 	}
 
 	/**
-	 * Gibt den Namen der Schriftart dieser Style-Definition zurück.
-	 * 
-	 * @return Der Name der Schriftart dieser Style-Definition.
+	 * Returns the font name.
+	 * @return The font name.
 	 */
 	public String getFontName() {
 		return fontName;
 	}
 
 	/**
-	 * Gibt den Zeilenabstand (in mm) dieser Style-Definition zurück.
-	 * 
-	 * @return Der Zeilenabstand dieser Style-Definition in mm.
+	 * Returns the line padding (spacing between multiple lines of text).
+	 * @return The line padding.
 	 */
 	public Spacing getLinePadding() {
 		return linePadding;
 	}
 
 	/**
-	 * Gibt die einzuhaltenden Seitenabstände (in mm) dieser Style-Definition
-	 * zurück.
-	 * 
-	 * @return Die einzuhaltende Seitenabstände (in mm) dieser Style-Definition.
+	 * Returns the block padding (spacing between multiple elements).
+	 * @return The block padding.
 	 */
 	public Spacing getBlockPadding() {
 		return blockPadding;
 	}
 
 	/**
-	 * Gibt die Farbe dieser Style-Definition zurück.
-	 * 
-	 * @return Die Farbe dieser Style-Definition.
+	 * Returns the font color.
+	 * @return The font color.
 	 */
 	public Color getColor() {
 		return color;
 	}
 
 	/**
-	 * Setzt die ID dieser Style-Definition.
-	 * 
-	 * @param id
-	 *            Die zu setzende ID.
-	 * @throws NullPointerException
-	 *             Tritt auf, wenn die ID den Wert {@code null} aufweist.
-	 * @throws IllegalArgumentException
-	 *             Tritt auf, wenn die ID ein leerer String ist.
+	 * Sets the identifier of this style definition.
+	 * @param id The identifier to set.
+	 * @throws NullPointerException Is thrown if the given identifier is <code>null</code>.
+	 * @throws IllegalArgumentException Is thrown if the given identifier is an empty string.
 	 */
 	public void setID(String id) throws NullPointerException, IllegalArgumentException{
 		if (id == null)
@@ -178,13 +162,9 @@ public class StyleDefinition implements XmlSerializable {
 	}
 
 	/**
-	 * Setzt die Schriftgröße dieser Style-Definition.
-	 * 
-	 * @param fontSize
-	 *            Die zu setzende Schriftgröße in Pt.
-	 * @throws IllegalArgumentException
-	 *             Tritt auf, wenn die zu setzende Schriftgröße kleiner oder
-	 *             gleich Null ist.
+	 * Sets the font size.
+	 * @param fontSize The font size to be set (in points).
+	 * @throws IllegalArgumentException Is thrown if the given font size is less than one.
 	 */
 	public void setFontSize(int fontSize) throws IllegalArgumentException {
 		if (fontSize < 1)
@@ -194,26 +174,18 @@ public class StyleDefinition implements XmlSerializable {
 	}
 
 	/**
-	 * Setzt die Dekoration dieser Style-Definition.
-	 * 
-	 * @param decoration
-	 *            Die zu setzende Style-Definition.
+	 * Sets the text decoration.
+	 * @param decoration The text decoration to be set.
 	 */
 	public void setDecoration(TextDecoration decoration) {
 		this.decoration = decoration;
 	}
-
+	
 	/**
-	 * Setzt den Namen der Schriftart dieser Style-Definition.
-	 * 
-	 * @param fontName
-	 *            Der Name der zu setzenden Schriftart.
-	 * @throws NullPointerException
-	 *             Tritt auf, wenn der zu setzende Schriftname {@code null}
-	 *             entspricht.
-	 * @throws IllegalArgumentException
-	 *             Tritt auf, wenn der zu setzende Schriftname ein leerer String
-	 *             ist.
+	 * Sets the name of the font.
+	 * @param fontName The font name to set.
+	 * @throws NullPointerException Is thrown if the given font name is <code>null</code>.
+	 * @throws IllegalArgumentException Is thrown if the given font name is an empty string.
 	 */
 	public void setFontName(String fontName) throws NullPointerException, IllegalArgumentException {
 		if (fontName == null)
@@ -222,14 +194,10 @@ public class StyleDefinition implements XmlSerializable {
 			throw new IllegalArgumentException("The fontname may not be empty.");
 		this.fontName = fontName;
 	}
-
+	
 	/**
-	 * Setzt den Zeilenabstand dieser Style-Definition.
-	 * 
-	 * @param linePadding
-	 *            Der zu setzende Zeilenabstand in mm.
-	 * @throws NullPointerException
-	 *             Tritt auf, wenn linePadding den Wert {@code null} hat.
+	 * Sets the line padding (spacing between multiple lines of text).
+	 * @param linePadding The line padding to set.
 	 */
 	public void setLinePadding(Spacing linePadding) {
 		if (linePadding == null)
@@ -238,26 +206,19 @@ public class StyleDefinition implements XmlSerializable {
 	}
 
 	/**
-	 * Setzt die einzuhaltenden Seitenabstände dieser Style-Definition.
-	 * 
-	 * @param blockPadding
-	 *            Die einzuhaltenden Seitenabstände in mm.
-	 * @throws NullPointerException
-	 *             Tritt auf, wenn blockPadding den Wert {@code null} hat.
+	 * Sets the block padding (spacing between multiple elements).
+	 * @param blockPadding The block padding to set.
 	 */
 	public void setBlockPadding(Spacing blockPadding) {
 		if (blockPadding == null)
 			throw new NullPointerException("The blockPadding may not be null.");
 		this.blockPadding = blockPadding;
 	}
-
+	
 	/**
-	 * Setzt die Farbe dieser Style-Definition.
-	 * 
-	 * @param color
-	 *            Die Farbe dieser Style-Definition.
-	 * @throws NullPointerException
-	 *             Tritt auf, wenn color den Wert {@code null} hat.
+	 * Sets the color.
+	 * @param color The color to set.
+	 * @throws NullPointerException Is thrown if the given color is <code>null</code>.
 	 */
 	public void setColor(Color color) {
 		if (color == null)
@@ -286,6 +247,11 @@ public class StyleDefinition implements XmlSerializable {
 		return sb.toString();
 	}
 	
+	/**
+	 * Returns a new style definition created by parsing the given node.
+	 * @param n The node to be parsed.
+	 * @return A new style definition created by parsing the given node.
+	 */
 	static StyleDefinition parse(Node n){
 		StyleDefinition sd = new StyleDefinition(getAttribute(n, "ID", ""));
 		sd.setFontSize(getAttribute(n, "FontSize", 9));
@@ -310,10 +276,18 @@ public class StyleDefinition implements XmlSerializable {
 		return sd;
 	}
 
+	/**
+	 * Returns the (text) alignment.
+	 * @return The (text) alignment.
+	 */
 	public TextAlignment getAlignment() {
 		return alignment;
 	}
 
+	/**
+	 * Sets the (text) alignment.
+	 * @param alignment The (text) alignment to set.
+	 */
 	public void setAlignment(TextAlignment alignment) {
 		this.alignment = alignment;
 	}
