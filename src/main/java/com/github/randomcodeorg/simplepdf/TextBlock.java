@@ -4,9 +4,8 @@ import com.github.randomcodeorg.simplepdf.ProcessMessage.MessageType;
 import com.github.randomcodeorg.simplepdf.creation.ProcessListener;
 
 /**
- * Repräsentiert einenen Text-Abschnitt, der innerhalb einer Area gerendert
- * werden kann. 
- * @author Individual Software Solutions - ISS, 2013
+ * Represents a block of text.
+ * @author Marcel Singer
  *
  */
 public class TextBlock extends DocumentElement {
@@ -14,9 +13,9 @@ public class TextBlock extends DocumentElement {
 	private String content;
 
 	/**
-	 * Initialisiert einen neuen TextBlock mit den angegegebenen Eigenschaften und einem leeren Text.
-	 * @param areaID Gibt die ID der Area an, in der dieser TextBlock gerendert werden soll.
-	 * @param styleID Gibt die ID der Style-Definition an, die auf diesen Text angewand werden soll.
+	 * Creates a new text block with an empty content.
+	 * @param areaID The identifier of the containing area definition.
+	 * @param styleID The identifier of the style definition to be applied on this text block.
 	 */
 	public TextBlock(String areaID, String styleID) {
 		this(areaID, styleID, "");
@@ -24,10 +23,10 @@ public class TextBlock extends DocumentElement {
 	}
 
 	/**
-	 * Initialisier einen neuen TextBlock mit den angegebenen Eigenschaften.
-	 * @param areaID Gibt die ID der Area an, in der dieser TextBlock gerendert werden soll.
-	 * @param styleID Gibt die ID der Style-Definition an, die auf diesen Text angewand werden soll.
-	 * @param content Gibt den Inhalt dieses Text-Blocks an.
+	 * Creates a new text block using the given content.
+	 * @param areaID The identifier of the containing area definition.
+	 * @param styleID The identifier of the style definition to be applied on this text block.
+	 * @param content The content of the text block to create.
 	 */
 	public TextBlock(String areaID, String styleID, String content) {
 		super(areaID, styleID);
@@ -36,19 +35,6 @@ public class TextBlock extends DocumentElement {
 		this.content = content;
 	}
 
-	/**
-	 * Setzt die ID der Style-Definition, die auf dieses Element angewendet
-	 * werden soll.
-	 * 
-	 * @param styleID
-	 *            Gibt die ID der Style-Definition an, die auf dieses Element
-	 *            angewendet werden soll.
-	 * @throws NullPointerException
-	 *             Tritt auf, wenn die angegebene styleID den Wert {@code null}
-	 *             hat.
-	 * @throws IllegalArgumentException
-	 * 				Tritt auf, wenn die angegebene styleID ein leerer String ist.
-	 */
 	@Override
 	public void setStyleID(String styleID) throws NullPointerException, IllegalArgumentException {
 		if (styleID == null)
@@ -59,17 +45,16 @@ public class TextBlock extends DocumentElement {
 	}
 	
 	/**
-	 * Gibt den Inhalt dieses TextBlocks zurück.
-	 * @return Der Inhalt dieses TextBlocks.
+	 * Returns the content of this text block.
+	 * @return The content of this text block.
 	 */
 	public String getContent(){
 		return content;
 	}
 
 	/**
-	 * Setzt den Inhalt dieses TextBlocks.
-	 * <b>Hinweis:</b> Ist der zu setzende Inhalt {@code null} wird als Inhalt ein String der Länge 0 gesetzt.
-	 * @param content
+	 * Sets the content of this text block.
+	 * @param content The content to set. <b>Note:</b> The content will be replaced by an empty string if it is <code>null</code>.
 	 */
 	public void setContent(String content){
 		if(content == null) content = "";
