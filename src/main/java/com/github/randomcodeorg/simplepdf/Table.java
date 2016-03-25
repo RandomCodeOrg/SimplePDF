@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 /**
- * Repräsentiert eine Tabelle, die innerhalb eines Bereiches gerendert werden kann.
- * @author Individual Software Solutions - ISS, 2013
+ * A table element that can be used to create a table.
+ * @author Marcel Singer
  *
  */
 public class Table extends DocumentElement {
@@ -16,8 +17,10 @@ public class Table extends DocumentElement {
 	private List<TableRow> rows;
 	
 	/**
-	 * Legt eine neue Tabelle an.
-	 * @param areaID Gibt die ID der Area an, in der diese Tabelle gezeichnet werden soll.
+	 * Creates a new table.
+	 * @param areaID The identifier of the containing area definition.
+	 * @throws NullPointerException Is thrown if the given area identifier is <code>null</code>.
+	 * @throws IllegalArgumentException Is thrown if the given area identifier is an empty string.
 	 */
 	public Table(String areaID){
 		super(areaID);
@@ -26,9 +29,11 @@ public class Table extends DocumentElement {
 	}
 
 	/**
-	 * Legt eine neue Tabelle unter Angabe über die automatisiert Ausrichtung an.
-	 * @param areaID Gibt die ID der Area an, in der diese Tabelle gezeichnet werden soll.
-	 * @param doAutoAligment Gibt an, ob die Zeilen in dieser Tabelle automatisiert ausgerichtet werden sollen.
+	 * Creates a new table. 
+	 * @param areaID The identifier of the containing area definition.
+	 * @param doAutoAligment <code>true</code> if the column widths should be aligned automatically.
+	 * @throws NullPointerException Is thrown if the given area identifier is <code>null</code>.
+	 * @throws IllegalArgumentException Is thrown if the given area identifier is an empty string.
 	 */
 	public Table(String areaID, boolean doAutoAligment) {
 		this(areaID);
@@ -36,10 +41,12 @@ public class Table extends DocumentElement {
 	}
 	
 	/**
-	 * Legt eine neue Tabelle unter Angabe über die automatisierte Ausrichtung und den enthaltenen Zeilen an.
-	 * @param areaID Gibt die ID der Area an, in der diese Tabelle gezeichnet werden soll.
-	 * @param doAutoAligment Gibt an, ob die Zeilen in dieser Tabelle automatisiert ausgerichtet werden sollen.
-	 * @param rows Gibt die Zeilen dieser Tabelle an.
+	 * Creates a new table.
+	 * @param areaID The identifier of the containing area definition.
+	 * @param doAutoAligment <code>true</code> if the column widths should be aligned automatically.
+	 * @param rows The rows of the table to create.
+	 * @throws NullPointerException Is thrown if the given area identifier or rows are <code>null</code>.
+	 * @throws IllegalArgumentException Is thrown if the given area identifier is an empty string.
 	 */
 	public Table(String areaID, boolean doAutoAligment, TableRow... rows) {
 		this(areaID, doAutoAligment);
@@ -48,10 +55,12 @@ public class Table extends DocumentElement {
 	}
 	
 	/**
-	 * Legt eine neue Tabelle unter Angabe über die automatisierte Ausrichtung und den enthaltenen Zeilen an.
-	 * @param areaID Gibt die ID der Area an, in der diese Tabelle gezeichnet werden soll.
-	 * @param doAutoAligment Gibt an, ob die Zeilen in dieser Tabelle automatisiert ausgerichtet werden sollen.
-	 * @param rows Gibt die Zeilen dieser Tabelle an.
+	 * Creates a new table.
+	 * @param areaID The identifier of the containing area definition.
+	 * @param doAutoAligment <code>true</code> is the column widths should be aligned automatically.
+	 * @param rows The rows of the table to create.
+	 * @throws NullPointerException Is thrown if the given area identifier or rows are <code>null</code>.
+	 * @throws IllegalArgumentException Is thrown if the given area identifier is an empty string.
 	 */
 	public Table(String areaID, boolean doAutoAligment, List<TableRow> rows){
 		this(areaID, doAutoAligment);
@@ -60,24 +69,24 @@ public class Table extends DocumentElement {
 	}
 	
 	/**
-	 * Ruft die Zeilen dieser Tabelle ab.
-	 * @return Die Zeilen dieser Tabelle.
+	 * Returns the rows of this table.
+	 * @return The rows of this table.
 	 */
 	public List<TableRow> getRows(){
 		return rows;
 	}
 	
 	/**
-	 * Gibt an, ob die Zellen in dieser Tabelle automatisiert ausgerichtet werden sollen.
-	 * @return {@code true}, wenn die Zellen in dieser Tabelle automatisiert ausgerichtet werden sollen.
+	 * Returns <code>true</code> if the column widths should be aligned automatically.
+	 * @return <code>true</code> if the column widths should be aligned automatically. Otherwise <code>false</code>.
 	 */
 	public boolean getDoAutoAligment(){
 		return doAutoAligment;
 	}
 	
 	/**
-	 * Setzt, ob die Zellen in dieser Tabelle automatisiert ausgerichtet werden sollen.
-	 * @param doAutoAligment {@code true}, wenn die Zellen in dieser Tabelle automatisiert ausgerichtet werden sollen.
+	 * Sets if the column width should be aligned automatically.
+	 * @param doAutoAligment <code>true</code> if the column width should be aligned automatically. Otherwise <code>false</code>.
 	 */
 	public void setDoAutoAligment(boolean doAutoAligment){
 		this.doAutoAligment = doAutoAligment;
@@ -112,6 +121,10 @@ public class Table extends DocumentElement {
 		return tbl;
 	}
 	
+	/**
+	 * Overwrites the style definition identifier of all contained elements.
+	 * @param styleID The style definition identifier to set.
+	 */
 	public void overwriteStyles(String styleID){
 		for(TableRow tr : rows){
 			for(TableCell tc : tr.getCells()){
@@ -122,6 +135,12 @@ public class Table extends DocumentElement {
 		}
 	}
 	
+	/**
+	 * Returns the {@link TableCell} at the given position.
+	 * @param col The column index.
+	 * @param row The row index.
+	 * @return The table cell at the given position.
+	 */
 	public TableCell getCell(int col, int row){
 		TableRow r = rows.get(row);
 		return r.getCells().get(col);
