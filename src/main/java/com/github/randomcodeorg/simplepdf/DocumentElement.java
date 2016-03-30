@@ -254,7 +254,7 @@ public abstract class DocumentElement implements XmlSerializable {
 	 * create the required object and copy extended properties. The overwriting class does not have to copy basic properties defined by {@link DocumentElement}.
 	 * This will be done automatically by the {@link #copy()} method. 
 	 * </p><p><b>Note:</b> Do not call this method directly. To get a copy of this element one should use the {@link #copy()} method.</p>
-	 * @return
+	 * @return A copy of this element.
 	 */
 	protected abstract DocumentElement onCopy();
 

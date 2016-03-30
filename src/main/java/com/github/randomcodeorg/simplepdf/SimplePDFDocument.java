@@ -23,8 +23,8 @@ import com.github.randomcodeorg.simplepdf.creation.ProcessListener;
  * </p>
  * <p>
  * <b>The following elements are currently available to be used:</b>
- * <p>
- * <table>
+ * </p>
+ * <table summary="Available document elements">
  * <tr>
  * <td><b>Class</b></td>
  * <td><b>Description</b>
@@ -48,12 +48,12 @@ import com.github.randomcodeorg.simplepdf.creation.ProcessListener;
  * <tr>
  * <td>{@link PageNumber}</td>
  * <td>Renders a automatically generated page number.</td>
- * <td><i>
+ * <td>
  * <ul>
- * <li>Requires a set and valid style identifier.</li>
- * <li>Will be rendered on every page by default.</li>
+ * <li><i>Requires a set and valid style identifier.</i></li>
+ * <li><i>Will be rendered on every page by default.</i></li>
  * </ul>
- * </i></td>
+ * </td>
  * <tr>
  * <tr>
  * <td>{@link PageCloser}</td>
@@ -64,7 +64,7 @@ import com.github.randomcodeorg.simplepdf.creation.ProcessListener;
  * <tr>
  * <td>{@link Table}</td>
  * <td>Renders a table within a given area.</td>
- * <td><i></i></td>
+ * <td><!--<i></i>--></td>
  * <tr>
  * </table>
  * 
@@ -526,15 +526,14 @@ public class SimplePDFDocument implements XmlSerializable {
 	/**
 	 * <p>
 	 * Adds the given element to this document.
+	 * </p>
 	 * <p>
-	 * <p>
-	 * <b>Note:</b>
+	 * <b>Note:</b></p>
 	 * <ul>
 	 * <li>A document element can be added multiple times.</li>
 	 * <li>The elements are rendered in the same order they were added to this
 	 * document. One may use {@link #getElements()} to modify this order.</li>
 	 * </ul>
-	 * </p>
 	 * 
 	 * @param element
 	 *            The element to add.

@@ -86,8 +86,8 @@ public class PageNumber extends DocumentElement {
 	
 	/**
 	 * <p>Sets the page number format.</p>
-	 * @param format
-	 * @throws NullPointerException
+	 * @param format The format to set.
+	 * @throws NullPointerException Is thrown if the given format is <code>null</code>.
 	 */
 	public void setFormat(String format) throws NullPointerException {
 		if (format == null)
@@ -95,19 +95,6 @@ public class PageNumber extends DocumentElement {
 		this.format = format;
 	}
 
-	/**
-	 * Setzt die ID der Style-Definition, die auf dieses Element angewendet
-	 * werden soll.
-	 * 
-	 * @param styleID
-	 *            Gibt die ID der Style-Definition an, die auf dieses Element
-	 *            angewendet werden soll.
-	 * @throws NullPointerException
-	 *             Tritt auf, wenn die angegebene styleID den Wert {@code null}
-	 *             hat.
-	 * @throws IllegalArgumentException
-	 *             Tritt auf, wenn die angegebene styleID ein leerer String ist.
-	 */
 	@Override
 	public void setStyleID(String styleID) throws NullPointerException, IllegalArgumentException {
 		if (styleID == null)
