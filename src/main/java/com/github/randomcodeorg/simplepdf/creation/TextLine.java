@@ -13,6 +13,11 @@ import com.github.randomcodeorg.simplepdf.Spacing;
 import com.github.randomcodeorg.simplepdf.StyleDefinition;
 import com.github.randomcodeorg.simplepdf.TextBlock;
 
+/**
+ * The render element for a single line of text created by splitting a {@link TextBlock}.
+ * @author Marcel Singer
+ *
+ */
 public class TextLine extends RenderElement<DocumentElement> {
 
 	private TextBlock textBlock;
@@ -32,15 +37,32 @@ public class TextLine extends RenderElement<DocumentElement> {
 		return defaultStyle;
 	}
 
+	/**
+	 * Creates a new instance of {@link TextLine}.
+	 * @param document The containing document.
+	 * @param docElement The corresponding element. An instance of {@link TextBlock} is expected.
+	 */
 	public TextLine(SimplePDFDocument document, DocumentElement docElement) {
 		super(document, docElement);
 		textBlock = (TextBlock) docElement;
 	}
 
+	/**
+	 * Returned the text to render.
+	 * @param info Information about the current creation process.
+	 * @param pageCount The number or the current page.
+	 * @param parentSize The size of the containing element.
+	 * @return The text to render.
+	 */
 	protected String getRenderText(PreRenderInformation info, int pageCount, Size parentSize) {
 		return textBlock.getContent();
 	}
 
+	/**
+	 * Sets if this is the last line of a split text block.
+	 * @param value The value to set.
+	 * @return This instance.
+	 */
 	private TextLine setIsLastLine(boolean value) {
 		lastLine = value;
 		return this;
@@ -69,6 +91,13 @@ public class TextLine extends RenderElement<DocumentElement> {
 		return result;
 	}
 	
+	/**
+	 * Returns the text to render assuming it was not split before.
+	 * @param info Information about the current creation process.
+	 * @param pageCount The number of the current page.
+	 * @param parentSize The size of the containing element.
+	 * @return The text to render.
+	 */
 	protected String getRenderPreSplitText(PreRenderInformation info, int pageCount, Size parentSize){
 		return getRenderText(info, pageCount, parentSize);
 	}
@@ -79,6 +108,14 @@ public class TextLine extends RenderElement<DocumentElement> {
 				parentSize);
 	}
 
+	/**
+	 * Returns the size that the given string will take up when rendered.
+	 * @param g The current document graphics.
+	 * @param txt The text to measure.
+	 * @param parentSize The size of the containing element.
+	 * @return The size that the given string will take up when rendered.
+	 * @throws RenderingException Is thrown if the size could not be calculated.
+	 */
 	public Size getRenderSize(DocumentGraphics g, String txt, Size parentSize) throws RenderingException {
 		return g.getTextSize(txt, getStyleDefinition(), parentSize);
 	}
