@@ -11,15 +11,28 @@ import com.github.randomcodeorg.simplepdf.Spacing;
 import com.github.randomcodeorg.simplepdf.Table;
 import com.github.randomcodeorg.simplepdf.TableRow;
 
+/**
+ * The render element corresponding to the {@link Table} element.
+ * @author Marcel Singer
+ *
+ */
 public class RenderTable extends RenderElement<Table> {
 
 	private float[] columnWidths;
 
+	/**
+	 * Creates a new instance of {@link RenderTable}.
+	 * @param document The containing document.
+	 * @param documentElement The corresponding document element.
+	 */
 	public RenderTable(SimplePDFDocument document, Table documentElement) {
 		super(document, documentElement);
 		createColumnWidths();
 	}
 
+	/**
+	 * Calculated the column widths.
+	 */
 	private void createColumnWidths() {
 		if (columnWidths != null)
 			return;

@@ -12,8 +12,18 @@ import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
 import com.github.randomcodeorg.simplepdf.Size;
 import com.github.randomcodeorg.simplepdf.Spacing;
 
+/**
+ * The render element corresponding to the {@link Rectangle} element.
+ * @author Marcel Singer
+ *
+ */
 public class RenderRectangle extends RenderElement<Rectangle> {
 
+	/**
+	 * Creates a new instance of {@link RenderRectangle}.
+	 * @param document The containing document.
+	 * @param documentElement The corresponding document element.
+	 */
 	public RenderRectangle(SimplePDFDocument document, Rectangle documentElement) {
 		super(document, documentElement);
 	}
