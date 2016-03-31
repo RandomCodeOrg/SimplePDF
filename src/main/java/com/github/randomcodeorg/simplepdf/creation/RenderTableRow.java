@@ -15,18 +15,34 @@ import com.github.randomcodeorg.simplepdf.Table;
 import com.github.randomcodeorg.simplepdf.TableCell;
 import com.github.randomcodeorg.simplepdf.TableRow;
 
+/**
+ * The render element corresponding to a {@link TableRow} document element.
+ * @author Marcel Singer
+ *
+ */
 public class RenderTableRow extends RenderElement<Table> {
 
 	private final float[] columnWidths;
 	private final TableRow row;
 	private Map<TableCell, GroupBox> cellMappings = null;
 
+	/**
+	 * Creates a new instance of {@link RenderTableRow}.
+	 * @param document The containing document.
+	 * @param documentElement The table containing the row to render.
+	 * @param row The row to render.
+	 * @param columnWidths A float array containing the column widths.
+	 */
 	public RenderTableRow(SimplePDFDocument document, Table documentElement, TableRow row, float[] columnWidths) {
 		super(document, documentElement);
 		this.columnWidths = columnWidths;
 		this.row = row;
 	}
 
+	/**
+	 * Maps the cells of this row to {@link GroupBox} objects.
+	 * @param info The information about the current creation process.
+	 */
 	private void map(PreRenderInformation info) {
 		if (cellMappings != null)
 			return;
@@ -39,6 +55,13 @@ public class RenderTableRow extends RenderElement<Table> {
 		}
 	}
 
+	/**
+	 * Creates a group box for the given table cell.
+	 * @param info The information about the current creation process.
+	 * @param width The width of the table cell.
+	 * @param tc The table cell.
+	 * @return A group box for the given table cell.
+	 */
 	private GroupBox getGroupBox(PreRenderInformation info, float width, TableCell tc) {
 		List<RenderElement<? extends DocumentElement>> finalElements = new ArrayList<RenderElement<? extends DocumentElement>>();
 		Collection<RenderElement<? extends DocumentElement>> tempElements = new ArrayList<RenderElement<? extends DocumentElement>>();

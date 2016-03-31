@@ -12,6 +12,11 @@ import com.github.randomcodeorg.simplepdf.Size;
 import com.github.randomcodeorg.simplepdf.TableOfContents;
 import com.github.randomcodeorg.simplepdf.TextBlock;
 
+/**
+ * The render element corresponding to the {@link TableOfContents} document element.
+ * @author Marcel Singer
+ *
+ */
 public class RenderTableOfContents extends TextLine {
 
 	private TableOfContents element;
@@ -20,11 +25,21 @@ public class RenderTableOfContents extends TextLine {
 	private int lineNumber = -1;
 	private List<RenderElement<? extends DocumentElement>> allLines;
 
+	/**
+	 * Creates a new instance of {@link RenderTableOfContents}.
+	 * @param document The containing document.
+	 * @param docElement The corresponding element. An instance of {@link TableOfContents} is expected.
+	 */
 	public RenderTableOfContents(SimplePDFDocument document, DocumentElement docElement) {
 		super(document, toTextBlock((TableOfContents) docElement));
 		this.element = (TableOfContents) docElement;
 	}
 
+	/**
+	 * Converts the given table of contents into a text block element.
+	 * @param pn The table of contents to be converted.
+	 * @return The converted table of contents.
+	 */
 	private static TextBlock toTextBlock(TableOfContents pn) {
 		TextBlock res = new TextBlock(pn.getAreaID(), pn.getStyleID(), "");
 		res.setIsRepeating(pn.getIsRepeating());
@@ -101,6 +116,11 @@ public class RenderTableOfContents extends TextLine {
 		return txt;
 	}
 	
+	/**
+	 * Calculates the indent of a table of contents entry based on the corresponding chapter element. 
+	 * @param e The chapter element.
+	 * @return The calculated indent.
+	 */
 	private String getIndent(ChapterElement e){
 		StringBuilder sb = new StringBuilder();
 		for(int i=0; i<e.getLevel(); i++) sb.append(element.getIndentString());
