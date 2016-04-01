@@ -8,8 +8,18 @@ import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
 import com.github.randomcodeorg.simplepdf.Size;
 import com.github.randomcodeorg.simplepdf.Spacing;
 
+/**
+ * The render element corresponding to the {@link Line} element.
+ * @author Marcel Singer
+ *
+ */
 public class RenderLine extends RenderElement<Line> {
 
+	/**
+	 * Creates a new instance of {@link RenderLine}.
+	 * @param document The containing document.
+	 * @param documentElement The corresponding document element.
+	 */
 	public RenderLine(SimplePDFDocument document, Line documentElement) {
 		super(document, documentElement);
 	}

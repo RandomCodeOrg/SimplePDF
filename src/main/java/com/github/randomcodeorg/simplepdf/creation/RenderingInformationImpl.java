@@ -7,6 +7,11 @@ import com.github.randomcodeorg.simplepdf.Position;
 import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
 import com.github.randomcodeorg.simplepdf.Size;
 
+/**
+ * A class that holds information about a document rendering process.
+ * @author Marcel Singer
+ *
+ */
 public class RenderingInformationImpl extends PreRenderInformationImpl implements RenderingInformation {
 
 	private final Position position;
@@ -16,6 +21,19 @@ public class RenderingInformationImpl extends PreRenderInformationImpl implement
 	private final Map<DocumentElement, RenderOrigin> originMap;
 	private final Size parentSize;
 
+	/**
+	 * Creates a new instance of {@link RenderingInformationImpl} using the given values.
+	 * @param p The current position within the document.
+	 * @param reservedSize The size that was reserved for the current element.
+	 * @param doc The document to render.
+	 * @param g The document graphics to be used.
+	 * @param layout The current layout.
+	 * @param pageLength The amount of pages.
+	 * @param areas All available document areas.
+	 * @param originMap A map containing the originated render elements for a given document element.
+	 * @param erm The current element render mapping to be used.
+	 * @param parentSize The size of the containing element.
+	 */
 	public RenderingInformationImpl(Position p, Size reservedSize, SimplePDFDocument doc, DocumentGraphics g,
 			AreaLayout layout, int pageLength, Iterable<DocumentArea> areas, Map<DocumentElement, RenderOrigin> originMap, ElementRenderMapping erm, Size parentSize) {
 		super(doc, areas, layout, g, erm);
