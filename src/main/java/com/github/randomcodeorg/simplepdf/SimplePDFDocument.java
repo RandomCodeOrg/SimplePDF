@@ -73,27 +73,25 @@ import com.github.randomcodeorg.simplepdf.creation.ProcessListener;
  */
 public class SimplePDFDocument implements XmlSerializable {
 
-	private String title = "";
-	private String creator = "";
 
 	private final XmlList<StyleDefinition> styles = new XmlList<StyleDefinition>("Styles");
 	private final XmlList<AreaDefinition> areas = new XmlList<AreaDefinition>("Areas");
 	private final XmlList<DocumentElement> elements = new XmlList<DocumentElement>("Elements");
 	private final XmlList<DocumentData> data = new XmlList<DocumentData>("ResourceData");
+	private final DocumentMetaInformation metaInformation = new DocumentMetaInformation();
 	private Spacing pagePadding = new Spacing(0);
 	private Size pageSize = new Size(210, 297);
 
 	/**
-	 * Creates a new document using the given title and creator.
+	 * Creates a new document using the given title and author.
 	 * 
 	 * @param title
 	 *            The title of the document to create.
-	 * @param creator
-	 *            The name of the creator.
+	 * @param author
+	 *            The name of the author.
 	 */
-	public SimplePDFDocument(String title, String creator) {
-		this.title = title;
-		this.creator = creator;
+	public SimplePDFDocument(String title, String author) {
+		metaInformation.setTitle(title).setAuthor(author);
 	}
 
 	/**
@@ -159,22 +157,34 @@ public class SimplePDFDocument implements XmlSerializable {
 	}
 
 	/**
-	 * Returns the title of this document.
-	 * 
-	 * @return The title of this document.
+	 * Returns the meta information about this document.
+	 * @return The meta information about this document.
 	 */
+	public DocumentMetaInformation getMetaInformation(){
+		return metaInformation;
+	}
+	
+	/**
+	 * Returns the title of this document.
+	 * @return The title of this document.
+	 * @deprecated Use {@link #getMetaInformation()} in combination with {@link DocumentMetaInformation#getTitle()}.
+	 */
+	@Deprecated
 	public String getTitle() {
-		return title;
+		return metaInformation.getTitle();
 	}
 
 	/**
 	 * Returns the creator of this document.
-	 * 
 	 * @return The creator of this document.
+	 * @deprecated The creator field was replaced by 'author'. Use {@link #getMetaInformation()} in combination with {@link DocumentMetaInformation#getAuthor()}.
 	 */
+	@Deprecated
 	public String getCreator() {
-		return creator;
+		return metaInformation.getAuthor();
 	}
+	
+	
 
 	/*
 	 * public Spacing getPagePadding() { return pagePadding; }
@@ -194,9 +204,11 @@ public class SimplePDFDocument implements XmlSerializable {
 	 * 
 	 * @param title
 	 *            The title to set.
+	 * @deprecated Use {@link #getMetaInformation()} in combination with {@link DocumentMetaInformation#setTitle(String)}.
 	 */
+	@Deprecated
 	public void setTitle(String title) {
-		this.title = title;
+		metaInformation.setTitle(title);
 	}
 
 	/**
@@ -204,9 +216,11 @@ public class SimplePDFDocument implements XmlSerializable {
 	 * 
 	 * @param creator
 	 *            The creator to set.
+	 * @deprecated The creator field was replaced by 'author'. Use {@link #getMetaInformation()} in combination with {@link DocumentMetaInformation#setAuthor(String)}.
 	 */
+	@Deprecated
 	public void setCreator(String creator) {
-		this.creator = creator;
+		metaInformation.setAuthor(creator);
 	}
 
 	private void setPagePadding(Spacing pagePadding) {
@@ -713,8 +727,10 @@ public class SimplePDFDocument implements XmlSerializable {
 
 	@Override
 	public String toXML() {
+		String title = metaInformation.getTitle();
 		if (title == null)
 			title = "";
+		String creator = metaInformation.getAuthor();
 		if (creator == null)
 			creator = "";
 		StringBuilder sb = new StringBuilder();
