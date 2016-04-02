@@ -16,6 +16,7 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 	public void test() {
 
 		DIN5008ADocument doc = new DIN5008ADocument("TestDoc", "Unit-Test");
+		doc.getMetaInformation().setKeywords("I'm; a; keyword").setSubject("Continue Testing...");
 		TextBlock addressElement = new TextBlock("/", "/", "Address element");
 		doc.addAddressElement(addressElement);
 		TextBlock returnInfoElement = new TextBlock("/", "/", "Return info element");
