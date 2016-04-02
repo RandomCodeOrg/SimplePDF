@@ -9,19 +9,37 @@ import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
 import com.github.randomcodeorg.simplepdf.Size;
 import com.github.randomcodeorg.simplepdf.TableOfContents;
 
+/**
+ * A render element to that renders chapter/paragraph headings ({@link ChapterElement}). 
+ * @author Marcel Singer
+ *
+ */
 public class RenderChapterElement extends TextLine {
 
 	private int level = 0;
 	private boolean isCopy = false;
 
+	/**
+	 * Creates a new instance of {@link RenderChapterElement}.
+	 * @param document The containing document.
+	 * @param docElement The corresponding document element.
+	 */
 	public RenderChapterElement(SimplePDFDocument document, DocumentElement docElement) {
 		super(document, docElement);
 	}
 
+	/**
+	 * Returns the level within the chapter/paragraph hierarchy.
+	 * @return The level within the chapter/paragraph hierarchy.
+	 */
 	public int getLevel() {
 		return level;
 	}
 
+	/**
+	 * Sets the level within the chapter/paragraph hierarchy.
+	 * @param level The level within the chapter/paragraph hierarchy.
+	 */
 	public void setLevel(int level) {
 		this.level = level;
 	}
@@ -32,7 +50,12 @@ public class RenderChapterElement extends TextLine {
 		return getNumberString(info.getDocument(), (ChapterElement) documentElement) + " " + super.getRenderText(info, pageCount, parentSize);
 	}
 
-	
+	/**
+	 * Returns the chapter/paragraph numbering for the given chapter element.
+	 * @param doc The containing document.
+	 * @param element The chapter element that's numbering should be returned.
+	 * @return The chapter/paragraph numbering for the given chapter element.
+	 */
 	public static String getNumberString(SimplePDFDocument doc, ChapterElement element){
 		List<Integer> levels = new ArrayList<Integer>();
 		DocumentElement current;
