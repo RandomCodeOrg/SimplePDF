@@ -15,12 +15,23 @@ import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
 import com.github.randomcodeorg.simplepdf.Size;
 import com.github.randomcodeorg.simplepdf.Spacing;
 
+/**
+ * The render element corresponding to the {@link DocumentImage} element.
+ * @author Marcel Singer
+ *
+ */
 public class RenderImage extends RenderElement<DocumentImage> {
 
 	private DocumentData data;
 	private BufferedImage image;
 	private float mmPerPixel = 1f / 5f;
 
+	/**
+	 * Creates a new instance of {@link RenderImage}.
+	 * @param document The containing document.
+	 * @param documentElement The corresponding document element.
+	 * @throws IOException Is thrown if an I/O error occurs during the reading of the image data.
+	 */
 	public RenderImage(SimplePDFDocument document, DocumentImage documentElement) throws IOException {
 		super(document, documentElement);
 		data = document.getData(documentElement.getDataID());
