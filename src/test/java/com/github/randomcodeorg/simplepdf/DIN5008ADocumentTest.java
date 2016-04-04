@@ -72,6 +72,15 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 		tableStyle.getBlockPadding().setTop(1);
 		tableStyle.getBlockPadding().setBottom(5);
 		tbl.overwriteStyles(tableStyle.getID());
+		
+		DocumentList docList = new DocumentList("/", "n");
+		docList.getItems().add("The first item");
+		docList.getItems().add("The second item");
+		docList.getItems().add("This is the third item");
+		docList.getItems().add("The items are getting longer and longer");
+		docList.getItems().add("The last item is a verry long line of text. Hello World! Foo, Bar or not Foo? That's the question....");
+		docList.getItems().add("And a last short line");
+		doc.addTextElement(docList);
 
 		StyleDefinition h = new StyleDefinition("h", sd);
 		h.setBlockPadding(new Spacing(h.getBlockPadding().getLeft(), 20, h.getBlockPadding().getRight(), 0));

@@ -135,7 +135,7 @@ public class TextLine extends RenderElement<DocumentElement> {
 		List<RenderElement<? extends DocumentElement>> result = new LinkedList<RenderElement<? extends DocumentElement>>();
 		TextBlock tb1 = new TextBlock(textBlock.getAreaID(), textBlock.getStyleID(),
 				txt.substring(0, dividerPos).trim());
-		TextLine tl1 = new TextLine(document, tb1);
+		TextLine tl1 = getCopyElement(document, tb1);
 		tl1.setElement(tb1);
 		result.add(tl1.setIsLastLine(false));
 
@@ -146,7 +146,7 @@ public class TextLine extends RenderElement<DocumentElement> {
 		} else {
 			tb1 = new TextBlock(textBlock.getAreaID(), textBlock.getStyleID(),
 					txt.substring(dividerPos + 1, txt.length()).trim());
-			TextLine tl2 = new TextLine(document, tb1);
+			TextLine tl2 = getCopyElement(document, tb1);
 			tl2.setElement(tb1);
 			result.add(tl2.setIsLastLine(true));
 			tl2.isEndLine = isEndLine;
@@ -157,5 +157,8 @@ public class TextLine extends RenderElement<DocumentElement> {
 		return result;
 	}
 	
+	protected TextLine getCopyElement(SimplePDFDocument doc, TextBlock tb){
+		return new TextLine(doc, tb);
+	}
 
 }

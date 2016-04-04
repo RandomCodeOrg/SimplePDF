@@ -79,7 +79,7 @@ public abstract class RenderElement<T extends DocumentElement> implements Conver
 	protected Position translate(Position p) {
 		return toUnits(invertY(p, document));
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public RenderElement<T> copy() {
 		RenderElement<T> result;
