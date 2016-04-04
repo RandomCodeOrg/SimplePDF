@@ -14,6 +14,12 @@ import com.github.randomcodeorg.simplepdf.Size;
 import com.github.randomcodeorg.simplepdf.StyleDefinition;
 import com.github.randomcodeorg.simplepdf.TextAlignment;
 
+/**
+ * <p>This class is an implementation of {@link DocumentGraphics} that renders a document as an image.</p>
+ * <p><b>Note:</b> The image rendering is intended for creating document previews. A smooth and accurate result can not be guaranteed.</p>
+ * @author Marcel Singer
+ *
+ */
 public class ImageDocumentGraphics implements DocumentGraphics {
 
 	private final float scaleFactor;
@@ -22,6 +28,11 @@ public class ImageDocumentGraphics implements DocumentGraphics {
 
 	int dpiH, dpiV;
 
+	/**
+	 * Creates a new instance of {@link ImageDocumentGraphics}.
+	 * @param scaleFactor The scale factor to be applied.
+	 * @param g The document graphics to be used.
+	 */
 	public ImageDocumentGraphics(float scaleFactor, Graphics2D g) {
 		this.scaleFactor = scaleFactor;
 		this.scaleFactorInv = 1.0f / scaleFactor;
@@ -87,6 +98,11 @@ public class ImageDocumentGraphics implements DocumentGraphics {
 		return new Size(r.getWidth() * scaleFactorInv, r.getHeight() * scaleFactorInv);
 	}
 
+	/**
+	 * Returns the font object corresponding to the given style definition.
+	 * @param sd The style definition thats corresponding font object should be returned.
+	 * @return The font object corresponding to the given style definition.
+	 */
 	private Font getFont(StyleDefinition sd) {
 		int fontSize = sd.getFontSize();
 		fontSize = (int) (fontSize * (scaleFactor / 2.54));
@@ -105,6 +121,11 @@ public class ImageDocumentGraphics implements DocumentGraphics {
 		return r;
 	}
 
+	/**
+	 * Returns the color corresponding to the given style definition.
+	 * @param sd The style definition thats corresponding color object should be returned.
+	 * @return The color corresponding to the given style definition.
+	 */
 	private Color getColor(StyleDefinition sd) {
 		Color c = Color.BLACK;
 		if (sd != null && sd.getColor() != null)
@@ -117,10 +138,20 @@ public class ImageDocumentGraphics implements DocumentGraphics {
 
 	}
 
+	/**
+	 * Transforms the given position by applying the current scale factor.
+	 * @param p The position to be transformed.
+	 * @return The transformed position.
+	 */
 	private Position transform(Position p) {
 		return new Position(p.getX() * scaleFactor, p.getY() * scaleFactor);
 	}
 
+	/**
+	 * Transforms the given size by applying the current scale factor.
+	 * @param s The size to be transformed.
+	 * @return The transformed size.
+	 */
 	private Size transform(Size s) {
 		return new Size(s.getWidth() * scaleFactor, s.getHeight() * scaleFactor);
 	}

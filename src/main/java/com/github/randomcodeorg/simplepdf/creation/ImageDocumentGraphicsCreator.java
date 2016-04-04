@@ -8,6 +8,12 @@ import java.util.Map;
 
 import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
 
+/**
+ * <p>This class is an implementation of {@link DocumentGraphicsCreator} that can be used to render documents as an image.</p>
+ * <p><b>Note:</b> The image rendering is intended for creating document previews. A smooth and accurate result can not be guaranteed.</p>
+ * @author Marcel Singer
+ *
+ */
 public class ImageDocumentGraphicsCreator implements DocumentGraphicsCreator {
 	
 	private final Map<SimplePDFDocument, List<BufferedImage>> openedDocs = new HashMap<SimplePDFDocument, List<BufferedImage>>();
