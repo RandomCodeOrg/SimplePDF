@@ -9,16 +9,35 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+/**
+ * A document creator that will render given documents as multiple image files.
+ * <p><b>Note:</b> The image rendering is intended for creating document previews. A smooth and accurate result can not be guaranteed.</p>
+ * @author Marcel Singer
+ *
+ */
 public class ImageDocumentCreator extends DocumentCreator {
 
+	/**
+	 * Creates a new instance of {@link ImageDocumentCreator} using the give scale factor.
+	 * @param scaleFactor The scale factor to be used.
+	 */
 	public ImageDocumentCreator(float scaleFactor) {
 		super(new ImageDocumentGraphicsCreator(scaleFactor));
 	}
 
+	/**
+	 * Creates a new instance of {@link ImageDocumentCreator} using the default scale factor (which is: <plain>1</plain>).
+	 */
 	public ImageDocumentCreator() {
 		super(new ImageDocumentGraphicsCreator());
 	}
 
+	/**
+	 * Renders every page of the given document as an image and saves it as a file with the name <plain>'page'</plain> + <i>page number</i> + <plain>'.png'</plain>.
+	 * @param doc The document to render.
+	 * @param outputDirectory The directory that will contain the image files.
+	 * @throws IOException If an I/O error occurs.
+	 */
 	public void create(SimplePDFDocument doc, File outputDirectory)
 			throws IOException {
 		super.create(doc);
