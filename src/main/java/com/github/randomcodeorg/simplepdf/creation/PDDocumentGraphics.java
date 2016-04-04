@@ -16,6 +16,11 @@ import com.github.randomcodeorg.simplepdf.Size;
 import com.github.randomcodeorg.simplepdf.StyleDefinition;
 import com.github.randomcodeorg.simplepdf.TextAlignment;
 
+/**
+ * <p>This class is an implementation of {@link DocumentGraphics} that uses PDFBox.</p>
+ * @author Marcel Singer
+ *
+ */
 public class PDDocumentGraphics implements DocumentGraphics, ConversionConstants {
 
 	private final PDPageContentStream contentStream;
@@ -23,6 +28,13 @@ public class PDDocumentGraphics implements DocumentGraphics, ConversionConstants
 	private final FontManager fontManager;
 	private final SimplePDFDocument sDoc;
 
+	/**
+	 * Creates a new instance of {@link PDDocumentGraphics} using the given values.
+	 * @param sDoc The document to be rendered.
+	 * @param contentStream The content stream to write to.
+	 * @param doc The PDFBox document instance.
+	 * @param manager The font manager to be used.
+	 */
 	public PDDocumentGraphics(SimplePDFDocument sDoc, PDPageContentStream contentStream, PDDocument doc,
 			FontManager manager) {
 		this.contentStream = contentStream;
@@ -31,10 +43,22 @@ public class PDDocumentGraphics implements DocumentGraphics, ConversionConstants
 		this.sDoc = sDoc;
 	}
 
+	/**
+	 * Returns the default tab space.
+	 * @param sd The style definition to be assumed.
+	 * @param reservedSize The available size.
+	 * @return The default tab space.
+	 */
 	private float getTabSpace(StyleDefinition sd, Size reservedSize) {
 		return getRawTextWidth("   ", sd);
 	}
 
+	/**
+	 * Returns the raw text width.
+	 * @param text The text to measure.
+	 * @param sd The style definition to be applied.
+	 * @return The raw text width.
+	 */
 	public float getRawTextWidth(String text, StyleDefinition sd) {
 		try {
 			PDFont f = fontManager.getFont(pdDocument, sd);
@@ -44,6 +68,13 @@ public class PDDocumentGraphics implements DocumentGraphics, ConversionConstants
 		}
 	}
 
+	/**
+	 * Gets the next tab position.
+	 * @param sd The style definition to be applied.
+	 * @param reservedSize The reserved size.
+	 * @param position The current position. The resulting number will be the horizontal position (from the left hand side) of the next tab location after this one.
+	 * @return The next tab position.
+	 */
 	private float getNextTab(StyleDefinition sd, Size reservedSize, float position) {
 		float tabSpace = getTabSpace(sd, reservedSize);
 		int tapsCount = (int) (position / tabSpace) + 1;
@@ -69,6 +100,15 @@ public class PDDocumentGraphics implements DocumentGraphics, ConversionConstants
 		}
 	}
 
+	/**
+	 * Draws the given text ignoring tabs.
+	 * @param text The text to draw.
+	 * @param p The position.
+	 * @param sd The style definition to apply.
+	 * @param reservedSize The reserved size.
+	 * @param isSingleLine <code>true</code> if the given line of text is a single line.
+	 * @throws RenderingException Is thrown if there is a problem during the rendering.
+	 */
 	public void drawTextRaw(String text, Position p, StyleDefinition sd, Size reservedSize, boolean isSingleLine)
 			throws RenderingException {
 		Size s = getTextSize(text, sd, reservedSize);
@@ -149,6 +189,13 @@ public class PDDocumentGraphics implements DocumentGraphics, ConversionConstants
 		return new Size(getTextWidth(text, sd, reservedSize), getTextHeight(sd));
 	}
 
+	/**
+	 * Returns the text width (tabs are taken into account).
+	 * @param text The text to measure.
+	 * @param sd The style definition to be applied.
+	 * @param reservedSize The reserved size.
+	 * @return The measured text width (including tabs).
+	 */
 	public float getTextWidth(String text, StyleDefinition sd, Size reservedSize) {
 		float width = 0;
 		String[] parts = text.split("\t");
@@ -161,6 +208,11 @@ public class PDDocumentGraphics implements DocumentGraphics, ConversionConstants
 		return width;
 	}
 
+	/**
+	 * Return the height of a text when using the given style definition. 
+	 * @param sd The style definition to be assumed.
+	 * @return The measured height.
+	 */
 	public float getTextHeight(StyleDefinition sd) {
 		try {
 			PDFont f = fontManager.getFont(pdDocument, sd);
@@ -170,14 +222,30 @@ public class PDDocumentGraphics implements DocumentGraphics, ConversionConstants
 		}
 	}
 
+	/**
+	 * Inverts the y-component of the given position.
+	 * @param p The position thats y-component should be inverted.
+	 * @param doc The affected document.
+	 * @return A new position with the same x- and inverted y-coordinate.
+	 */
 	protected Position invertY(Position p, SimplePDFDocument doc) {
 		return new Position(p.getX(), (float) doc.getPageSize().getHeight() - p.getY());
 	}
 
+	/**
+	 * Translates the given position into global units used by PDFBox.
+	 * @param p The position to translate.
+	 * @return The translated position.
+	 */
 	protected Position translate(Position p) {
 		return toUnits(invertY(p, sDoc));
 	}
 
+	/**
+	 * Converts the given position (in millimeters) to units.
+	 * @param p The position to convert.
+	 * @return The converted position.
+	 */
 	protected Position toUnits(Position p) {
 		return new Position(p.getX() * MM_TO_UNITS, p.getY() * MM_TO_UNITS);
 	}

@@ -11,12 +11,21 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 
+/**
+ * An implementation of {@link DocumentGraphicsCreator} that uses PDFBox.
+ * @author Marcel Singer
+ *
+ */
 public class PDDocumentGraphicsCreator implements DocumentGraphicsCreator,
 		ConversionConstants {
 
 	private final Map<SimplePDFDocument, PDDocument> openDocuments = new HashMap<SimplePDFDocument, PDDocument>();
 	private final FontManager fontManager;
 
+	/**
+	 * Creates a new instance of {@link PDDocumentGraphicsCreator} using the given font manager.
+	 * @param fontManager The font manager to be used.
+	 */
 	public PDDocumentGraphicsCreator(FontManager fontManager) {
 		this.fontManager = fontManager;
 
@@ -70,6 +79,12 @@ public class PDDocumentGraphicsCreator implements DocumentGraphicsCreator,
 
 	}
 	
+	/**
+	 * <p>Returns an instance of {@link PDDocument} that represents the rendering of the given {@link SimplePDFDocument}.</p>
+	 * <p><b>Note:</> The given document must be started (using {@link #startDocument(SimplePDFDocument)}) in order to use this method.
+	 * @param doc The {@link SimplePDFDocument} thats {@link PDDocument} representation should be returned.
+	 * @return an instance of {@link PDDocument} that represents the rendering of the given {@link SimplePDFDocument}.
+	 */
 	public PDDocument getDocument(SimplePDFDocument doc){
 		return openDocuments.get(doc);
 	}
