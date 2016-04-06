@@ -100,7 +100,7 @@ public class DocumentCreator implements ConversionConstants {
 	 * @param doc The currently created document.
 	 * @param pageIndex The current page index.
 	 * @param areas The document areas.
-	 * @throws RenderingException Is thrown if thers is an error during the layout process.
+	 * @throws RenderingException Is thrown if there is is an error during the layout process.
 	 */
 	private void layout(List<AreaLayout> layouts, SimplePDFDocument doc, int pageIndex, List<DocumentArea> areas)
 			throws RenderingException {
