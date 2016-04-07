@@ -36,7 +36,7 @@ public interface DocumentGraphicsCreator {
 	/**
 	 * Releases all resources that are held for the given document.
 	 * @param doc The document thats resources should be released.
-	 * @throws RenderingException
+	 * @throws RenderingException If there is an error during the document release.
 	 */
 	public void releaseDocument(SimplePDFDocument doc) throws RenderingException;
 

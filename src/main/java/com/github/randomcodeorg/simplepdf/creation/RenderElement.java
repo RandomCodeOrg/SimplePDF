@@ -39,7 +39,7 @@ public abstract class RenderElement<T extends DocumentElement> implements Conver
 	 * @param info Information about the current creation process.
 	 * @param parentSize The size of the containing element.
 	 * @return The size this element will take up.
-	 * @throws RenderingException
+	 * @throws RenderingException Is thrown if there is an error during the measuring process.
 	 */
 	public abstract Size getRenderSize(PreRenderInformation info, Size parentSize) throws RenderingException;
 
@@ -47,7 +47,7 @@ public abstract class RenderElement<T extends DocumentElement> implements Conver
 	 * Returns the margin to other elements required by this instance.
 	 * @param g The document graphics to be used.
 	 * @return The margin to other elements required by this instance.
-	 * @throws RenderingException
+	 * @throws RenderingException Is thown if there is an error during the measuring process.
 	 */
 	public abstract Spacing getRenderMargin(DocumentGraphics g) throws RenderingException;
 

@@ -206,7 +206,7 @@ public class FontManager {
 	 * <li>Apple OS X</li>
 	 * </ul>
 	 * <p>Consider adding the font locations manually (by using {@link #registerLocation(File)}) if your current operation system is currently not supported.</p>
-	 * @return
+	 * @return A font manager with the default OS font locations.
 	 */
 	public static FontManager createDefault() {
 		FontManager fm = new FontManager();

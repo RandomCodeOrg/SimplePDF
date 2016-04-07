@@ -26,14 +26,14 @@ public class ImageDocumentCreator extends DocumentCreator {
 	}
 
 	/**
-	 * Creates a new instance of {@link ImageDocumentCreator} using the default scale factor (which is: <plain>1</plain>).
+	 * Creates a new instance of {@link ImageDocumentCreator} using the default scale factor (which is: <i>1</i>).
 	 */
 	public ImageDocumentCreator() {
 		super(new ImageDocumentGraphicsCreator());
 	}
 
 	/**
-	 * Renders every page of the given document as an image and saves it as a file with the name <plain>'page'</plain> + <i>page number</i> + <plain>'.png'</plain>.
+	 * Renders every page of the given document as an image and saves it as a file with the name 'page' + <i>page number</i> + '.png'.
 	 * @param doc The document to render.
 	 * @param outputDirectory The directory that will contain the image files.
 	 * @throws IOException If an I/O error occurs.

@@ -107,7 +107,7 @@ public class GroupBox {
 
 	/**
 	 * Returns the current height.
-	 * @return The current height or <plain>-1</plain> if it is infinite.
+	 * @return The current height or <i>-1</i> if it is infinite.
 	 */
 	public float getCurrentHeight() {
 		return y;
@@ -115,7 +115,7 @@ public class GroupBox {
 
 	/**
 	 * Returns the current width.
-	 * @return The current width or <plain>-1</plain> if it is infinite.
+	 * @return The current width or <i>-1</i> if it is infinite.
 	 */
 	public float getCurrentWidth() {
 		return maxX;

@@ -93,7 +93,7 @@ public class PDDocumentGraphicsCreator implements DocumentGraphicsCreator,
 	
 	/**
 	 * <p>Returns an instance of {@link PDDocument} that represents the rendering of the given {@link SimplePDFDocument}.</p>
-	 * <p><b>Note:</> The given document must be started (using {@link #startDocument(SimplePDFDocument)}) in order to use this method.
+	 * <p><b>Note:</b> The given document must be started (using {@link #startDocument(SimplePDFDocument)}) in order to use this method.</p>
 	 * @param doc The {@link SimplePDFDocument} thats {@link PDDocument} representation should be returned.
 	 * @return an instance of {@link PDDocument} that represents the rendering of the given {@link SimplePDFDocument}.
 	 */
