@@ -1,5 +1,6 @@
 package com.github.randomcodeorg.simplepdf.creation;
 
+import com.github.randomcodeorg.simplepdf.DocumentMetaInformation;
 import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
 
 import java.io.IOException;
@@ -7,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
@@ -34,8 +36,18 @@ public class PDDocumentGraphicsCreator implements DocumentGraphicsCreator,
 	@Override
 	public void startDocument(SimplePDFDocument doc) throws RenderingException {
 		PDDocument pdDoc = new PDDocument();
-		pdDoc.getDocumentInformation().setTitle(doc.getTitle());
-		pdDoc.getDocumentInformation().setAuthor(doc.getCreator());
+		
+		DocumentMetaInformation dmi = doc.getMetaInformation();
+		PDDocumentInformation di = pdDoc.getDocumentInformation();
+		if(dmi.hasAuthor()) di.setAuthor(dmi.getAuthor());
+		if(dmi.hasCreationDate()) di.setCreationDate(dmi.getCreationDate());
+		if(dmi.hasCreator()) di.setCreator(dmi.getCreator());
+		if(dmi.hasKeywords()) di.setKeywords(dmi.getKeywords());
+		if(dmi.hasModificationDate()) di.setModificationDate(dmi.getModificationDate());
+		if(dmi.hasProducer()) di.setProducer(dmi.getProducer());
+		if(dmi.hasSubject()) di.setSubject(dmi.getSubject());
+		if(dmi.hasTitle()) di.setTitle(dmi.getTitle());
+		
 		openDocuments.put(doc, pdDoc);
 	}
 
