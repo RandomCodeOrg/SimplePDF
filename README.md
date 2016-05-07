@@ -13,7 +13,7 @@ SimplePDF is available on Maven Central. You can add it as a dependency using yo
 ```
 #### Gradle
 ```
-compile 'com.github.jlinq:jlinq:0.0.4'
+compile 'com.github.randomcodeorg.simplepdf:simplepdf:0.0.1'
 ````
 #### Download the JAR
 You can also download the JAR directly from this project by visiting the [releases section](https://github.com/RandomCodeOrg/SimplePDF/releases). Be sure to also download the required dependencies that are declared within the release descriptions.
