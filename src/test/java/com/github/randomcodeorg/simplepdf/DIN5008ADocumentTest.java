@@ -49,7 +49,8 @@ public class DIN5008ADocumentTest extends SimpleGUITest {
 		} catch (IOException e1) {
 			fail(e1.getMessage());
 		}
-
+		doc.addTextElement(new PageCloser("/"));
+		doc.addTextElement(new TextBlock("/", "/", "Ich stehe auf einer neuen Seite!"));
 		
 
 		PageNumber pn = new PageNumber("/", "/");

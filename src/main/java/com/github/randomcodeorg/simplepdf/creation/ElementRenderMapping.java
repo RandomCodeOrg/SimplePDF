@@ -4,6 +4,7 @@ import com.github.randomcodeorg.simplepdf.ChapterElement;
 import com.github.randomcodeorg.simplepdf.DocumentElement;
 import com.github.randomcodeorg.simplepdf.DocumentImage;
 import com.github.randomcodeorg.simplepdf.Line;
+import com.github.randomcodeorg.simplepdf.PageCloser;
 import com.github.randomcodeorg.simplepdf.PageNumber;
 import com.github.randomcodeorg.simplepdf.Rectangle;
 import com.github.randomcodeorg.simplepdf.SimplePDFDocument;
@@ -130,6 +131,7 @@ public class ElementRenderMapping {
 			defaultMapping.register(DocumentImage.class, RenderImage.class);
 			defaultMapping.register(Rectangle.class, RenderRectangle.class);
 			defaultMapping.register(Table.class, RenderTable.class);
+			defaultMapping.register(PageCloser.class, RenderPageCloser.class);
 		}
 		return defaultMapping;
 	}
